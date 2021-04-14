@@ -22,9 +22,8 @@ public class BindingOfNewton extends ApplicationAdapter {
 	private int x;
 	private int y;
 	private Orientation orientation;
-	private TiledMap map;
 	private OrthographicCamera camera;
-	private TiledMapRenderer tiledMapRenderer;
+	private MapBodyBuilder mapBuilder;
 
 	
 	@Override
@@ -45,8 +44,7 @@ public class BindingOfNewton extends ApplicationAdapter {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, w, h);
 		camera.update();
-		map = new TmxMapLoader().load("map.tmx");
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 3f);
+		mapBuilder = new MapBodyBuilder();
 	}
 
 	@Override
@@ -56,8 +54,7 @@ public class BindingOfNewton extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
-		tiledMapRenderer.setView(camera);
-		tiledMapRenderer.render();
+		mapBuilder.setViewAndRender(camera);
 
 		batch.begin();
 		int range = 3;
