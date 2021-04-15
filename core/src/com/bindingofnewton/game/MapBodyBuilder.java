@@ -14,7 +14,7 @@ public class MapBodyBuilder {
 
     public MapBodyBuilder(){
         map = new TmxMapLoader().load("map.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 3f);
+        renderer = new OrthogonalTiledMapRenderer(map, 3.5f);
     }
 
     public void setViewAndRender(OrthographicCamera camera){

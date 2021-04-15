@@ -1,9 +1,6 @@
 package com.bindingofnewton.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,7 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-public class BindingOfNewton extends ApplicationAdapter {
+public class BindingOfNewton extends Game {
 	private SpriteBatch batch;
 	/*
 	private Texture imgCharacterUp;
@@ -39,6 +36,7 @@ public class BindingOfNewton extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		setScreen(new MainMenuScreen());
 		batch = new SpriteBatch();
 		/*
 		imgCharacterUp = new Texture("isaac-back.png");
