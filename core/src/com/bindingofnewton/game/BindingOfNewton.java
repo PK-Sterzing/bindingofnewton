@@ -7,7 +7,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -15,24 +17,43 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class BindingOfNewton extends ApplicationAdapter {
 	private SpriteBatch batch;
+	/*
 	private Texture imgCharacterUp;
 	private Texture imgCharacterDown;
 	private Texture imgCharacterLeft;
 	private Texture imgCharacterRight;
+
+	 */
+	private Sprite imgCharacterUp;
+	private Sprite imgCharacterDown;
+	private Sprite imgCharacterLeft;
+	private Sprite imgCharacterRight;
 	private int x;
 	private int y;
 	private Orientation orientation;
 	private OrthographicCamera camera;
+	TextureAtlas textureAtlas;
+	private TiledMapRenderer tiledMapRenderer;
 	private MapBodyBuilder mapBuilder;
 
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		imgCharacterUp = new Texture("isaac-2.png");
-		imgCharacterDown = new Texture("isaac-1.png");
-		imgCharacterLeft = new Texture("isaac-3.png");
-		imgCharacterRight = new Texture("isaac-4.png");
+		/*
+		imgCharacterUp = new Texture("isaac-back.png");
+		imgCharacterDown = new Texture("isaac-front.png");
+		imgCharacterLeft = new Texture("isaac-left.png");
+		imgCharacterRight = new Texture("isaac-right.png");
+		 */
+
+		textureAtlas = new TextureAtlas("data.txt");
+
+		imgCharacterUp = textureAtlas.createSprite("isaac3");
+		imgCharacterDown = textureAtlas.createSprite("isaac2");
+		imgCharacterRight = textureAtlas.createSprite("isaac5");
+		imgCharacterLeft = textureAtlas.createSprite("isaac4");
+
 		x = 0;
 		y = 0;
 		orientation = Orientation.DOWN;
@@ -90,8 +111,12 @@ public class BindingOfNewton extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		/*
 		imgCharacterUp.dispose();
 		imgCharacterDown.dispose();
+
+		 */
+		textureAtlas.dispose();
 	}
 
 }
