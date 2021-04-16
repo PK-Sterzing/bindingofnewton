@@ -13,8 +13,8 @@ public class MapBodyBuilder {
     private TiledMapRenderer renderer;
 
     public MapBodyBuilder(){
-        map = new TmxMapLoader().load("map.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 3.5f);
+        map = new TmxMapLoader().load("map2.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
     }
 
     public void setViewAndRender(OrthographicCamera camera){

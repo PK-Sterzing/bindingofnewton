@@ -47,10 +47,10 @@ public class BindingOfNewton extends Game {
 
 		textureAtlas = new TextureAtlas("data.txt");
 
-		imgCharacterUp = textureAtlas.createSprite("isaac3");
-		imgCharacterDown = textureAtlas.createSprite("isaac2");
-		imgCharacterRight = textureAtlas.createSprite("isaac5");
-		imgCharacterLeft = textureAtlas.createSprite("isaac4");
+		imgCharacterUp = textureAtlas.createSprite("isaac-newton-back");
+		imgCharacterDown = textureAtlas.createSprite("isaac-newton-front");
+		imgCharacterRight = textureAtlas.createSprite("isaac-newton-right");
+		imgCharacterLeft = textureAtlas.createSprite("isaac-newton-left");
 
 		x = 0;
 		y = 0;
@@ -95,13 +95,13 @@ public class BindingOfNewton extends Game {
 		}
 
 		if(this.orientation == Orientation.DOWN){
-			batch.draw(imgCharacterDown, x, y, 60, 70);
+			batch.draw(imgCharacterDown, x, y);
 		}else if(this.orientation == Orientation.UP){
-			batch.draw(imgCharacterUp, x, y, 60, 70);
+			batch.draw(imgCharacterUp, x, y);
 		}else if(this.orientation == Orientation.LEFT){
-			batch.draw(imgCharacterLeft, x, y, 60, 70);
+			batch.draw(imgCharacterLeft, x, y);
 		}else if(this.orientation == Orientation.RIGHT){
-			batch.draw(imgCharacterRight, x, y, 60, 70);
+			batch.draw(imgCharacterRight, x, y, (float) (imgCharacterRight.getBoundingRectangle().width * 4), (float) (imgCharacterRight.getBoundingRectangle().height * 4));
 		}
 		batch.end();
 	}
