@@ -11,49 +11,38 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 
 public class BindingOfNewton extends Game {
 	private SpriteBatch batch;
-	/*
 	private Texture imgCharacterUp;
 	private Texture imgCharacterDown;
 	private Texture imgCharacterLeft;
 	private Texture imgCharacterRight;
 
-	 */
-	private Sprite imgCharacterUp;
-	private Sprite imgCharacterDown;
-	private Sprite imgCharacterLeft;
-	private Sprite imgCharacterRight;
 	private int x;
 	private int y;
 	private Orientation orientation;
 	private OrthographicCamera camera;
-	TextureAtlas textureAtlas;
-	private TiledMapRenderer tiledMapRenderer;
 	private MapBodyBuilder mapBuilder;
+
+	private Sprite character;
+	private World world;
+	private Body body;
 
 	
 	@Override
 	public void create () {
 		setScreen(new MainMenuScreen());
 		batch = new SpriteBatch();
-		/*
-		imgCharacterUp = new Texture("isaac-back.png");
-		imgCharacterDown = new Texture("isaac-front.png");
-		imgCharacterLeft = new Texture("isaac-left.png");
-		imgCharacterRight = new Texture("isaac-right.png");
-		 */
+		imgCharacterUp = new Texture("isaac-2.png");
+		imgCharacterDown = new Texture("isaac-1.png");
+		imgCharacterLeft = new Texture("isaac-3.png");
+		imgCharacterRight = new Texture("isaac-4.png");
 
-		textureAtlas = new TextureAtlas("data.txt");
-
-		imgCharacterUp = textureAtlas.createSprite("isaac-newton-back");
-		imgCharacterDown = textureAtlas.createSprite("isaac-newton-front");
-		imgCharacterRight = textureAtlas.createSprite("isaac-newton-right");
-		imgCharacterLeft = textureAtlas.createSprite("isaac-newton-left");
-
-		x = 0;
-		y = 0;
+		x = 1000;
+		y = 1000;
 		orientation = Orientation.DOWN;
 
 
@@ -63,11 +52,35 @@ public class BindingOfNewton extends Game {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, w, h);
 		camera.update();
+
+		character = new Sprite(imgCharacterDown);
+		world = new World(new Vector2(0, 0), true);
+		BodyDef def = new BodyDef();
+		def.type = BodyDef.BodyType.DynamicBody;
+		def.position.set(character.getX(), character.getY());
+
+		body = world.createBody(def);
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(character.getWidth()/2, character.getHeight()/2);
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.density = 1f;
+
+		Fixture fixture = body.createFixture(fixtureDef);
+
+		shape.dispose();
+
 		mapBuilder = new MapBodyBuilder();
+		mapBuilder.buildBodies(world);
+		System.out.println("Amount of bodies: " + world.getBodyCount());
 	}
 
 	@Override
 	public void render () {
+
+		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -76,7 +89,9 @@ public class BindingOfNewton extends Game {
 		mapBuilder.setViewAndRender(camera);
 
 		batch.begin();
-		int range = 3;
+		int range = 100;
+		int x = 0;
+		int y = 0;
 		if(Gdx.input.isKeyPressed(Input.Keys.W)){
 			y = y + range;
 			this.orientation = Orientation.UP;
@@ -93,7 +108,7 @@ public class BindingOfNewton extends Game {
 			x = x + range;
 			this.orientation = Orientation.RIGHT;
 		}
-
+		/*
 		if(this.orientation == Orientation.DOWN){
 			batch.draw(imgCharacterDown, x, y);
 		}else if(this.orientation == Orientation.UP){
@@ -101,20 +116,24 @@ public class BindingOfNewton extends Game {
 		}else if(this.orientation == Orientation.LEFT){
 			batch.draw(imgCharacterLeft, x, y);
 		}else if(this.orientation == Orientation.RIGHT){
-			batch.draw(imgCharacterRight, x, y, (float) (imgCharacterRight.getBoundingRectangle().width * 4), (float) (imgCharacterRight.getBoundingRectangle().height * 4));
+			batch.draw(imgCharacterRight, x, y);
 		}
+
+		 */
+        body.setLinearVelocity(new Vector2(x, y));
+		character.setPosition(body.getPosition().x, body.getPosition().y);
+		//System.out.println(body.getPosition());
+		batch.draw(character, character.getX(), character.getY());
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		/*
 		imgCharacterUp.dispose();
 		imgCharacterDown.dispose();
-
-		 */
-		textureAtlas.dispose();
+		imgCharacterRight.dispose();
+		imgCharacterLeft.dispose();
 	}
 
 }
