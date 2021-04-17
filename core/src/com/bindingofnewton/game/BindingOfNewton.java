@@ -41,8 +41,8 @@ public class BindingOfNewton extends Game {
 		imgCharacterLeft = new Texture("isaac-3.png");
 		imgCharacterRight = new Texture("isaac-4.png");
 
-		x = 1000;
-		y = 1000;
+		x = 200;
+		y = 200;
 		orientation = Orientation.DOWN;
 
 
@@ -54,6 +54,7 @@ public class BindingOfNewton extends Game {
 		camera.update();
 
 		character = new Sprite(imgCharacterDown);
+		character.setPosition(x, y);
 		world = new World(new Vector2(0, 0), true);
 		BodyDef def = new BodyDef();
 		def.type = BodyDef.BodyType.DynamicBody;

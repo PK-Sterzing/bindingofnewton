@@ -9,7 +9,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -20,9 +19,8 @@ public class MapBodyBuilder {
     private static final float TILE_SIZE = 16;
 
     public MapBodyBuilder(){
-        map = new TmxMapLoader().load("map.tmx");
+        map = new TmxMapLoader().load("map2.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
-        System.out.println("bodybuilder created");
     }
 
     public void setViewAndRender(OrthographicCamera camera){
@@ -30,49 +28,59 @@ public class MapBodyBuilder {
         renderer.render();
     }
 
+    /**
+     * Creates box2d definition from tiled map
+     * Runs trough all objects in map and creates bodies and fixtures from objects and adds them to the world
+     * @param world
+     */
     public void buildBodies(World world){
         String layer = "border";
         MapObjects objects = map.getLayers().get(layer).getObjects();
-        System.out.println(map.getLayers().get(layer).getObjects().getCount());
-        System.out.println(objects);
-        for(MapObject object: objects){
-            System.out.println("border found");
-            System.out.println(object);
+
+        for(MapObject object: objects) {
+            // Make sure the found object is a rectangle
             if(object instanceof RectangleMapObject){
-                System.out.println("Rectangle border found");
+                // Get Rectangle from found object on map
                 Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+
+                // Create box2d body
                 BodyDef def = new BodyDef();
                 def.type = BodyDef.BodyType.StaticBody;
                 Body body = world.createBody(def);
 
                 Fixture fixture = body.createFixture(getShapeFromRectangle(rectangle), 1f);
-                fixture.setFriction(0.1f);
+                fixture.setFriction(0.5f);
 
-                String positionX = (String) object.getName();
-                String positionY = (String) object.getName();
-                System.out.println("name: " + positionX);
-                System.out.println("name: " + positionY);
-                System.out.println("X exists: " + object.getProperties().containsKey("X"));
-
-                //body.setTransform(new Vector2(200, 200), 0);
                 body.setTransform(getTransformedCenterForRectangle(rectangle), 0);
 
             }
         }
     }
 
+    /**
+     * Returns PolygonShape with shape from Rectangle
+     * PolygonShape is required to create fixture, but we only get a rectangle from the map
+     * @param rectangle
+     * @return shape
+     */
     private static Shape getShapeFromRectangle(Rectangle rectangle){
         PolygonShape polygonShape = new PolygonShape();
-        //polygonShape.setAsBox(rectangle.width * 0.5f / TILE_SIZE, rectangle.height * 0.5f / TILE_SIZE);
         polygonShape.setAsBox(rectangle.width / 2, rectangle.height / 2);
         return polygonShape;
     }
 
+    /**
+     * Gets center from rectangle
+     * Returns coordinates from the found rectangle on the map
+     * @param rectangle
+     * @return Vector2 coordinates to the origin point of the object
+     */
     private static Vector2 getTransformedCenterForRectangle(Rectangle rectangle){
         Vector2 center = new Vector2();
         rectangle.getCenter(center);
-        System.out.println("Rectangle :" + rectangle.getCenter(center));
-        return center.scl(TILE_SIZE);
+        // The center is offset by one tile in every direction
+        // Not sure if this is right...
+        return center.add(new Vector2(-TILE_SIZE, -TILE_SIZE));
     }
 
     public TiledMap getMap() {
