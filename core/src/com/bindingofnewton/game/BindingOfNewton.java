@@ -11,6 +11,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 public class BindingOfNewton extends Game {
 	private SpriteBatch batch;
@@ -32,7 +35,9 @@ public class BindingOfNewton extends Game {
 	TextureAtlas textureAtlas;
 	private TiledMapRenderer tiledMapRenderer;
 	private MapBodyBuilder mapBuilder;
-
+	private InputHandler inputHandler;
+	private Player player;
+	private World world;
 	
 	@Override
 	public void create () {
@@ -44,26 +49,23 @@ public class BindingOfNewton extends Game {
 		imgCharacterLeft = new Texture("isaac-left.png");
 		imgCharacterRight = new Texture("isaac-right.png");
 		 */
-
-		textureAtlas = new TextureAtlas("data.txt");
-
-		imgCharacterUp = textureAtlas.createSprite("isaac-newton-back");
-		imgCharacterDown = textureAtlas.createSprite("isaac-newton-front");
-		imgCharacterRight = textureAtlas.createSprite("isaac-newton-right");
-		imgCharacterLeft = textureAtlas.createSprite("isaac-newton-left");
-
 		x = 0;
 		y = 0;
-		orientation = Orientation.DOWN;
 
+		orientation = Orientation.DOWN;
 
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
+
+		world = new World(new Vector2(0,0), true);
+		player = new Player(world, 0, 0, Atlas.getInstance().getPlayerSprite("isaac-newton"));
+		inputHandler = new InputHandler(player);
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, w, h);
 		camera.update();
 		mapBuilder = new MapBodyBuilder();
+		Gdx.input.setInputProcessor(inputHandler);
 	}
 
 	@Override
@@ -76,6 +78,7 @@ public class BindingOfNewton extends Game {
 		mapBuilder.setViewAndRender(camera);
 
 		batch.begin();
+		/*
 		int range = 3;
 		if(Gdx.input.isKeyPressed(Input.Keys.W)){
 			y = y + range;
@@ -92,8 +95,11 @@ public class BindingOfNewton extends Game {
 		if(Gdx.input.isKeyPressed(Input.Keys.D)){
 			x = x + range;
 			this.orientation = Orientation.RIGHT;
-		}
+		}*/
 
+		batch.draw(player.getSprite(), player.getX(), player.getY());
+
+		/*
 		if(this.orientation == Orientation.DOWN){
 			batch.draw(imgCharacterDown, x, y);
 		}else if(this.orientation == Orientation.UP){
@@ -102,7 +108,9 @@ public class BindingOfNewton extends Game {
 			batch.draw(imgCharacterLeft, x, y);
 		}else if(this.orientation == Orientation.RIGHT){
 			batch.draw(imgCharacterRight, x, y, (float) (imgCharacterRight.getBoundingRectangle().width * 4), (float) (imgCharacterRight.getBoundingRectangle().height * 4));
-		}
+		}*/
+		//batch.draw(player.getImage);
+
 		batch.end();
 	}
 	
@@ -113,8 +121,9 @@ public class BindingOfNewton extends Game {
 		imgCharacterUp.dispose();
 		imgCharacterDown.dispose();
 
-		 */
 		textureAtlas.dispose();
+
+		 */
 	}
 
 }

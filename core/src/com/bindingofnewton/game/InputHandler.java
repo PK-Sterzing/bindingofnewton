@@ -5,17 +5,29 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 public class InputHandler implements InputProcessor {
+
+    private Player player;
+    private final int SPEED = 3;
+
+    public InputHandler(Player player){
+        this.player = player;
+    }
+
     @Override
     public boolean keyDown(int keycode) {
+
         switch (keycode){
             case Input.Keys.W:
-//                player.move(new Vector2(0, 3));
+                player.move(new Vector2(0, SPEED));
 
             case Input.Keys.A:
+                player.move(new Vector2(-SPEED, 0));
 
             case Input.Keys.S:
+                player.move(new Vector2(0, -SPEED));
 
             case Input.Keys.D:
+                player.move(new Vector2(SPEED, 0));
 
             case Input.Keys.UP:
 
