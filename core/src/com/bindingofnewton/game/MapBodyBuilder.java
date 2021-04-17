@@ -1,6 +1,8 @@
 package com.bindingofnewton.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -66,6 +68,7 @@ public class MapBodyBuilder {
     private static Shape getShapeFromRectangle(Rectangle rectangle){
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(rectangle.width / 2, rectangle.height / 2);
+        System.out.println("Rectangle size: (" + rectangle.width + ", " + rectangle.height + ")");
         return polygonShape;
     }
 
@@ -80,7 +83,9 @@ public class MapBodyBuilder {
         rectangle.getCenter(center);
         // The center is offset by one tile in every direction
         // Not sure if this is right...
-        return center.add(new Vector2(-TILE_SIZE, -TILE_SIZE));
+        System.out.println("Rectangle pos: " + center.add(new Vector2(-TILE_SIZE, -TILE_SIZE)));
+        //return center.add(new Vector2(-TILE_SIZE, -TILE_SIZE));
+        return center;
     }
 
     public TiledMap getMap() {

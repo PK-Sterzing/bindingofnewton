@@ -34,13 +34,14 @@ public class BindingOfNewton extends Game {
 		float h = Gdx.graphics.getHeight();
 
 		world = new World(new Vector2(0,0), true);
-		System.out.println(Atlas.getInstance().getPlayerSprite("isaac-newton"));
 		player = new Player(world, 100, 100, Atlas.getInstance().getPlayerSprite("isaac-newton"));
 		inputHandler = new InputHandler(player);
 
 		camera = new OrthographicCamera();
+		camera.zoom = 0.5f;
 		camera.setToOrtho(false, w, h);
 		camera.update();
+
 
 
 		mapBuilder = new MapBodyBuilder();
@@ -57,6 +58,7 @@ public class BindingOfNewton extends Game {
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		batch.setProjectionMatrix(camera.combined);
 		camera.update();
 		mapBuilder.setViewAndRender(camera);
 
