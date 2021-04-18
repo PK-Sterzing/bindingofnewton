@@ -6,7 +6,8 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public abstract class Entity {
 
-    private final Body body;
+
+    private Body body;
 
     protected int x;
     protected int y;
@@ -38,48 +39,23 @@ public abstract class Entity {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1f;
+        fixtureDef.friction = 0.4f;
 
         Fixture fixture = body.createFixture(fixtureDef);
 
         shape.dispose();
 
         sprites[0].setPosition(body.getPosition().x, body.getPosition().y);
+        /*
         sprites[1].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[2].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[3].setPosition(body.getPosition().x, body.getPosition().y);
+        */
 
         orientation = Orientation.DOWN;
 
-		/*
-		character = new Sprite(imgCharacterDown);
-		character.setPosition(x, y);
-		world = new World(new Vector2(0, 0), true);
-		BodyDef def = new BodyDef();
-		def.type = BodyDef.BodyType.DynamicBody;
-		def.position.set(character.getX(), character.getY());
-
-		body = world.createBody(def);
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(character.getWidth()/2, character.getHeight()/2);
-
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.density = 1f;
-
-		Fixture fixture = body.createFixture(fixtureDef);
-
-		shape.dispose();
-		 */
     }
 
-    /*
-    public Entity(World world, int startX, int startY, Sprite sprite) {
-        //this(world, startX, startY);
-        sprites = new Sprite[1];
-        sprites[0] = sprite;
-    }
-
-     */
 
     //</editor-fold>
 
@@ -144,10 +120,16 @@ public abstract class Entity {
 
         body.setLinearVelocity(vector);
         sprites[0].setPosition(body.getPosition().x, body.getPosition().y);
+        /*
         sprites[1].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[2].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[3].setPosition(body.getPosition().x, body.getPosition().y);
+
+         */
     }
 
 
+    public Body getBody() {
+        return body;
+    }
 }

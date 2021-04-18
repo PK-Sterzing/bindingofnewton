@@ -3,9 +3,12 @@ package com.bindingofnewton.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 public class BindingOfNewton extends Game {
 	private SpriteBatch batch;
@@ -20,13 +23,16 @@ public class BindingOfNewton extends Game {
 	private Player player;
 	private World world;
 
+	private Texture white;
+	private Texture red;
+
 	@Override
 	public void create () {
 		setScreen(new MainMenuScreen());
 		batch = new SpriteBatch();
 
-		x = 0;
-		y = 0;
+		x = 100;
+		y = 100;
 
 		orientation = Orientation.DOWN;
 
@@ -34,11 +40,13 @@ public class BindingOfNewton extends Game {
 		float h = Gdx.graphics.getHeight();
 
 		world = new World(new Vector2(0,0), true);
-		player = new Player(world, 100, 100, Atlas.getInstance().getPlayerSprite("isaac-newton"));
+		world.setContactListener(new CollisionListener());
+
+		player = new Player(world, x, y, Atlas.getInstance().getPlayerSprite("isaac-newton"));
 		inputHandler = new InputHandler(player);
 
 		camera = new OrthographicCamera();
-		camera.zoom = 0.5f;
+		camera.zoom = 0.35f;
 		camera.setToOrtho(false, w, h);
 		camera.update();
 
@@ -46,21 +54,25 @@ public class BindingOfNewton extends Game {
 
 		mapBuilder = new MapBodyBuilder();
 		mapBuilder.buildBodies(world);
-		//Gdx.input.setInputProcessor(inputHandler);
+
+		white = new Texture("white.jpg");
+		red = new Texture("red.jpg");
+
 	}
+
 
 	@Override
 	public void render () {
 
-		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+		world.step(Gdx.graphics.getDeltaTime(), 24, 24);
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.setProjectionMatrix(camera.combined);
-		camera.update();
 		mapBuilder.setViewAndRender(camera);
+		camera.update();
 
 		int x = 0;
 		int y = 0;
@@ -81,11 +93,55 @@ public class BindingOfNewton extends Game {
 
 		batch.begin();
 
+		/*
+		for(int i = 0; i < mapBuilder.rectangles.size(); i+=4){
+			batch.draw(texture, mapBuilder.rectangles.get(i), mapBuilder.rectangles.get(i+1), mapBuilder.rectangles.get(i+2), mapBuilder.rectangles.get(i+3));
+		}
+
+
+
+
+		Array<Body> bodies = new Array<>();
+		world.getBodies(bodies);
+		int counter = 0;
+		for(int i = 0; i < bodies.size; i++){
+			int x1 = (int) bodies.get(i).getPosition().x;
+			int y1 = (int) bodies.get(i).getPosition().y;
+			int width = (int) ((PolygonShape) bodies.get(0).getUserData()).getHeight();
+			int height = (int) ((PolygonShape) bodies.get(0).getFixtureList().get(0).getShape()
+
+            int width = 32;
+            int height = 50;
+			if(counter+3 <= mapBuilder.rectangles.size()){
+				width = mapBuilder.rectangles.get(counter+2);
+				height = mapBuilder.rectangles.get(counter+3);
+
+			}
+
+			batch.draw(texture, x1, y1, width, height);
+			counter += 4;
+
+		}
+		*/
 
 		batch.draw(player.getSprite(), player.getSprite().getX(), player.getSprite().getY());
+
+		System.out.println("World:");
+		Array<Body> bodies = new Array<>();
+		world.getBodies(bodies);
+		for(int i = 0; i < bodies.size; i++){
+			System.out.println("X, Y: (" + bodies.get(i).getPosition().x + ", " + bodies.get(i).getPosition().y + ")");
+			batch.draw(white, bodies.get(i).getPosition().x, bodies.get(i).getPosition().y, 5, 5);
+		}
+		System.out.println("--------------------");
+
+
 		batch.end();
+
+
+
 	}
-	
+
 	@Override
 	public void dispose () {
 		batch.dispose();

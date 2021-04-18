@@ -1,8 +1,7 @@
 package com.bindingofnewton.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -15,10 +14,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 
+
 public class MapBodyBuilder {
     private TiledMap map;
     private TiledMapRenderer renderer;
-    private static final float TILE_SIZE = 16;
+    private static final float TILE_SIZE = 32;
+
+
 
     public MapBodyBuilder(){
         map = new TmxMapLoader().load("map2.tmx");
@@ -72,6 +74,7 @@ public class MapBodyBuilder {
         return polygonShape;
     }
 
+
     /**
      * Gets center from rectangle
      * Returns coordinates from the found rectangle on the map
@@ -83,14 +86,15 @@ public class MapBodyBuilder {
         rectangle.getCenter(center);
         // The center is offset by one tile in every direction
         // Not sure if this is right...
-        System.out.println("Rectangle pos: " + center.add(new Vector2(-TILE_SIZE, -TILE_SIZE)));
+        System.out.println("Rectangle pos: " + center);
         //return center.add(new Vector2(-TILE_SIZE, -TILE_SIZE));
-        return center;
+        return center.add(new Vector2(-TILE_SIZE, -TILE_SIZE));
     }
 
     public TiledMap getMap() {
         return map;
     }
+
 
     public TiledMapRenderer getRenderer() {
         return renderer;
