@@ -2,13 +2,17 @@ package com.bindingofnewton.game;
 
 public class RoomBuilder {
 
-    private MapBodyBuilder mapBodyBuilder;
+    private String tmxFilename;
 
-    public RoomBuilder(MapBodyBuilder mapBodyBuilder){
-       this.mapBodyBuilder = mapBodyBuilder;
+    public RoomBuilder(String tmxFilename){
+       this.tmxFilename = tmxFilename;
    }
 
     public void createRoom(){
+        manipulate(5, 0);
+    }
+
+    private void manipulate(int x, int y){
 
     }
 

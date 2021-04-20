@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class BindingOfNewton extends Game {
+
 	private final String MAP_FILE_NAME = "map3.tmx";
 
 	private SpriteBatch batch;
@@ -18,14 +19,16 @@ public class BindingOfNewton extends Game {
 	private Orientation orientation;
 	private OrthographicCamera camera;
 	private MapBodyBuilder mapBuilder;
-	private RoomBuilder roomBuilder;
 
 	private InputHandler inputHandler;
 	private Player player;
 	private World world;
 	private Box2DDebugRenderer renderer;
 
-	//public static final float SCALE = 10;
+	private Level level;
+	private int levelCount = 0;
+
+	public static final float SCALE = 10;
 
 	@Override
 	public void create () {
@@ -49,10 +52,12 @@ public class BindingOfNewton extends Game {
 		camera.setToOrtho(false, w, h);
 		camera.update();
 
-
+		Level.Builder levelBuilder = new Level.Builder();
 
 		mapBuilder = new MapBodyBuilder(MAP_FILE_NAME);
 		mapBuilder.buildBodies(world);
+
+
 
 		//Gdx.input.setInputProcessor(inputHandler);
 		renderer = new Box2DDebugRenderer();

@@ -7,10 +7,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -62,11 +59,13 @@ public class MapBodyBuilder {
     }
 
     public void manipulate(int x, int y){
-        MapLayer layer = map.getLayers().get(0);
-        //for (RectangleMapObj ct rectangle : layer.getObjects(){
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+        TiledMapTileSet tileSet = map.getTileSets().getTileSet(0);
+        System.out.println("Tileset Name: " + tileSet.getName());
 
-        //}
-
+        TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
+        cell.setTile(tileSet.getTile(3));
+        layer.setCell(x, y, cell);
     }
 
     /**
