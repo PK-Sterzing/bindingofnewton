@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class BindingOfNewton extends Game {
-	private final String MAP_FILE_NAME = "map2.tmx";
+	private final String MAP_FILE_NAME = "map3.tmx";
 
 	private SpriteBatch batch;
 
@@ -91,7 +91,7 @@ public class BindingOfNewton extends Game {
 		batch.begin();
 
 
-		batch.draw(player.getSprite(), player.getSprite().getX(), player.getSprite().getY());
+		player.getSprite().draw(batch);
 		batch.end();
 		renderer.render(world, camera.combined);
 	}
@@ -101,9 +101,12 @@ public class BindingOfNewton extends Game {
 		batch.dispose();
 	}
 
+	/*
 	public float scale(float valueToBeScaled) {
 		return valueToBeScaled/SCALE;
 	}
+
+	 */
 
 
 }

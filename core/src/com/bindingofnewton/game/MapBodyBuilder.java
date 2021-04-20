@@ -79,11 +79,11 @@ public class MapBodyBuilder {
     private static PolygonShape getShapeFromRectangle(RectangleMapObject rectangleMapObject) {
         Rectangle rectangle = rectangleMapObject.getRectangle();
         PolygonShape polygonShape = new PolygonShape();
-        Vector2 position = new Vector2((rectangle.x + rectangle.width * 0.5f / BindingOfNewton.SCALE),
-                (rectangle.y + rectangle.height * 0.5f / BindingOfNewton.SCALE));
+        Vector2 position = new Vector2((rectangle.x + rectangle.width * 0.5f ),
+                (rectangle.y + rectangle.height * 0.5f ));
 
-        polygonShape.setAsBox(rectangle.width * 0.5f / BindingOfNewton.SCALE,
-                rectangle.height * 0.5f / BindingOfNewton.SCALE,
+        polygonShape.setAsBox(rectangle.width * 0.5f ,
+                rectangle.height * 0.5f ,
                 position,
                 0.0f);
 

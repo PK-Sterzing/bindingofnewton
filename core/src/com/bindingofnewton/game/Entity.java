@@ -10,6 +10,8 @@ public abstract class Entity {
 
     protected int x;
     protected int y;
+    private int characterHeight;
+    private int characterWidth;
 
     protected Sprite[] sprites;
 
@@ -29,47 +31,30 @@ public abstract class Entity {
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(x ,y);
 
+        characterWidth = 25;
+        characterHeight = 31;
 
         body = world.createBody(def);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(sprites[0].getWidth()/2, sprites[0].getHeight()/2);
+        PolygonShape polygonShape = new PolygonShape();
+        Vector2 position = new Vector2((getSprite().getX() + characterWidth * 0.5f ),
+                (getSprite().getY() + characterHeight * 0.5f ));
+
+        polygonShape.setAsBox(characterWidth * 0.5f ,
+                characterHeight * 0.5f ,
+                position,
+                0.0f);
+
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1f;
+        fixtureDef.shape = polygonShape;
+        //fixtureDef.density = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);
 
-        shape.dispose();
-
-        sprites[0].setPosition(body.getPosition().x, body.getPosition().y);
-        sprites[1].setPosition(body.getPosition().x, body.getPosition().y);
-        sprites[2].setPosition(body.getPosition().x, body.getPosition().y);
-        sprites[3].setPosition(body.getPosition().x, body.getPosition().y);
+        polygonShape.dispose();
 
         orientation = Orientation.DOWN;
-
-		/*
-		character = new Sprite(imgCharacterDown);
-		character.setPosition(x, y);
-		world = new World(new Vector2(0, 0), true);
-		BodyDef def = new BodyDef();
-		def.type = BodyDef.BodyType.DynamicBody;
-		def.position.set(character.getX(), character.getY());
-
-		body = world.createBody(def);
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(character.getWidth()/2, character.getHeight()/2);
-
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.density = 1f;
-
-		Fixture fixture = body.createFixture(fixtureDef);
-
-		shape.dispose();
-		 */
     }
 
     /*
@@ -147,6 +132,11 @@ public abstract class Entity {
         sprites[1].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[2].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[3].setPosition(body.getPosition().x, body.getPosition().y);
+    }
+
+    public Sprite adjustSize(Sprite spriteToBeScaled) {
+        spriteToBeScaled.setSize(spriteToBeScaled.getWidth() * 0.5f, spriteToBeScaled.getHeight() * 0.5f);
+        return spriteToBeScaled;
     }
 
 
