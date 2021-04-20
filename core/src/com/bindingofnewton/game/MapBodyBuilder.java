@@ -58,16 +58,6 @@ public class MapBodyBuilder {
         }
     }
 
-    public void manipulate(int x, int y){
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
-        TiledMapTileSet tileSet = map.getTileSets().getTileSet(0);
-        System.out.println("Tileset Name: " + tileSet.getName());
-
-        TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
-        cell.setTile(tileSet.getTile(3));
-        layer.setCell(x, y, cell);
-    }
-
     /**
      * Returns PolygonShape with shape from Rectangle
      * PolygonShape is required to create fixture, but we only get a rectangle from the map

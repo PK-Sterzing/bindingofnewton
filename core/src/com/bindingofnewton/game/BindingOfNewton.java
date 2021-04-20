@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class BindingOfNewton extends Game {
 
-	private final String MAP_FILE_NAME = "map3.tmx";
+	private final String MAP_FILE_NAME = "mapStart.tmx";
 
 	private SpriteBatch batch;
 
@@ -44,7 +44,7 @@ public class BindingOfNewton extends Game {
 		float h = Gdx.graphics.getHeight();
 
 		world = new World(new Vector2(0,0), true);
-		player = new Player(world, 150, 150, Atlas.getInstance().getPlayerSprite("isaac-newton"));
+		player = new Player(world, 150, 150, AssetsHandler.getInstance().getPlayerSprite("isaac-newton"));
 		inputHandler = new InputHandler(player);
 
 		camera = new OrthographicCamera();
@@ -52,7 +52,13 @@ public class BindingOfNewton extends Game {
 		camera.setToOrtho(false, w, h);
 		camera.update();
 
+		/*
 		Level.Builder levelBuilder = new Level.Builder();
+		levelBuilder
+			.setWorldWidthHeight(4, 4)
+			.setMinRooms(6)
+			.setAmountRandomRooms(0, 0);
+		Level level = levelBuilder.build();*/
 
 		mapBuilder = new MapBodyBuilder(MAP_FILE_NAME);
 		mapBuilder.buildBodies(world);

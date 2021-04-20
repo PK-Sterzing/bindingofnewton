@@ -55,6 +55,7 @@ public abstract class Entity {
         polygonShape.dispose();
 
         orientation = Orientation.DOWN;
+
     }
 
     /*
