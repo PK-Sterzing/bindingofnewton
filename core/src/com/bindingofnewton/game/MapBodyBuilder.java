@@ -68,14 +68,6 @@ public class MapBodyBuilder {
         }
     }
 
-    public void manipulate(int x, int y){
-        MapLayer layer = map.getLayers().get(0);
-        //for (RectangleMapObj ct rectangle : layer.getObjects(){
-
-        //}
-
-    }
-
     /**
      * Returns PolygonShape with shape from Rectangle
      * PolygonShape is required to create fixture, but we only get a rectangle from the map
