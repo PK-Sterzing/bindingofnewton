@@ -88,10 +88,9 @@ public abstract class Entity {
     }
 
     public Sprite getSprite(){
-        if (sprites.length <= 4){
+        if (sprites.length < 4){
             return sprites[0];
         }
-
         switch (orientation){
             case DOWN: return sprites[1];
             case LEFT: return sprites[2];
@@ -124,6 +123,8 @@ public abstract class Entity {
         }else if(x<0){
             orientation = Orientation.LEFT;
         }
+
+        //System.out.println(orientation);
 
         this.x += x;
         this.y += y;
