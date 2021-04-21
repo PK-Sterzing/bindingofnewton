@@ -30,6 +30,11 @@ public class Atlas {
         array[2] = textureAtlas.createSprite(name + "-left");
         array[3] = textureAtlas.createSprite(name + "-right");
 
+        // Scaled sprite
+        for(int i = 0; i < array.length; i++){
+            array[i].setSize(array[i].getWidth()*0.7f, array[i].getHeight()*0.7f);
+        }
+
         return array;
     }
 

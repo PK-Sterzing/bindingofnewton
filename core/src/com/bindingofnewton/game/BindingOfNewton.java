@@ -9,7 +9,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class BindingOfNewton extends Game {
-	private final String MAP_FILE_NAME = "map2.tmx";
+
+	private final String MAP_FILE_NAME = "mapStart.tmx";
 
 	private SpriteBatch batch;
 
@@ -18,14 +19,16 @@ public class BindingOfNewton extends Game {
 	private Orientation orientation;
 	private OrthographicCamera camera;
 	private MapBodyBuilder mapBuilder;
-	private RoomBuilder roomBuilder;
 
 	private InputHandler inputHandler;
 	private Player player;
 	private World world;
 	private Box2DDebugRenderer renderer;
 
-	//public static final float SCALE = 10;
+	private Level level;
+	private int levelCount = 0;
+
+	public static final float SCALE = 10;
 
 	@Override
 	public void create () {
@@ -41,7 +44,7 @@ public class BindingOfNewton extends Game {
 		float h = Gdx.graphics.getHeight();
 
 		world = new World(new Vector2(0,0), true);
-		player = new Player(world, 150, 150, Atlas.getInstance().getPlayerSprite("isaac-newton"));
+		player = new Player(world, 150, 150, AssetsHandler.getInstance().getPlayerSprite("isaac-newton"));
 		inputHandler = new InputHandler(player);
 
 		camera = new OrthographicCamera();
@@ -49,10 +52,18 @@ public class BindingOfNewton extends Game {
 		camera.setToOrtho(false, w, h);
 		camera.update();
 
-
+		/*
+		Level.Builder levelBuilder = new Level.Builder();
+		levelBuilder
+			.setWorldWidthHeight(4, 4)
+			.setMinRooms(6)
+			.setAmountRandomRooms(0, 0);
+		Level level = levelBuilder.build();*/
 
 		mapBuilder = new MapBodyBuilder(MAP_FILE_NAME);
 		mapBuilder.buildBodies(world);
+
+
 
 		//Gdx.input.setInputProcessor(inputHandler);
 		renderer = new Box2DDebugRenderer();
@@ -74,16 +85,16 @@ public class BindingOfNewton extends Game {
 		int x = 0;
 		int y = 0;
 		if(Gdx.input.isKeyPressed(Input.Keys.W)){
-			 y += 100;
+			 y += player.getSpeed();
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.S)){
-			y -= 100;
+			y -= player.getSpeed();
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.D)){
-			x += 100;
+			x += player.getSpeed();
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.A)){
-			x -= 100;
+			x -= player.getSpeed();
 		}
 
 		player.move(new Vector2(x, y));
@@ -91,7 +102,7 @@ public class BindingOfNewton extends Game {
 		batch.begin();
 
 
-		batch.draw(player.getSprite(), player.getSprite().getX(), player.getSprite().getY());
+		player.getSprite().draw(batch);
 		batch.end();
 		renderer.render(world, camera.combined);
 	}
@@ -101,9 +112,12 @@ public class BindingOfNewton extends Game {
 		batch.dispose();
 	}
 
+	/*
 	public float scale(float valueToBeScaled) {
 		return valueToBeScaled/SCALE;
 	}
+
+	 */
 
 
 }
