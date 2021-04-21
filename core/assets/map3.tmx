@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="24">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="36">
  <tileset firstgid="1" source="room.tsx"/>
  <layer id="1" name="Ground" width="15" height="9">
   <data encoding="csv">
@@ -14,29 +14,6 @@
 3221225474,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,2684354562
 </data>
  </layer>
- <objectgroup id="4" name="border">
-  <object id="3" x="0" y="0" width="480" height="32"/>
-  <object id="4" x="448" y="0" width="32" height="288"/>
-  <object id="5" x="0" y="256" width="480" height="32"/>
-  <object id="6" x="0" y="0" width="32" height="288"/>
-  <object id="7" x="64" y="64" width="32" height="32"/>
-  <object id="8" x="96" y="64" width="32" height="32"/>
-  <object id="9" x="96" y="96" width="32" height="32"/>
-  <object id="10" x="64" y="128" width="32" height="32"/>
-  <object id="11" x="64" y="224" width="32" height="32"/>
-  <object id="12" x="96" y="192" width="32" height="32"/>
-  <object id="13" x="128" y="192" width="32" height="32"/>
-  <object id="14" x="192" y="192" width="32" height="32"/>
-  <object id="15" x="224" y="160" width="32" height="32"/>
-  <object id="16" x="224" y="128" width="32" height="32"/>
-  <object id="17" x="160" y="128" width="64" height="32"/>
-  <object id="18" x="224" y="96" width="32" height="32"/>
-  <object id="19" x="160" y="64" width="32" height="32"/>
-  <object id="20" x="320" y="64" width="32" height="32"/>
-  <object id="21" x="288" y="64" width="32" height="32"/>
-  <object id="22" x="320" y="160" width="32" height="32"/>
-  <object id="23" x="320" y="192" width="32" height="32"/>
- </objectgroup>
  <layer id="3" name="Obstacles" width="15" height="9">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -50,4 +27,28 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="4" name="border">
+  <object id="3" x="0" y="0" width="480" height="32"/>
+  <object id="4" x="448" y="0" width="32" height="288"/>
+  <object id="5" x="0" y="256" width="480" height="32"/>
+  <object id="6" x="0" y="0" width="32" height="288"/>
+  <object id="7" x="64" y="64" width="32" height="32"/>
+  <object id="9" x="96" y="96" width="32" height="32"/>
+  <object id="10" x="64" y="128" width="32" height="32"/>
+  <object id="11" x="64" y="224" width="32" height="32"/>
+  <object id="12" x="96" y="192" width="32" height="32"/>
+  <object id="13" x="128" y="192" width="32" height="32"/>
+  <object id="14" x="192" y="192" width="32" height="32"/>
+  <object id="15" x="224" y="160" width="32" height="32"/>
+  <object id="16" x="224" y="128" width="32" height="32"/>
+  <object id="17" x="160" y="128" width="64" height="32"/>
+  <object id="18" x="224" y="96" width="32" height="32"/>
+  <object id="20" x="320" y="64" width="32" height="32"/>
+  <object id="21" x="288" y="64" width="32" height="32"/>
+  <object id="22" x="320" y="160" width="32" height="32"/>
+  <object id="23" x="320" y="192" width="32" height="32"/>
+  <object id="35" x="163.273" y="68.9091">
+   <polygon points="0,0 11.8182,1.45455 26.1818,1.45455 27.0909,20.5455 8,25.0909 -0.909091,15.0909"/>
+  </object>
+ </objectgroup>
 </map>

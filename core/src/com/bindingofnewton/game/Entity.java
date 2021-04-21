@@ -16,8 +16,8 @@ public abstract class Entity {
     protected Sprite[] sprites;
 
     protected Orientation orientation;
-    protected int speed;
 
+    protected int speed;
     protected int health;
 
     //<editor-fold desc="Constructors">-
@@ -31,7 +31,7 @@ public abstract class Entity {
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(x ,y);
 
-        characterWidth = 25;
+        characterWidth = 23;
         characterHeight = 31;
 
         body = world.createBody(def);

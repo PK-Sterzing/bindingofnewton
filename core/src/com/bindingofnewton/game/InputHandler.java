@@ -15,7 +15,6 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("Keydown event");
         switch (keycode){
             case Input.Keys.W:
                 player.move(new Vector2(0, SPEED));
