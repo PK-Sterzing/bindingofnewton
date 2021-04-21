@@ -24,6 +24,7 @@ public abstract class Entity {
 
 
     public Entity(World world, int startX, int startY, Sprite[] sprites) {
+        orientation = Orientation.DOWN;
         this.sprites = sprites;
         x = startX;
         y = startY;
@@ -54,21 +55,11 @@ public abstract class Entity {
 
         polygonShape.dispose();
 
-        orientation = Orientation.DOWN;
 
     }
 
-    /*
-    public Entity(World world, int startX, int startY, Sprite sprite) {
-        //this(world, startX, startY);
-        sprites = new Sprite[1];
-        sprites[0] = sprite;
-    }
-
-     */
 
     //</editor-fold>
-
     //<editor-fold desc="Getter and Setter">
 
     /**
