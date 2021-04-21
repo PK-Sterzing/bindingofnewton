@@ -17,7 +17,8 @@ public abstract class Entity {
 
     protected Orientation orientation;
 
-    protected int speed;
+
+    protected int speed = 100;
     protected int health;
 
     //<editor-fold desc="Constructors">-
@@ -32,8 +33,8 @@ public abstract class Entity {
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(x ,y);
 
-        characterWidth = 23;
-        characterHeight = 31;
+        characterWidth = 22;
+        characterHeight = 28;
 
         body = world.createBody(def);
 
@@ -41,10 +42,22 @@ public abstract class Entity {
         Vector2 position = new Vector2((getSprite().getX() + characterWidth * 0.5f ),
                 (getSprite().getY() + characterHeight * 0.5f ));
 
+        System.out.println((float) (45/360) * 2* Math.PI);
+        /*
         polygonShape.setAsBox(characterWidth * 0.5f ,
                 characterHeight * 0.5f ,
                 position,
                 0.0f);
+
+         */
+        polygonShape.set(new float[] {
+                7.7f, 0.0f,
+                14.0f, 0.0f,
+                20.3f, 18.2f,
+                16.0f, 28.0f,
+                5.6f, 28.0f,
+                1.4f, 18.2f,
+        });
 
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -127,10 +140,8 @@ public abstract class Entity {
         sprites[3].setPosition(body.getPosition().x, body.getPosition().y);
     }
 
-    public Sprite adjustSize(Sprite spriteToBeScaled) {
-        spriteToBeScaled.setSize(spriteToBeScaled.getWidth() * 0.5f, spriteToBeScaled.getHeight() * 0.5f);
-        return spriteToBeScaled;
+    public int getSpeed() {
+        return speed;
     }
-
 
 }

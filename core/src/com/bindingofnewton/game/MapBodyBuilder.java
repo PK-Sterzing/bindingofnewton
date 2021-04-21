@@ -42,7 +42,6 @@ public class MapBodyBuilder {
         MapObjects objects = map.getLayers().get(layer).getObjects();
 
         for (MapObject object : objects) {
-            System.out.println(object);
             // Make sure the found object is a rectangle
             Shape shape = null;
             if (object instanceof RectangleMapObject) {
@@ -92,22 +91,14 @@ public class MapBodyBuilder {
     private static PolygonShape getPolygon(PolygonMapObject polygonObject) {
         PolygonShape polygon = new PolygonShape();
         float[] vertices = polygonObject.getPolygon().getTransformedVertices();
-        System.out.println(vertices.length);
 
         float[] worldVertices = new float[vertices.length];
-        System.out.println(worldVertices.length);
 
         for (int i = 0; i < vertices.length; i++) {
-            System.out.println(i);
             worldVertices[i] = vertices[i];
         }
 
-        System.out.println("Hello");
-        for (int i = 0; i < worldVertices.length; i++) {
-            System.out.println(worldVertices[i]);
-        }
         polygon.set(worldVertices);
-        System.out.println("Ciao");
         return polygon;
     }
 
