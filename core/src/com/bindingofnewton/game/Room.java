@@ -1,5 +1,6 @@
 package com.bindingofnewton.game;
 
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
@@ -9,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
-
     private int x;
     private int y;
 
@@ -30,7 +30,7 @@ public class Room {
 
     public void setDoors(List<Orientation> orientations){
 
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("ground");
         TiledMapTileSet tileSet = map.getTileSets().getTileSet(0);
 
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
@@ -54,7 +54,9 @@ public class Room {
                     layer.setCell(width-1, height/2, cell);
 
             }
+            //map.getLayers().remove(map.getLayers().get("doors-" + orientation.name()));
         }
+
     }
 
     public int getX() {

@@ -67,8 +67,6 @@ public abstract class Entity {
         Fixture fixture = body.createFixture(fixtureDef);
 
         polygonShape.dispose();
-
-
     }
 
 

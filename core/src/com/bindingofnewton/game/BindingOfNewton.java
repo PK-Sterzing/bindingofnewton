@@ -52,18 +52,16 @@ public class BindingOfNewton extends Game {
 		camera.setToOrtho(false, w, h);
 		camera.update();
 
-		/*
+
 		Level.Builder levelBuilder = new Level.Builder();
 		levelBuilder
 			.setWorldWidthHeight(4, 4)
 			.setMinRooms(6)
 			.setAmountRandomRooms(0, 0);
-		Level level = levelBuilder.build();*/
+		Level level = levelBuilder.build();
 
-		mapBuilder = new MapBodyBuilder(MAP_FILE_NAME);
+		mapBuilder = new MapBodyBuilder(level.getRooms().get(0).getMap());
 		mapBuilder.buildBodies(world);
-
-
 
 		//Gdx.input.setInputProcessor(inputHandler);
 		renderer = new Box2DDebugRenderer();

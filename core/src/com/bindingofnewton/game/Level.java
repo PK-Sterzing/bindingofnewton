@@ -1,5 +1,6 @@
 package com.bindingofnewton.game;
 
+import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ public class Level {
     private int minRooms;
     private int randomMinRooms;
     private int randomMaxRooms;
+
+    private World world;
 
     private Level(){
         rooms = new ArrayList<>();
@@ -50,7 +53,7 @@ public class Level {
                 //Randomly decides which room gets neighbor
                 int roomIndex = 0;
                 do{
-                    //TODO: runden
+                    //TODO: runden überlegen
                     roomIndex = (int) (Math.random() * level.rooms.size());
                 }while (level.rooms.get(roomIndex).getNeighbors().size() == 4);
 
@@ -66,6 +69,10 @@ public class Level {
                 currentRoom.addNeighbor(neighbor);
 
                 builder = new Room.Builder();
+
+                if (i == amountRooms-1){
+                    builder.setMap(AssetsHandler.END_MAP);
+                }
 
                 Room room = null;
                 switch (neighbor){
@@ -90,6 +97,7 @@ public class Level {
                         room.addNeighbor(Orientation.LEFT);
                         break;
                 }
+
                 level.rooms.add(room);
             }
 
@@ -145,9 +153,9 @@ public class Level {
             return level;
         }
 
-        public int getOpenDoors(Room room){
-
-            return 0;
+        public Builder setWorld(World world){
+            level.world = world;
+            return this;
         }
 
         public Builder setWorldWidth(int width){
