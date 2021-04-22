@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="42">
-
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="64">
  <tileset firstgid="1" source="room.tsx"/>
  <layer id="1" name="ground" width="15" height="9">
   <data encoding="csv">
@@ -16,45 +14,6 @@
 3221225474,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,3221225473,2684354562
 </data>
  </layer>
- <layer id="3" name="Obstacles" width="15" height="9">
-  <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,4,7,0,4,0,0,0,5,6,0,0,0,0,
-0,0,0,4,0,0,0,4,0,0,0,0,0,0,0,
-0,0,6,0,0,4,6,7,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,4,0,0,5,0,0,0,0,
-0,0,0,6,4,0,6,0,0,0,7,0,0,0,0,
-0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
- </layer>
- <objectgroup id="4" name="border">
-  <object id="3" x="0" y="0" width="224" height="32"/>
-  <object id="4" x="448" y="0" width="32" height="128"/>
-  <object id="7" x="64" y="64" width="32" height="32"/>
-  <object id="9" x="96" y="96" width="32" height="32"/>
-  <object id="10" x="64" y="128" width="32" height="32"/>
-  <object id="11" x="64" y="224" width="32" height="32"/>
-  <object id="12" x="96" y="192" width="32" height="32"/>
-  <object id="13" x="128" y="192" width="32" height="32"/>
-  <object id="14" x="192" y="192" width="32" height="32"/>
-  <object id="15" x="224" y="160" width="32" height="32"/>
-  <object id="16" x="224" y="128" width="32" height="32"/>
-  <object id="17" x="160" y="128" width="64" height="32"/>
-  <object id="18" x="224" y="96" width="32" height="32"/>
-  <object id="20" x="320" y="64" width="32" height="32"/>
-  <object id="21" x="288" y="64" width="32" height="32"/>
-  <object id="22" x="320" y="160" width="32" height="32"/>
-  <object id="23" x="320" y="192" width="32" height="32"/>
-
-  <object id="24" x="256" y="0" width="224" height="32"/>
-  <object id="25" x="448" y="160" width="32" height="128"/>
-  <object id="26" x="0" y="256" width="224" height="32"/>
-  <object id="27" x="256" y="256" width="224" height="32"/>
-  <object id="28" x="0" y="0" width="32" height="128"/>
-  <object id="29" x="0" y="160" width="32" height="128"/>
- </objectgroup>
  <objectgroup id="5" name="doors-UP">
   <object id="36" x="224" y="0" width="32" height="32"/>
  </objectgroup>
@@ -80,4 +39,71 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="4" name="border">
+  <object id="3" x="0" y="0" width="224" height="32"/>
+  <object id="4" x="448" y="0" width="32" height="128"/>
+  <object id="24" x="256" y="0" width="224" height="32"/>
+  <object id="25" x="448" y="160" width="32" height="128"/>
+  <object id="26" x="0" y="256" width="224" height="32"/>
+  <object id="27" x="256" y="256" width="224" height="32"/>
+  <object id="28" x="0" y="0" width="32" height="128"/>
+  <object id="29" x="0" y="160" width="32" height="128"/>
+  <object id="42" x="166.5" y="69.5">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="43" x="231.5" y="101.5">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="44" x="231.5" y="166.5">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="46" x="102.75" y="102.25">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="48" x="135.25" y="198.75">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="49" x="166.25" y="134.25">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="50" x="70.6463" y="69.3922">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="51" x="100.178" y="80.1427">
+   <polygon points="0,0 13.7231,-11.8018 21.408,-11.8018 26.6228,5.48923 19.2123,12.8997 1.09785,11.2529"/>
+  </object>
+  <object id="53" x="228.5" y="145">
+   <polygon points="0,0 13.7231,-11.8018 21.408,-11.8018 26.6228,5.48923 19.2123,12.8997 1.09785,11.2529"/>
+  </object>
+  <object id="54" x="325" y="209.5">
+   <polygon points="0,0 13.7231,-11.8018 21.408,-11.8018 26.6228,5.48923 19.2123,12.8997 1.09785,11.2529"/>
+  </object>
+  <object id="55" x="69.25" y="156">
+   <polygon points="0,0 -4.75,-11.75 -1.75,-21.5 14.25,-25.75 23.5,-18 23.75,-3.25 10.75,1"/>
+  </object>
+  <object id="56" x="103.5" y="221.5">
+   <polygon points="0,0 -4.75,-11.75 -1.75,-21.5 14.25,-25.75 23.5,-18 23.75,-3.25 10.75,1"/>
+  </object>
+  <object id="57" x="199.5" y="220.5">
+   <polygon points="0,0 -4.75,-11.75 -1.75,-21.5 14.25,-25.75 23.5,-18 23.75,-3.25 10.75,1"/>
+  </object>
+  <object id="58" x="198" y="157.5">
+   <polygon points="0,0 -4.75,-11.75 -1.75,-21.5 14.25,-25.75 23.5,-18 23.75,-3.25 10.75,1"/>
+  </object>
+  <object id="59" x="328" y="93.5">
+   <polygon points="0,0 -4.75,-11.75 -1.75,-21.5 14.25,-25.75 23.5,-18 23.75,-3.25 10.75,1"/>
+  </object>
+  <object id="60" x="328" y="93.5">
+   <polygon points="0,0 -4.75,-11.75 -1.75,-21.5 14.25,-25.75 23.5,-18 23.75,-3.25 10.75,1"/>
+  </object>
+  <object id="61" x="292.364" y="83.0909">
+   <polygon points="0,0 6,7.09091 20.1818,8.36364 25.4545,3.09091 22.9091,-14.7273 4.18182,-17.0909"/>
+  </object>
+  <object id="62" x="324.727" y="180.545">
+   <polygon points="0,0 6,7.09091 20.1818,8.36364 25.4545,3.09091 22.9091,-14.7273 4.18182,-17.0909"/>
+  </object>
+  <object id="63" x="68.7273" y="243.455">
+   <polygon points="0,0 6,7.09091 20.1818,8.36364 25.4545,3.09091 22.9091,-14.7273 4.18182,-17.0909"/>
+  </object>
+ </objectgroup>
 </map>

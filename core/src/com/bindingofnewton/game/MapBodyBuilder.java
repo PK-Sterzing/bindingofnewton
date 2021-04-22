@@ -84,7 +84,6 @@ public class MapBodyBuilder {
                 position,
                 0.0f);
 
-        //System.out.println("Rectangle size: (" + rectangle.width + ", " + rectangle.height + ")");
         return polygonShape;
     }
     private static PolygonShape getPolygon(PolygonMapObject polygonObject) {
@@ -100,6 +99,11 @@ public class MapBodyBuilder {
         polygon.set(worldVertices);
         return polygon;
     }
+
+    public TiledMap getMap() {
+        return map;
+    }
+
 
 }
 

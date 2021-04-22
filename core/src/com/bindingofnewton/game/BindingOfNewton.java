@@ -50,10 +50,6 @@ public class BindingOfNewton extends Game{
 		player = new Player(world, 150, 150, AssetsHandler.getInstance().getPlayerSprite("isaac-newton"));
 		inputHandler = new InputHandler(player);
 
-		camera = new OrthographicCamera();
-		camera.zoom = 0.5f;
-		camera.setToOrtho(false, w, h);
-		camera.update();
 
 
 		Level.Builder levelBuilder = new Level.Builder();
@@ -67,8 +63,27 @@ public class BindingOfNewton extends Game{
 		mapBuilder = new MapBodyBuilder(level.getRooms().get(0).getMap());
 		mapBuilder.buildBodies(world);
 
-		//Gdx.input.setInputProcessor(inputHandler);
+		// Create debug renderer to make collisions visible
 		renderer = new Box2DDebugRenderer();
+
+		// Create Camera
+		camera = new OrthographicCamera();
+		camera.zoom = 0.5f;
+		camera.setToOrtho(false, w, h);
+
+		// Get map height and width
+		int mapWidth = mapBuilder.getMap().getProperties().get("width", Integer.class);
+		int mapHeight = mapBuilder.getMap().getProperties().get("height", Integer.class);
+		int tileWidth = mapBuilder.getMap().getProperties().get("tilewidth", Integer.class);
+		int tileHeight = mapBuilder.getMap().getProperties().get("tileheight", Integer.class);
+
+		int translateX = (Gdx.graphics.getWidth() - (mapWidth * tileWidth)) / 4;
+		int translateY = (Gdx.graphics.getHeight() - (mapHeight * tileHeight)) / 4;
+
+		// Move Camera to set map in the middle
+		// * 0.5 because the map is zoomed
+		camera.translate(-translateX * 0.5f, -translateY * 0.5f);
+		camera.update();
 	}
 
 	@Override
@@ -105,7 +120,6 @@ public class BindingOfNewton extends Game{
 
 		player.getSprite().draw(batch);
 
-		System.out.println(player.getBody().getPosition().toString());
 
 		batch.end();
 		renderer.render(world, camera.combined);
