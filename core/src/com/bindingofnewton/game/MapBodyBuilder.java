@@ -1,25 +1,28 @@
 package com.bindingofnewton.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 
 
 public class MapBodyBuilder {
     private TiledMap map;
     private TiledMapRenderer renderer;
 
-    public MapBodyBuilder(String tmxFilename) {
-        map = new TmxMapLoader().load(tmxFilename);
+    public MapBodyBuilder(TiledMap map) {
+        this.map = map;
         renderer = new OrthogonalTiledMapRenderer(map);
     }
 
@@ -40,21 +43,26 @@ public class MapBodyBuilder {
 
         for (MapObject object : objects) {
             // Make sure the found object is a rectangle
+            Shape shape = null;
             if (object instanceof RectangleMapObject) {
-                // Get Rectangle from found object on map
-                //Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
-                Shape shape = getShapeFromRectangle((RectangleMapObject) object);
+                shape = getRectangle((RectangleMapObject)object);
+            } else if (object instanceof PolygonMapObject) {
+                shape = getPolygon((PolygonMapObject)object);
+            } else {
+                continue;
+            }
 
+            if(shape != null){
                 // Create box2d body
                 BodyDef def = new BodyDef();
                 def.type = BodyDef.BodyType.StaticBody;
                 Body body = world.createBody(def);
                 body.createFixture(shape, 1);
-
+            }
 
                 //body.setTransform(getTransformedCenterForRectangle(rectangle), 0);
                 shape.dispose();
-            }
+
         }
     }
 
@@ -65,7 +73,7 @@ public class MapBodyBuilder {
      * @param rectangleMapObject
      * @return shape
      */
-    private static PolygonShape getShapeFromRectangle(RectangleMapObject rectangleMapObject) {
+    private static PolygonShape getRectangle(RectangleMapObject rectangleMapObject) {
         Rectangle rectangle = rectangleMapObject.getRectangle();
         PolygonShape polygonShape = new PolygonShape();
         Vector2 position = new Vector2((rectangle.x + rectangle.width * 0.5f ),
@@ -79,5 +87,19 @@ public class MapBodyBuilder {
         //System.out.println("Rectangle size: (" + rectangle.width + ", " + rectangle.height + ")");
         return polygonShape;
     }
+    private static PolygonShape getPolygon(PolygonMapObject polygonObject) {
+        PolygonShape polygon = new PolygonShape();
+        float[] vertices = polygonObject.getPolygon().getTransformedVertices();
+
+        float[] worldVertices = new float[vertices.length];
+
+        for (int i = 0; i < vertices.length; i++) {
+            worldVertices[i] = vertices[i];
+        }
+
+        polygon.set(worldVertices);
+        return polygon;
+    }
+
 }
 

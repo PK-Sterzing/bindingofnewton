@@ -9,11 +9,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
 
-import java.nio.file.Paths;
-
-public class BindingOfNewton extends Game {
+public class BindingOfNewton extends Game{
 
 	private final String MAP_FILE_NAME = "mapStart.tmx";
 
@@ -49,6 +48,8 @@ public class BindingOfNewton extends Game {
 		float h = Gdx.graphics.getHeight();
 
 		world = new World(new Vector2(0,0), true);
+		world.setContactListener(new ContactHandler());
+
 		player = new Player(world, 150, 150, AssetsHandler.getInstance().getPlayerSprite("isaac-newton"));
 		inputHandler = new InputHandler(player);
 
@@ -57,18 +58,17 @@ public class BindingOfNewton extends Game {
 		camera.setToOrtho(false, w, h);
 		camera.update();
 
-		/*
+
 		Level.Builder levelBuilder = new Level.Builder();
 		levelBuilder
+			.setWorld(world)
 			.setWorldWidthHeight(4, 4)
 			.setMinRooms(6)
 			.setAmountRandomRooms(0, 0);
-		Level level = levelBuilder.build();*/
+		level = levelBuilder.build();
 
-		mapBuilder = new MapBodyBuilder(MAP_FILE_NAME);
+		mapBuilder = new MapBodyBuilder(level.getRooms().get(0).getMap());
 		mapBuilder.buildBodies(world);
-
-
 
 		//Gdx.input.setInputProcessor(inputHandler);
 		renderer = new Box2DDebugRenderer();
@@ -90,24 +90,24 @@ public class BindingOfNewton extends Game {
 		int x = 0;
 		int y = 0;
 		if(Gdx.input.isKeyPressed(Input.Keys.W)){
-			 y += 100;
+			 y += player.getSpeed();
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.S)){
-			y -= 100;
+			y -= player.getSpeed();
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.D)){
-			x += 100;
+			x += player.getSpeed();
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.A)){
-			x -= 100;
+			x -= player.getSpeed();
 		}
 
 		player.move(new Vector2(x, y));
 
 		batch.begin();
 
+		player.getSprite().draw(batch);
 
-		//player.getSprite().draw(batch);
 		batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y);
 		batch.end();
 		renderer.render(world, camera.combined);

@@ -1,6 +1,7 @@
 package com.bindingofnewton.game;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,8 @@ public class Level {
     private int minRooms;
     private int randomMinRooms;
     private int randomMaxRooms;
+
+    private World world;
 
     private Level(){
         rooms = new ArrayList<>();
@@ -41,114 +44,88 @@ public class Level {
             int x = (int) (Math.random() * level.width);
             int y = (int) (Math.random() * level.height);
 
-            builder.setPosition(x, y);
-            builder.setMap(AssetsHandler.START_MAP);
-            Room startRoom = builder.build();
+            Room startRoom = builder
+                    .setPosition(x, y)
+                    .setMap(AssetsHandler.START_MAP)
+                    .setWorld(level.world)
+                    .build();
+
             level.rooms.add(startRoom);
 
             for (int i=1; i<amountRooms; i++){
-
-                //Randomly decides which room gets neighbor
+                //Randomly decides which room gets a neighbor
                 int roomIndex = 0;
                 do{
-                    //TODO: runden
+                    //TODO: runden überlegen
                     roomIndex = (int) (Math.random() * level.rooms.size());
-                }while (level.rooms.get(roomIndex).getNeighbors().size() == 4);
+                }while (level.rooms.get(roomIndex).getDoors().size() == 4);
 
                 Room currentRoom = level.rooms.get(roomIndex);
 
-                List<Orientation> neighbors = currentRoom.getNeighbors();
-                List<Orientation> possibleNeighbors = new ArrayList<>();
-                for (Orientation orientation : Orientation.values()){
-                    if (!neighbors.contains(orientation)) possibleNeighbors.add(orientation);
+                List<Orientation> possibleNeighbors = currentRoom.getPossibleDoors();
+
+                Vector2 vector;
+                Orientation neighbor;
+                int counter = 0;
+                do{
+                    neighbor = possibleNeighbors.get((int) (Math.random() * possibleNeighbors.size()));
+                    vector = neighbor.moveCoord(new Vector2(currentRoom.getX(), currentRoom.getY()), 1);
+                    counter++;
+                }while(vector.x < 0 || vector.y < 0 || counter > 20);
+                if (counter > 20){
+                    i--;
+                    continue;
                 }
 
-                Orientation neighbor = possibleNeighbors.get((int) (Math.random() * possibleNeighbors.size()));
-                currentRoom.addNeighbor(neighbor);
+                currentRoom.addDoor(new Door(level.world, currentRoom.getMap(), neighbor));
 
                 builder = new Room.Builder();
 
-                Room room = null;
-                switch (neighbor){
-                    case UP:
-                        builder.setPosition(currentRoom.getX(), currentRoom.getY()+1);
-                        room = builder.build();
-                        room.addNeighbor(Orientation.DOWN);
-                        break;
-                    case DOWN:
-                        builder.setPosition(currentRoom.getX(), currentRoom.getY()-1);
-                        room = builder.build();
-                        room.addNeighbor(Orientation.UP);
-                        break;
-                    case LEFT:
-                        builder.setPosition(currentRoom.getX()-1, currentRoom.getY());
-                        room = builder.build();
-                        room.addNeighbor(Orientation.RIGHT);
-                        break;
-                    case RIGHT:
-                        builder.setPosition(currentRoom.getX()+1, currentRoom.getY());
-                        room = builder.build();
-                        room.addNeighbor(Orientation.LEFT);
-                        break;
+                if (i == amountRooms-1){
+                    builder.setMap(AssetsHandler.END_MAP);
                 }
+                Room room = builder
+                        .setPosition(
+                            (int) vector.x,
+                            (int) vector.y
+                        )
+                        .setWorld(level.world)
+                        .build();
+
+                room.addDoor(new Door(level.world, room.getMap(), neighbor.getOpposite()));
+
                 level.rooms.add(room);
             }
 
             for (Room room : level.rooms){
-                List<Orientation> possibleNeighbors = new ArrayList<>();
-                for (Orientation orientation : Orientation.values()){
-                    if (!room.getNeighbors().contains(orientation)) possibleNeighbors.add(orientation);
-                }
+                List<Orientation> possibleNeighbors = room.getPossibleDoors();
 
                 for (Orientation orientation : possibleNeighbors){
 
                     x = room.getX();
                     y = room.getY();
 
-                    switch(orientation){
-                        case DOWN:
-                            y--;
-                            break;
-                        case UP:
-                            y++;
-                            break;
-                        case LEFT:
-                            x--;
-                            break;
-                        case RIGHT:
-                            x++;
-                            break;
-                    }
+                    x = (int) orientation.moveCoord(new Vector2(x, y), 1).x;
+                    y = (int) orientation.moveCoord(new Vector2(x, y), 1).y;
 
-                    for (Room room1 : level.rooms){
-                        if (room1.getX() == x && room1.getY() == y){
-                            room.addNeighbor(orientation);
-                            switch (orientation){
-                                case UP:
-                                    room1.addNeighbor(Orientation.DOWN);
-                                    break;
-                                case DOWN:
-                                    room1.addNeighbor(Orientation.UP);
-                                    break;
-                                case LEFT:
-                                    room1.addNeighbor(Orientation.RIGHT);
-                                    break;
-                                case RIGHT:
-                                    room1.addNeighbor(Orientation.LEFT);
-                            }
+                    for (Room neighborRoom : level.rooms){
+                        if (neighborRoom.getX() == x && neighborRoom.getY() == y){
+                            room.addDoor(new Door(level.world, room.getMap(), orientation));
+                            neighborRoom.addDoor(new Door(level.world, neighborRoom.getMap(), orientation.getOpposite()));
                         }
                     }
 
                 }
-                room.setDoors(room.getNeighbors());
+                //TODO: Achtung beim überarbeiten hier ändern
+                //room.setDoors(room.getNeighbors());
             }
 
             return level;
         }
 
-        public int getOpenDoors(Room room){
-
-            return 0;
+        public Builder setWorld(World world){
+            level.world = world;
+            return this;
         }
 
         public Builder setWorldWidth(int width){

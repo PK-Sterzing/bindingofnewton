@@ -12,10 +12,10 @@ import java.util.List;
 
 public class AssetsHandler {
     public static final String START_MAP = "mapStart.tmx";
+    public static final String END_MAP = "mapEnd.tmx";
+    public static final String MAP = "map1.tmx";
 
     private String ASSETS_PATH = ".\\core\\assets\\";
-    private final String END_MAP = "mapEnd.tmx";
-    private final String MAP = "map1.tmx";
 
     private static AssetsHandler instance;
     private TextureAtlas textureAtlas;
