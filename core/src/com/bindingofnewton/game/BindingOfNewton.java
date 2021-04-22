@@ -3,10 +3,15 @@ package com.bindingofnewton.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+
+import java.nio.file.Paths;
 
 public class BindingOfNewton extends Game {
 
@@ -102,7 +107,8 @@ public class BindingOfNewton extends Game {
 		batch.begin();
 
 
-		player.getSprite().draw(batch);
+		//player.getSprite().draw(batch);
+		batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y);
 		batch.end();
 		renderer.render(world, camera.combined);
 	}

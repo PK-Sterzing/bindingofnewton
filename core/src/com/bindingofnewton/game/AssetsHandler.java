@@ -2,6 +2,8 @@ package com.bindingofnewton.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -45,6 +47,10 @@ public class AssetsHandler {
         }
 
         return array;
+    }
+
+    public Array<TextureAtlas.AtlasRegion> getAnimationRegions(String name) {
+        return textureAtlas.findRegions(name);
     }
 
     public List<String> getMaps(){

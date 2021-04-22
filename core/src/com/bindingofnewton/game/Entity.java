@@ -30,6 +30,7 @@ public abstract class Entity {
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(x ,y);
+        orientation = Orientation.DOWN;
 
         characterWidth = 25;
         characterHeight = 31;
@@ -53,9 +54,6 @@ public abstract class Entity {
         Fixture fixture = body.createFixture(fixtureDef);
 
         polygonShape.dispose();
-
-        orientation = Orientation.DOWN;
-
     }
 
     /*
@@ -77,6 +75,10 @@ public abstract class Entity {
      */
     public int getX() {
         return x;
+    }
+
+    public Body getBody() {
+        return body;
     }
 
     /**
@@ -130,6 +132,7 @@ public abstract class Entity {
         this.y += y;
 
         body.setLinearVelocity(vector);
+
         sprites[0].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[1].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[2].setPosition(body.getPosition().x, body.getPosition().y);
