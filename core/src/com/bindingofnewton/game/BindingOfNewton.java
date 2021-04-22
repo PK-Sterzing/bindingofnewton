@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class BindingOfNewton extends Game {
+public class BindingOfNewton extends Game{
 
 	private final String MAP_FILE_NAME = "mapStart.tmx";
 
@@ -44,6 +45,8 @@ public class BindingOfNewton extends Game {
 		float h = Gdx.graphics.getHeight();
 
 		world = new World(new Vector2(0,0), true);
+		world.setContactListener(new ContactHandler());
+
 		player = new Player(world, 150, 150, AssetsHandler.getInstance().getPlayerSprite("isaac-newton"));
 		inputHandler = new InputHandler(player);
 
@@ -55,10 +58,11 @@ public class BindingOfNewton extends Game {
 
 		Level.Builder levelBuilder = new Level.Builder();
 		levelBuilder
+			.setWorld(world)
 			.setWorldWidthHeight(4, 4)
 			.setMinRooms(6)
 			.setAmountRandomRooms(0, 0);
-		Level level = levelBuilder.build();
+		level = levelBuilder.build();
 
 		mapBuilder = new MapBodyBuilder(level.getRooms().get(0).getMap());
 		mapBuilder.buildBodies(world);
@@ -99,8 +103,10 @@ public class BindingOfNewton extends Game {
 
 		batch.begin();
 
-
 		player.getSprite().draw(batch);
+
+		System.out.println(player.getBody().getPosition().toString());
+
 		batch.end();
 		renderer.render(world, camera.combined);
 	}

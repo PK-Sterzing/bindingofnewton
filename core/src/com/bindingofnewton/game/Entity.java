@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 public abstract class Entity {
-
     private final Body body;
 
     protected int x;
@@ -100,6 +99,10 @@ public abstract class Entity {
             case UP:
             default: return sprites[0];
         }
+    }
+
+    public Body getBody() {
+        return body;
     }
 
     //</editor-fold>
