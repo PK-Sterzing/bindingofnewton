@@ -4,6 +4,16 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -120,11 +130,37 @@ public class BindingOfNewton extends Game{
 
 		player.getSprite().draw(batch);
 
+		checkDoorCollision();
 
 		batch.end();
 		renderer.render(world, camera.combined);
 	}
-	
+
+	private void checkDoorCollision() {
+		String layerName = "doors";
+		TiledMap map = level.getRooms().get(0).getMap();
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(layerName);
+		for (MapObject mapObject : layer.getObjects()){
+			RectangleMapObject rectangleMapObject = (RectangleMapObject) mapObject;
+			Rectangle rectangle = rectangleMapObject.getRectangle();
+
+			Polygon polygon = player.getPolygon();
+
+			System.out.println("Player: " + polygon.getX() + ",  " + polygon.getY());
+
+			Polygon rPoly = new Polygon(new float[] { 0, 0, rectangle.width, 0, rectangle.width,
+					rectangle.height, 0, rectangle.height });
+
+			System.out.println("Player: " + polygon.getX() + ",  " + polygon.getY());
+			System.out.println("rPoly: " + rPoly.getX() + ",  " + rPoly.getY());
+
+			rPoly.setPosition(rectangle.x, rectangle.y);
+			if (Intersector.overlapConvexPolygons(rPoly, polygon))
+				System.out.println("COLLISION");
+		}
+
+	}
+
 	@Override
 	public void dispose () {
 		batch.dispose();
