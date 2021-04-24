@@ -154,4 +154,16 @@ public abstract class Entity {
     public Polygon getPolygon() {
         return polygon;
     }
+
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
+
+        body.setTransform(x, y,0);
+        sprites[0].setPosition(x, y);
+        sprites[1].setPosition(x, y);
+        sprites[2].setPosition(x, y);
+        sprites[3].setPosition(x, y);
+        polygon.setPosition(x, y);
+    }
 }

@@ -22,22 +22,24 @@ public enum Orientation {
         }
     }
 
+    //TODO: gleiche Methode mit x-, y-Übergabeparametern
     public Vector2 moveCoord(Vector2 vector, float value){
+        Vector2 vector2 = new Vector2(vector);
         switch (this){
             case UP:
-                vector.y += value;
+                vector2.y += value;
                 break;
             case DOWN:
-                vector.y -= value;
+                vector2.y -= value;
                 break;
             case RIGHT:
-                vector.x += value;
+                vector2.x += value;
                 break;
             case LEFT:
-                vector.x -= value;
+                vector2.x -= value;
                 break;
         }
-        return vector;
+        return vector2;
     }
 
 }

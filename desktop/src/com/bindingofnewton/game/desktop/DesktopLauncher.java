@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		config.fullscreen = false;
 		config.width = 1920;
 		config.height = 1080;
-		config.resizable = false;
+		config.resizable = true;
 		new LwjglApplication(new BindingOfNewton(), config);
 	}
 }

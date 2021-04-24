@@ -5,8 +5,6 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -22,9 +20,9 @@ public class Room {
     private int y;
 
     private TiledMap map;
+    private World world;
 
     private ArrayList<Door> doors;
-    private HashMap<Orientation, Body> doorBodies;
 
     private Room(){
         ArrayList<String> mapList = (ArrayList<String>) AssetsHandler.getInstance().getMaps();
@@ -58,9 +56,53 @@ public class Room {
         return map;
     }
 
+    public void setBodies(){
+        int i=0;
+        for (Orientation orientation : Orientation.values()){
+
+            String layerName = "doors-" + orientation.name();
+            MapLayer layer = map.getLayers().get(layerName);
+            if (layer == null){
+                break;
+            }
+
+            MapObjects objects = layer.getObjects();
+            for (MapObject object : objects) {
+                // Make sure the found object is a rectangle
+                if (object instanceof RectangleMapObject) {
+                    Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+                    PolygonShape shape = new PolygonShape();
+                    Vector2 position = new Vector2((rectangle.x + rectangle.width * 0.5f ),
+                            (rectangle.y + rectangle.height * 0.5f ));
+
+                    shape.setAsBox(rectangle.width * 0.5f ,
+                            rectangle.height * 0.5f ,
+                            position,
+                            0.0f);
+
+
+                    // Create box2d body
+                    BodyDef def = new BodyDef();
+                    def.type = BodyDef.BodyType.StaticBody;
+                    Body body = world.createBody(def);
+                    body.createFixture(shape, 1);
+                    body.setActive(true);
+
+                    for (Door door : doors){
+                        if (door.getOrientation() == orientation){
+                            door.setBody(body);
+                            door.open();
+                        }
+                    }
+                    shape.dispose();
+                }
+            }
+            i++;
+        }
+
+    }
+
     public void addDoor(Door door){
-        door.setBody(doorBodies.get(door.getOrientation()));
-        door.open();
         doors.add(door);
     }
 
@@ -70,56 +112,18 @@ public class Room {
 
     public static class Builder{
         private Room room;
-        private World world;
 
         public Builder(){
             room = new Room();
             room.doors = new ArrayList<>();
-            room.doorBodies = new HashMap<>();
         }
 
         public Builder setWorld(World world){
-            this.world = world;
+            room.world = world;
             return this;
         }
 
         public Room build(){
-            for (Orientation orientation : Orientation.values()){
-
-                String layerName = "doors-" + orientation.name();
-                MapLayer layer = room.map.getLayers().get(layerName);
-                if (layer == null){
-                    break;
-                }
-
-                MapObjects objects = layer.getObjects();
-                for (MapObject object : objects) {
-                    // Make sure the found object is a rectangle
-                    if (object instanceof RectangleMapObject) {
-                        Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
-                        PolygonShape shape = new PolygonShape();
-                        Vector2 position = new Vector2((rectangle.x + rectangle.width * 0.5f ),
-                                (rectangle.y + rectangle.height * 0.5f ));
-
-                        shape.setAsBox(rectangle.width * 0.5f ,
-                                rectangle.height * 0.5f ,
-                                position,
-                                0.0f);
-
-
-                        // Create box2d body
-                        BodyDef def = new BodyDef();
-                        def.type = BodyDef.BodyType.StaticBody;
-                        Body body = world.createBody(def);
-                        body.createFixture(shape, 1);
-                        body.setActive(true);
-
-                        room.doorBodies.put(orientation, body);
-
-                        shape.dispose();
-                    }
-                }
-            }
             return room;
         }
 

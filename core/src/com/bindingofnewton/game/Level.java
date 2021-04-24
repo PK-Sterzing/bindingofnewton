@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Level {
     private ArrayList<Room> rooms;
+    private Room currentRoom;
 
     private int width;
     private int height;
@@ -22,8 +23,33 @@ public class Level {
         rooms = new ArrayList<>();
     }
 
-    public ArrayList<Room> getRooms(){
-        return rooms;
+    public Room getNextRoom(Orientation orientation){
+        if (currentRoom == null) {
+            currentRoom = rooms.get(0);
+            return currentRoom;
+        }
+
+        if (orientation == null) return null;
+
+        int x = currentRoom.getX();
+        int y = currentRoom.getY();
+        Vector2 vector = orientation.moveCoord(new Vector2(x, y), 1);
+
+        for (Room room : rooms){
+            if (vector.x == room.getX() && vector.y == room.getY()){
+                currentRoom = room;
+                return currentRoom;
+            }
+        }
+
+        return currentRoom;
+    }
+
+    public Room getCurrentRoom(){
+        if (currentRoom == null){
+            currentRoom = rooms.get(0);
+        }
+        return currentRoom;
     }
 
     //<editor-fold desc="Builder">
@@ -128,19 +154,19 @@ public class Level {
             return this;
         }
 
-        public Builder setWorldWidth(int width){
+        public Builder setLevelWidth(int width){
             level.width = width;
             return this;
         }
 
-        public Builder setWorldHeight(int height){
+        public Builder setLevelHeight(int height){
             level.height = height;
             return this;
         }
 
-        public Builder setWorldWidthHeight(int width, int height){
-            setWorldWidth(width);
-            setWorldHeight(height);
+        public Builder setLevelWidthHeight(int width, int height){
+            setLevelWidth(width);
+            setLevelHeight(height);
             return this;
         }
 
@@ -153,6 +179,10 @@ public class Level {
             level.randomMaxRooms = max;
             level.randomMinRooms = min;
             return this;
+        }
+
+        public void setStartRoom(Room room){
+            if (level.rooms.contains(room)) level.currentRoom = room;
         }
     }
 
