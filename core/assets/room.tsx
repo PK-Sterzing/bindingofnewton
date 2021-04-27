@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.5.0" name="room" tilewidth="33" tileheight="64" tilecount="7" columns="0">
+<tileset version="1.5" tiledversion="1.5.0" name="room" tilewidth="33" tileheight="64" tilecount="8" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="32" height="32" source="wall.png"/>
@@ -49,5 +49,8 @@
     <polygon points="0,0 8.47148,-8.20254 15.0604,-10.0851 21.7838,-6.7234 23.6664,2.82383 23.8008,14.1191 17.3464,17.6153 10.0851,16.4051 2.82383,16.674 -3.3617,15.5983 -4.57191,11.4298 -2.68936,7.93361 -3.7651,3.22723"/>
    </object>
   </objectgroup>
+ </tile>
+ <tile id="7">
+  <image width="32" height="32" source="door.png"/>
  </tile>
 </tileset>

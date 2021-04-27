@@ -111,10 +111,6 @@ public abstract class Entity {
         }
     }
 
-    public Body getBody() {
-        return body;
-    }
-
     //</editor-fold>
 
 
