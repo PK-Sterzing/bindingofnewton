@@ -1,11 +1,13 @@
 package com.bindingofnewton.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 public abstract class Entity {
     private final Body body;
+    private final Polygon polygon;
 
     protected int x;
     protected int y;
@@ -50,15 +52,18 @@ public abstract class Entity {
                 0.0f);
 
          */
-        polygonShape.set(new float[] {
+        float[] vertices = new float[] {
                 7.7f, 0.0f,
                 14.0f, 0.0f,
                 20.3f, 18.2f,
                 16.0f, 28.0f,
                 5.6f, 28.0f,
                 1.4f, 18.2f,
-        });
+        };
 
+        polygonShape.set(vertices);
+
+        polygon = new Polygon(vertices);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = polygonShape;
@@ -145,10 +150,26 @@ public abstract class Entity {
         sprites[1].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[2].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[3].setPosition(body.getPosition().x, body.getPosition().y);
+        polygon.setPosition(body.getPosition().x, body.getPosition().y);
     }
 
     public int getSpeed() {
         return speed;
     }
 
+    public Polygon getPolygon() {
+        return polygon;
+    }
+
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
+
+        body.setTransform(x, y,0);
+        sprites[0].setPosition(x, y);
+        sprites[1].setPosition(x, y);
+        sprites[2].setPosition(x, y);
+        sprites[3].setPosition(x, y);
+        polygon.setPosition(x, y);
+    }
 }
