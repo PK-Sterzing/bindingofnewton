@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import javax.xml.soap.Text;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
