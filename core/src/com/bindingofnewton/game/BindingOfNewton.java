@@ -162,7 +162,7 @@ public class BindingOfNewton extends Game{
 
 		switch (orientation.getOpposite()){
 			case UP:
-				playerY = (int) (height-playerSprite[0].getHeight());
+				playerY = (int) (height-playerSprite[0].getHeight()-32);
 				playerX = (int) (width/2 - playerSprite[0].getWidth()/2);
 				break;
 			case DOWN:
