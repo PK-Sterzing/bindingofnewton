@@ -1,13 +1,21 @@
 package com.bindingofnewton.game;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen extends ScreenAdapter {
 
-    public MainMenuScreen() {
-        super();
+    private Stage stage;
 
+    public MainMenuScreen() {
+        stage = new Stage(new ScreenViewport());
+
+    }
+
+    @Override
+    public void show() {
+        super.show();
     }
 
     @Override

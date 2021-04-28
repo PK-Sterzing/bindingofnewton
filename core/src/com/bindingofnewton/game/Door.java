@@ -32,26 +32,28 @@ public class Door {
         TiledMapTileSet tileSet = map.getTileSets().getTileSet(0);
 
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
-        cell.setTile(tileSet.getTile(4));
+        cell.setTile(tileSet.getTile(8));
 
         int width = layer.getWidth();
         int height = layer.getHeight();
 
         switch (orientation){
             case DOWN:
+                cell.setFlipVertically(true);
                 layer.setCell(width/2, 0, cell);
                 break;
             case UP:
                 layer.setCell(width/2, height-1, cell);
                 break;
             case LEFT:
+                cell.setRotation(TiledMapTileLayer.Cell.ROTATE_90);
                 layer.setCell(0, height/2, cell);
                 break;
             case RIGHT:
+                cell.setRotation(TiledMapTileLayer.Cell.ROTATE_270);
                 layer.setCell(width-1, height/2, cell);
 
         }
-        //map.getLayers().remove(map.getLayers().get("doors-" + orientation.name()));
     }
 
     public void setBody(Body body){

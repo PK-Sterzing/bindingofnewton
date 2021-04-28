@@ -33,6 +33,7 @@ public abstract class Entity {
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(x ,y);
+        orientation = Orientation.DOWN;
 
         characterWidth = 22;
         characterHeight = 28;
@@ -40,7 +41,15 @@ public abstract class Entity {
         body = world.createBody(def);
 
         PolygonShape polygonShape = new PolygonShape();
+        Vector2 position = new Vector2((getSprite().getX() + characterWidth * 0.5f ),
+                (getSprite().getY() + characterHeight * 0.5f ));
+        /*
+        polygonShape.setAsBox(characterWidth * 0.5f ,
+                characterHeight * 0.5f ,
+                position,
+                0.0f);
 
+         */
         float[] vertices = new float[] {
                 7.7f, 0.0f,
                 14.0f, 0.0f,
@@ -75,6 +84,10 @@ public abstract class Entity {
         return x;
     }
 
+    public Body getBody() {
+        return body;
+    }
+
     /**
      * Gets the y-coordinate of the Entity
      * @return y-coordinate
@@ -94,10 +107,6 @@ public abstract class Entity {
             case UP:
             default: return sprites[0];
         }
-    }
-
-    public Body getBody() {
-        return body;
     }
 
     //</editor-fold>
@@ -130,6 +139,7 @@ public abstract class Entity {
         this.y += y;
 
         body.setLinearVelocity(vector);
+
         sprites[0].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[1].setPosition(body.getPosition().x, body.getPosition().y);
         sprites[2].setPosition(body.getPosition().x, body.getPosition().y);

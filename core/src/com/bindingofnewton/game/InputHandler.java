@@ -4,16 +4,25 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class InputHandler implements InputProcessor {
 
     private Player player;
+    protected boolean isMoving;
+    private ArrayList<Integer> activeKeys;
 
     public InputHandler(Player player){
+        activeKeys = new ArrayList<>();
         this.player = player;
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        activeKeys.add(keycode);
+        isMoving = true;
+        /*
         switch (keycode){
             case Input.Keys.W:
                 player.move(new Vector2(0, player.getSpeed()));
@@ -25,7 +34,7 @@ public class InputHandler implements InputProcessor {
                 player.move(new Vector2(0, -player.getSpeed()));
                 break;
             case Input.Keys.D:
-                player.move(new Vector2(player.getSpeed(), 0));
+
                 break;
             case Input.Keys.UP:
 
@@ -34,9 +43,9 @@ public class InputHandler implements InputProcessor {
             case Input.Keys.DOWN:
 
             case Input.Keys.RIGHT:
-
-
         }
+
+         */
 
         return false;
 
@@ -44,6 +53,10 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+        activeKeys.remove((Object) keycode);
+        if (activeKeys.size() == 0) {
+            isMoving = false;
+        }
         return false;
     }
 
