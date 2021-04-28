@@ -81,10 +81,31 @@ public class Level {
             for (int i=1; i<amountRooms; i++){
                 //Randomly decides which room gets a neighbor
                 int roomIndex = 0;
+                int counter = 0;
+
+                /*
                 do{
                     //TODO: runden überlegen
                     roomIndex = (int) (Math.random() * level.rooms.size());
-                }while (level.rooms.get(roomIndex).getDoors().size() == 4);
+                }while (level.rooms.get(roomIndex).getDoors().size() - == 4);*/
+                boolean doAgain=false;
+                while (true){
+                    if (counter > 100){
+                        doAgain = true;
+
+                        break;
+                    }
+                    roomIndex = (int) (Math.random() * level.rooms.size());
+
+                    if (level.rooms.get(roomIndex).getDoors().size() != 4){
+                        break;
+                    }
+                    counter++;
+                }
+                if (doAgain){
+                    i--;
+                    continue;
+                }
 
                 Room currentRoom = level.rooms.get(roomIndex);
 
@@ -92,12 +113,12 @@ public class Level {
 
                 Vector2 vector;
                 Orientation neighbor;
-                int counter = 0;
+                counter = 0;
                 do{
                     neighbor = possibleNeighbors.get((int) (Math.random() * possibleNeighbors.size()));
                     vector = neighbor.moveCoord(new Vector2(currentRoom.getX(), currentRoom.getY()), 1);
                     counter++;
-                }while(vector.x < 0 || vector.y < 0 || counter > 20);
+                }while((vector.x < 0 || vector.y < 0) && counter < 20);
                 if (counter > 20){
                     i--;
                     continue;
@@ -142,8 +163,6 @@ public class Level {
                     }
 
                 }
-                //TODO: Achtung beim überarbeiten hier ändern
-                //room.setDoors(room.getNeighbors());
             }
 
             return level;

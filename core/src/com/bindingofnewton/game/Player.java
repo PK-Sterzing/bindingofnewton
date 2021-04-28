@@ -26,7 +26,6 @@ public class Player extends Entity{
         down = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("isaac"), Animation.PlayMode.LOOP);
         right = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("isaac"), Animation.PlayMode.LOOP);
         left = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("isaac"), Animation.PlayMode.LOOP);
-        System.out.println("Jetzt angekommen!");
     }
 
     public TextureRegion getTextureRegion() {
