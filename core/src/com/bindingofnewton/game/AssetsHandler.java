@@ -21,7 +21,7 @@ public class AssetsHandler {
     private TextureAtlas textureAtlas;
 
     private AssetsHandler(){
-        textureAtlas = new TextureAtlas("data.txt");
+        textureAtlas = new TextureAtlas("./newton/packed/newton.atlas");
         ASSETS_PATH = Paths.get("").toAbsolutePath().toString() + "\\core\\assets\\";
     }
 

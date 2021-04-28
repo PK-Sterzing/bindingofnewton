@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.5.0" name="room" tilewidth="33" tileheight="64" tilecount="8" columns="0">
+<tileset version="1.5" tiledversion="1.5.0" name="room" tilewidth="33" tileheight="48" tilecount="10" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="32" height="32" source="wall.png"/>
@@ -28,12 +28,6 @@
    </object>
   </objectgroup>
  </tile>
- <tile id="4">
-  <image width="32" height="64" source="fire-1.png"/>
-  <objectgroup draworder="index" id="4">
-   <object id="3" x="4.70638" y="32.2723" width="27.028" height="28.6417"/>
-  </objectgroup>
- </tile>
  <tile id="5">
   <image width="32" height="32" source="stein2.png"/>
   <objectgroup draworder="index" id="2">
@@ -52,5 +46,19 @@
  </tile>
  <tile id="7">
   <image width="32" height="32" source="door.png"/>
+ </tile>
+ <tile id="11">
+  <image width="32" height="48" source="fire1.png"/>
+  <animation>
+   <frame tileid="12" duration="100"/>
+   <frame tileid="11" duration="100"/>
+   <frame tileid="13" duration="100"/>
+  </animation>
+ </tile>
+ <tile id="12">
+  <image width="32" height="48" source="fire2.png"/>
+ </tile>
+ <tile id="13">
+  <image width="32" height="48" source="fire3.png"/>
  </tile>
 </tileset>

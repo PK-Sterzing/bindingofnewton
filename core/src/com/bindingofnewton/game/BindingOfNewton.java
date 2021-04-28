@@ -60,6 +60,7 @@ public class BindingOfNewton extends Game{
 		makeNewLevel(orientation);
 
 		inputHandler = new InputHandler(player);
+		Gdx.input.setInputProcessor(inputHandler);
 
 		// Create debug renderer to make collisions visible
 		renderer = new Box2DDebugRenderer();
@@ -100,28 +101,35 @@ public class BindingOfNewton extends Game{
 
 		int x = 0;
 		int y = 0;
-		if(Gdx.input.isKeyPressed(Input.Keys.W)){
-			 y += player.getSpeed();
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.S)){
-			y -= player.getSpeed();
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.D)){
-			x += player.getSpeed();
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.A)){
-			x -= player.getSpeed();
+
+
+		batch.begin();
+		if (inputHandler.isMoving) {
+			if(Gdx.input.isKeyPressed(Input.Keys.W)){
+				y += player.getSpeed();
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.S)){
+				y -= player.getSpeed();
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.D)){
+				x += player.getSpeed();
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.A)){
+				x -= player.getSpeed();
+			}
+			batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
+
+
+		} else {
+			player.getSprite().draw(batch);
+			batch.draw(player.getSprite(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
 		}
 
 		player.move(new Vector2(x, y));
 
-		batch.begin();
-
-		player.getSprite().draw(batch);
 
 		checkDoorCollision();
 
-		batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y);
 		batch.end();
 		renderer.render(world, camera.combined);
 	}
@@ -148,7 +156,7 @@ public class BindingOfNewton extends Game{
 		int height = (int) map.getProperties().get("height")*32;
 
 		int playerX=0, playerY=0;
-		Sprite[] playerSprite = AssetsHandler.getInstance().getPlayerSprite("isaac-newton");
+		Sprite[] playerSprite = AssetsHandler.getInstance().getPlayerSprite("newton");
 
 		switch (orientation.getOpposite()){
 			case UP:
@@ -169,7 +177,7 @@ public class BindingOfNewton extends Game{
 				break;
 		}
 
-		player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getPlayerSprite("isaac-newton"));
+		player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getPlayerSprite("newton"));
 
 		mapBuilder = new MapBodyBuilder(map);
 		mapBuilder.buildBodies(world);

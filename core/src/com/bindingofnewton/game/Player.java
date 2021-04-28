@@ -20,18 +20,21 @@ public class Player extends Entity{
 
     public Player(World world, int startX, int startY, Sprite[] sprites) {
         super(world, startX, startY, sprites);
-        textureAtlas = new TextureAtlas("hearts.txt");
+        textureAtlas = new TextureAtlas("./newton_run/packed/newton-run.atlas");
 
-        up = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("isaac"), Animation.PlayMode.LOOP);
-        down = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("isaac"), Animation.PlayMode.LOOP);
-        right = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("isaac"), Animation.PlayMode.LOOP);
-        left = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("isaac"), Animation.PlayMode.LOOP);
-        System.out.println("Jetzt angekommen!");
+        up = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("run-back"), Animation.PlayMode.LOOP);
+        down = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("run-front"), Animation.PlayMode.LOOP);
+        right = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("run-right"), Animation.PlayMode.LOOP);
+        left = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("run-left"), Animation.PlayMode.LOOP);
     }
 
     public TextureRegion getTextureRegion() {
         deltaTime += Gdx.graphics.getDeltaTime();
         switch (orientation) {
+            case UP: return up.getKeyFrame(deltaTime, true);
+            case DOWN: return down.getKeyFrame(deltaTime, true);
+            case LEFT: return left.getKeyFrame(deltaTime, true);
+            case RIGHT: return right.getKeyFrame(deltaTime, true);
             // TODO: Add also for up down right and left animations!
             default: return up.getKeyFrame(deltaTime, true);
         }
