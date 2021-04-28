@@ -1,8 +1,10 @@
 package com.bindingofnewton.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
+import javax.xml.soap.Text;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -70,6 +72,12 @@ public class AssetsHandler {
         if (file.exists()) list.add(file.getName());
 
         return list;
+    }
+
+    public Sprite getSingleSprite(String name){
+        Texture texture = new Texture(name);
+        Sprite sprite = new Sprite(texture);
+        return  sprite;
     }
 
 }

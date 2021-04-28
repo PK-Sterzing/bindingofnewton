@@ -40,17 +40,7 @@ public abstract class Entity {
         body = world.createBody(def);
 
         PolygonShape polygonShape = new PolygonShape();
-        Vector2 position = new Vector2((getSprite().getX() + characterWidth * 0.5f ),
-                (getSprite().getY() + characterHeight * 0.5f ));
 
-        System.out.println((float) (45/360) * 2* Math.PI);
-        /*
-        polygonShape.setAsBox(characterWidth * 0.5f ,
-                characterHeight * 0.5f ,
-                position,
-                0.0f);
-
-         */
         float[] vertices = new float[] {
                 7.7f, 0.0f,
                 14.0f, 0.0f,
@@ -155,15 +145,4 @@ public abstract class Entity {
         return polygon;
     }
 
-    public void setPosition(int x, int y){
-        this.x = x;
-        this.y = y;
-
-        body.setTransform(x, y,0);
-        sprites[0].setPosition(x, y);
-        sprites[1].setPosition(x, y);
-        sprites[2].setPosition(x, y);
-        sprites[3].setPosition(x, y);
-        polygon.setPosition(x, y);
-    }
 }

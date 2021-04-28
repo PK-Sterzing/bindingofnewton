@@ -14,6 +14,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.ArrayList;
+
 public class BindingOfNewton extends Game{
 	private SpriteBatch batch;
 
@@ -32,6 +34,8 @@ public class BindingOfNewton extends Game{
 	private int levelCount = 0;
 
 	public static final float SCALE = 10;
+	public static ArrayList<Bullet> bullets;
+	private long lastShot = 0;
 
 	@Override
 	public void create () {
@@ -48,7 +52,7 @@ public class BindingOfNewton extends Game{
 
 
 		world = new World(new Vector2(0,0), true);
-		world.setContactListener(new ContactHandler());
+		world.setContactListener(new ContactHandler(world));
 
 		level = new Level.Builder()
 				.setWorld(world)
@@ -83,12 +87,17 @@ public class BindingOfNewton extends Game{
 		// * 0.5 because the map is zoomed
 		camera.translate(-translateX * 0.5f, -translateY * 0.5f);
 
+
+		// Create Bullet array
+		bullets = new ArrayList<>();
+
 		camera.update();
 	}
 
 	@Override
 	public void render () {
 		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -100,6 +109,7 @@ public class BindingOfNewton extends Game{
 
 		int x = 0;
 		int y = 0;
+
 		if(Gdx.input.isKeyPressed(Input.Keys.W)){
 			 y += player.getSpeed();
 		}
@@ -113,10 +123,73 @@ public class BindingOfNewton extends Game{
 			x -= player.getSpeed();
 		}
 
+
+		// Create Bullet on arrow click
+		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate){
+				Bullet bullet = new Bullet(world,
+						(int) player.getSprite().getX(),
+						(int) (player.getSprite().getY()+ 20 + (player.getSprite().getHeight()/2)));
+				bullet.setMovement(new Vector2(0, bullet.getSpeed()));
+				bullets.add(bullet);
+
+				lastShot = System.currentTimeMillis();
+			}
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
+				Bullet bullet = new Bullet(world,
+						(int)player.getSprite().getX(),
+						(int)player.getSprite().getY() - 20);
+				bullet.setMovement(new Vector2(0, -bullet.getSpeed()));
+				bullets.add(bullet);
+
+				lastShot = System.currentTimeMillis();
+			}
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
+				Bullet bullet = new Bullet(world,
+						(int)player.getSprite().getX() - 20,
+						(int)player.getSprite().getY());
+				bullet.setMovement(new Vector2(-bullet.getSpeed(), 0));
+				bullets.add(bullet);
+
+				lastShot = System.currentTimeMillis();
+			}
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
+				Bullet bullet = new Bullet(world,
+						(int)(player.getSprite().getX() + 20 + (player.getSprite().getWidth()/2)),
+						(int)player.getSprite().getY());
+				bullet.setMovement(new Vector2(bullet.getSpeed(), 0));
+				bullets.add(bullet);
+
+				lastShot = System.currentTimeMillis();
+			}
+		}
+
 		player.move(new Vector2(x, y));
+
+		// Update all bullets
+		for(int i = 0; i < bullets.size(); i++){
+			if(bullets.get(i).isRemove()){
+			    // Destroy body, remove bullet
+				world.destroyBody(bullets.get(i).getBody());
+				bullets.remove(i);
+			}else{
+				bullets.get(i).update();
+			}
+
+		}
 
 		batch.begin();
 
+		// Render all bullets
+		for(int i = 0; i < bullets.size(); i++){
+			bullets.get(i).getSprite().draw(batch);
+		}
 		player.getSprite().draw(batch);
 
 		checkDoorCollision();
@@ -138,7 +211,7 @@ public class BindingOfNewton extends Game{
 		}
 
 		//Generating a new player and bodies of the new map
-		player = new Player(world, 150, 150, AssetsHandler.getInstance().getPlayerSprite("isaac-newton"));
+		player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite("isaac-newton"));
 
 		Room room = level.getNextRoom(orientation);
 		room.setBodies();

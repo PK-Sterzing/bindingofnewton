@@ -3,9 +3,32 @@ package com.bindingofnewton.game;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class ContactHandler implements ContactListener {
+
+    private World world;
+    public ContactHandler(World world){
+        this.world = world;
+    }
+
     @Override
     public void beginContact(Contact contact) {
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+        removeFixture(fixtureA);
+        removeFixture(fixtureB);
+    }
 
+    private void removeFixture(Fixture fixtureA) {
+        if(fixtureA.getUserData() != null) {
+            if (fixtureA.getUserData().equals("bullet")) {
+                for (int i = 0; i < BindingOfNewton.bullets.size(); i++) {
+                    if (BindingOfNewton.bullets.get(i).getBody().equals(fixtureA.getBody())) {
+                        // Setting remove flag
+                        BindingOfNewton.bullets.get(i).setRemove(true);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @Override
