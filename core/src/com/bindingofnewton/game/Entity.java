@@ -43,8 +43,6 @@ public abstract class Entity {
         PolygonShape polygonShape = new PolygonShape();
         Vector2 position = new Vector2((getSprite().getX() + characterWidth * 0.5f ),
                 (getSprite().getY() + characterHeight * 0.5f ));
-
-        System.out.println((float) (45/360) * 2* Math.PI);
         /*
         polygonShape.setAsBox(characterWidth * 0.5f ,
                 characterHeight * 0.5f ,

@@ -149,6 +149,8 @@ public class BindingOfNewton extends Game{
 		//Generating a new player and bodies of the new map
 		Room room = level.getNextRoom(orientation);
 
+		System.out.println("Room: " + room.getX() + ",  " + room.getY());
+
 		room.setBodies();
 		TiledMap map = room.getMap();
 
