@@ -6,14 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class Bullet {
-    private int speed = 120;
-    private final int WIDTH = 15;
-    private final int HEIGHT = 13;
+    private int speed = 140;
+    public static final int WIDTH = 9;
+    public static final int HEIGHT = 8;
     private final Body body;
     private final PolygonShape polygonShape;
     private final Sprite sprite;
     private Vector2 movement;
-    public static int fireRate = 500;
+    public static int fireRate = 700;
 
     private boolean remove = false;
 

@@ -129,7 +129,7 @@ public class BindingOfNewton extends Game{
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate){
 				Bullet bullet = new Bullet(world,
-						(int) player.getSprite().getX(),
+						(int) (player.getSprite().getX() + player.getSprite().getWidth() / 2 - Bullet.WIDTH/2),
 						(int) (player.getSprite().getY()+ 20 + (player.getSprite().getHeight()/2)));
 				bullet.setMovement(new Vector2(0, bullet.getSpeed()));
 				bullets.add(bullet);
@@ -140,7 +140,7 @@ public class BindingOfNewton extends Game{
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
 				Bullet bullet = new Bullet(world,
-						(int)player.getSprite().getX(),
+						(int)(player.getSprite().getX() + player.getSprite().getWidth()/2 - Bullet.WIDTH/2),
 						(int)player.getSprite().getY() - 20);
 				bullet.setMovement(new Vector2(0, -bullet.getSpeed()));
 				bullets.add(bullet);
@@ -152,7 +152,7 @@ public class BindingOfNewton extends Game{
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
 				Bullet bullet = new Bullet(world,
 						(int)player.getSprite().getX() - 20,
-						(int)player.getSprite().getY());
+						(int) (player.getSprite().getY() + player.getSprite().getHeight()/2));
 				bullet.setMovement(new Vector2(-bullet.getSpeed(), 0));
 				bullets.add(bullet);
 
@@ -163,7 +163,7 @@ public class BindingOfNewton extends Game{
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
 				Bullet bullet = new Bullet(world,
 						(int)(player.getSprite().getX() + 20 + (player.getSprite().getWidth()/2)),
-						(int)player.getSprite().getY());
+						(int)(player.getSprite().getY() + player.getSprite().getHeight()/2));
 				bullet.setMovement(new Vector2(bullet.getSpeed(), 0));
 				bullets.add(bullet);
 
@@ -267,7 +267,6 @@ public class BindingOfNewton extends Game{
 				break;
 		}
 
-		player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getPlayerSprite("newton"));
 
 		mapBuilder = new MapBodyBuilder(map);
 		mapBuilder.buildBodies(world);
