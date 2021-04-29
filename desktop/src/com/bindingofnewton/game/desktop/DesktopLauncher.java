@@ -7,10 +7,14 @@ import com.bindingofnewton.game.BindingOfNewton;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.fullscreen = false;
+		config.fullscreen = true;
 		config.width = 1920;
 		config.height = 1000;
-		config.resizable = true;
+		//config.resizable = true;
+
+		//config.setFromDisplayMode(Gdx.graphics.getDisplayMode());
+
 		new LwjglApplication(new BindingOfNewton(), config);
+		//new LwjglApplication(new TestGame(), config);
 	}
 }

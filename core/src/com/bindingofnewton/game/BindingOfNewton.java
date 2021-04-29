@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -46,10 +47,6 @@ public class BindingOfNewton extends Game{
 
 		Orientation orientation = Orientation.DOWN;
 
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
-
-
 		world = new World(new Vector2(0,0), true);
 		world.setContactListener(new ContactHandler());
 
@@ -71,7 +68,10 @@ public class BindingOfNewton extends Game{
 
 		// Create Camera
 		camera = new OrthographicCamera();
-		camera.zoom = 0.5f;
+		//camera.zoom = 0.5f;
+		TiledMapTileLayer layer = (TiledMapTileLayer) level.getCurrentRoom().getMap().getLayers().get("ground");
+		float w = layer.getTileWidth() * layer.getWidth();
+		float h = layer.getTileHeight() * layer.getHeight();
 		camera.setToOrtho(false, w, h);
 
 		// Get map height and width
@@ -85,7 +85,7 @@ public class BindingOfNewton extends Game{
 
 		// Move Camera to set map in the middle
 		// * 0.5 because the map is zoomed
-		camera.translate(-translateX * 0.5f, -translateY * 0.5f);
+		//camera.translate(-translateX * 0.5f, -translateY * 0.5f);
 
 
 		// Create Bullet array
