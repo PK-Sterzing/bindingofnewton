@@ -234,7 +234,7 @@ public class BindingOfNewton extends Game{
 		}
 
 		//Generating a new player and bodies of the new map
-		player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite("isaac-newton"));
+		player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite("newton"));
 		Room room = level.getNextRoom(orientation);
 
 		System.out.println("Room: " + room.getX() + ",  " + room.getY());
