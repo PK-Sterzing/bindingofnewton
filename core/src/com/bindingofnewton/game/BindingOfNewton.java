@@ -110,20 +110,6 @@ public class BindingOfNewton extends Game{
 		int x = 0;
 		int y = 0;
 
-		if(Gdx.input.isKeyPressed(Input.Keys.W)){
-			 y += player.getSpeed();
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.S)){
-			y -= player.getSpeed();
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.D)){
-			x += player.getSpeed();
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.A)){
-			x -= player.getSpeed();
-		}
-
-
 		// Create Bullet on arrow click
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate){
@@ -170,8 +156,6 @@ public class BindingOfNewton extends Game{
 			}
 		}
 
-		player.move(new Vector2(x, y));
-
 		// Update all bullets
 		for(int i = 0; i < bullets.size(); i++){
 			if(bullets.get(i).isRemove()){
@@ -199,8 +183,6 @@ public class BindingOfNewton extends Game{
 				x -= player.getSpeed();
 			}
 			batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
-
-
 		} else {
 			batch.draw(player.getSprite(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
 		}

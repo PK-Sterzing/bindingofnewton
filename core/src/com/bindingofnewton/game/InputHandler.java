@@ -1,5 +1,6 @@
 package com.bindingofnewton.game;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.bindingofnewton.game.character.Player;
 
@@ -9,53 +10,63 @@ public class InputHandler implements InputProcessor {
 
     private Player player;
     protected boolean isMoving;
-    private ArrayList<Integer> activeKeys;
+    protected boolean isShooting;
+    private ArrayList<Integer> activeMoveKeys;
+    private ArrayList<Integer> activeShootKeys;
 
     public InputHandler(Player player){
-        activeKeys = new ArrayList<>();
+        activeMoveKeys = new ArrayList<>();
+        activeShootKeys = new ArrayList<>();
         this.player = player;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        activeKeys.add(keycode);
-        isMoving = true;
-        /*
-        switch (keycode){
-            case Input.Keys.W:
-                player.move(new Vector2(0, player.getSpeed()));
-                break;
-            case Input.Keys.A:
-                player.move(new Vector2(-player.getSpeed(), 0));
-                break;
-            case Input.Keys.S:
-                player.move(new Vector2(0, -player.getSpeed()));
-                break;
-            case Input.Keys.D:
-
-                break;
-            case Input.Keys.UP:
-
-            case Input.Keys.LEFT:
-
-            case Input.Keys.DOWN:
-
-            case Input.Keys.RIGHT:
+        if (keycode == Input.Keys.W || keycode == Input.Keys.S || keycode == Input.Keys.A || keycode == Input.Keys.D) {
+            activeMoveKeys.add(keycode);
+            isMoving = true;
         }
 
-         */
+        switch (keycode) {
+            case Input.Keys.LEFT: {
+                player.setOrientation(Orientation.LEFT);
+                break;
+            }
+            case Input.Keys.RIGHT: {
+                player.setOrientation(Orientation.RIGHT);
+                break;
+            }
+            case Input.Keys.UP: {
+                player.setOrientation(Orientation.UP);
+                break;
+            }
+            case Input.Keys.DOWN: {
+                player.setOrientation(Orientation.DOWN);
+                break;
+            }
+        }
+        //player.move(new Vector2(0, 0));
 
-        return false;
-
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        activeKeys.remove((Object) keycode);
-        if (activeKeys.size() == 0) {
-            isMoving = false;
+        System.out.println(activeShootKeys);
+
+        if (activeShootKeys.contains(keycode)) {
+            activeShootKeys.remove((Object) keycode);
+        } else if (activeMoveKeys.contains(keycode)) {
+            activeMoveKeys.remove((Object) keycode);
         }
-        return false;
+
+        if (activeMoveKeys.isEmpty()) {
+            isMoving = false;
+        } else if (activeShootKeys.isEmpty()) {
+            isShooting = false;
+        }
+
+        return true;
     }
 
     @Override

@@ -152,4 +152,12 @@ public abstract class Entity {
         return polygon;
     }
 
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
+
 }
