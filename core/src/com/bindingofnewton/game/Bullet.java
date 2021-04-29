@@ -4,16 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.bindingofnewton.game.assets.AssetsHandler;
 
 public class Bullet {
-    private int speed = 140;
+    private int speed = 150;
     public static final int WIDTH = 9;
     public static final int HEIGHT = 8;
     private final Body body;
     private final PolygonShape polygonShape;
     private final Sprite sprite;
     private Vector2 movement;
-    public static int fireRate = 700;
+    // The lower, the faster the character is shooting
+    public static int fireRate = 500;
 
     private boolean remove = false;
 

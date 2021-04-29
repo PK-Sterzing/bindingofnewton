@@ -1,4 +1,4 @@
-package com.bindingofnewton.game;
+package com.bindingofnewton.game.map;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.bindingofnewton.game.Orientation;
 
 public class Door {
     private World world;

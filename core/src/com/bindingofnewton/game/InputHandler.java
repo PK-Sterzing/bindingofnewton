@@ -1,10 +1,8 @@
 package com.bindingofnewton.game;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
+import com.bindingofnewton.game.character.Player;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class InputHandler implements InputProcessor {

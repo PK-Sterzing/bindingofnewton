@@ -4,11 +4,6 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public class ContactHandler implements ContactListener {
 
-    private World world;
-    public ContactHandler(World world){
-        this.world = world;
-    }
-
     @Override
     public void beginContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();

@@ -13,15 +13,18 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.character.Player;
+import com.bindingofnewton.game.map.Level;
+import com.bindingofnewton.game.map.LevelBuilder;
+import com.bindingofnewton.game.map.MapBodyBuilder;
+import com.bindingofnewton.game.map.Room;
 
 import java.util.ArrayList;
 
 public class BindingOfNewton extends Game{
 	private SpriteBatch batch;
 
-	private int x;
-	private int y;
-	private Orientation orientation;
 	private OrthographicCamera camera;
 	private MapBodyBuilder mapBuilder;
 
@@ -31,9 +34,7 @@ public class BindingOfNewton extends Game{
 	private Box2DDebugRenderer renderer;
 
 	private Level level;
-	private int levelCount = 0;
 
-	public static final float SCALE = 10;
 	public static ArrayList<Bullet> bullets;
 	private long lastShot = 0;
 
@@ -42,19 +43,17 @@ public class BindingOfNewton extends Game{
 		setScreen(new MainMenuScreen());
 		batch = new SpriteBatch();
 
-		x = 0;
-		y = 0;
 
-		orientation = Orientation.DOWN;
+		Orientation orientation = Orientation.DOWN;
 
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 
 
 		world = new World(new Vector2(0,0), true);
-		world.setContactListener(new ContactHandler(world));
+		world.setContactListener(new ContactHandler());
 
-		level = new Level.Builder()
+		level = new LevelBuilder()
 				.setWorld(world)
 				.setLevelWidthHeight(4, 4)
 				.setMinRooms(6)
@@ -96,7 +95,7 @@ public class BindingOfNewton extends Game{
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
 
 
@@ -203,7 +202,6 @@ public class BindingOfNewton extends Game{
 
 
 		} else {
-			player.getSprite().draw(batch);
 			batch.draw(player.getSprite(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
 		}
 
@@ -213,7 +211,6 @@ public class BindingOfNewton extends Game{
 		for(int i = 0; i < bullets.size(); i++){
 			bullets.get(i).getSprite().draw(batch);
 		}
-		player.getSprite().draw(batch);
 
 		checkDoorCollision();
 
@@ -237,35 +234,9 @@ public class BindingOfNewton extends Game{
 		player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite("newton"));
 		Room room = level.getNextRoom(orientation);
 
-		System.out.println("Room: " + room.getX() + ",  " + room.getY());
 
 		room.setBodies();
 		TiledMap map = room.getMap();
-
-		int width = (int) map.getProperties().get("width")*32;
-		int height = (int) map.getProperties().get("height")*32;
-
-		int playerX=0, playerY=0;
-		Sprite[] playerSprite = AssetsHandler.getInstance().getPlayerSprite("newton");
-
-		switch (orientation.getOpposite()){
-			case UP:
-				playerY = (int) (height-playerSprite[0].getHeight()-32);
-				playerX = (int) (width/2 - playerSprite[0].getWidth()/2);
-				break;
-			case DOWN:
-				playerY = (int) (playerSprite[0].getHeight()/2);
-				playerX = (int) (width/2 - playerSprite[0].getWidth()/2);
-				break;
-			case LEFT:
-				playerY = (int) (height/2 - playerSprite[0].getHeight()/2);
-				playerX = (int) (32 + playerSprite[0].getWidth()/2);
-				break;
-			case RIGHT:
-				playerY = (int) (height/2 - playerSprite[0].getHeight()/2);
-				playerX = (int) (width-32-playerSprite[0].getWidth());
-				break;
-		}
 
 
 		mapBuilder = new MapBodyBuilder(map);
@@ -307,10 +278,6 @@ public class BindingOfNewton extends Game{
 							rectangle.width + size.x,
 							rectangle.height + size.y);
 
-					Vector2 start = orientation.moveCoord(
-							new Vector2(rectangle1.x , rectangle1.y ),
-							-playerRectangle.getHeight()
-					);
 
 					if (playerRectangle.overlaps(rectangle1)){
 						//The Player enters a door

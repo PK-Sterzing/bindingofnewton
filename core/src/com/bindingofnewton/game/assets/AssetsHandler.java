@@ -1,10 +1,8 @@
-package com.bindingofnewton.game;
+package com.bindingofnewton.game.assets;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -16,10 +14,10 @@ public class AssetsHandler {
     public static final String END_MAP = "mapEnd.tmx";
     public static final String MAP = "map1.tmx";
 
-    private String ASSETS_PATH = ".\\core\\assets\\";
+    private final String ASSETS_PATH;
 
     private static AssetsHandler instance;
-    private TextureAtlas textureAtlas;
+    private final TextureAtlas textureAtlas;
 
     private AssetsHandler(){
         textureAtlas = new TextureAtlas("./newton/packed/newton.atlas");
@@ -50,9 +48,6 @@ public class AssetsHandler {
         return array;
     }
 
-    public Array<TextureAtlas.AtlasRegion> getAnimationRegions(String name) {
-        return textureAtlas.findRegions(name);
-    }
 
     public List<String> getMaps(){
         ArrayList<String> list = new ArrayList<>();
@@ -81,8 +76,7 @@ public class AssetsHandler {
 
     public Sprite getSingleSprite(String name){
         Texture texture = new Texture(name);
-        Sprite sprite = new Sprite(texture);
-        return  sprite;
+        return  new Sprite(texture);
     }
 
 }
