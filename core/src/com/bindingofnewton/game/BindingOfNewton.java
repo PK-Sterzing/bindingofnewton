@@ -32,12 +32,15 @@ public class BindingOfNewton extends Game{
 	private InputHandler inputHandler;
 	private Player player;
 	private World world;
-	private Box2DDebugRenderer renderer;
+
 
 	private Level level;
 
 	public static ArrayList<Bullet> bullets;
 	private long lastShot = 0;
+
+	private Box2DDebugRenderer renderer;
+	public static boolean showDebugInfo = false;
 
 	@Override
 	public void create () {
@@ -197,7 +200,12 @@ public class BindingOfNewton extends Game{
 		checkDoorCollision();
 
 		batch.end();
-		renderer.render(world, camera.combined);
+
+		// Show debug info when the switch is on (SHIFT)
+		if(showDebugInfo){
+			renderer.render(world, camera.combined);
+		}
+
 	}
 
 	/**
@@ -273,17 +281,12 @@ public class BindingOfNewton extends Game{
 
 	}
 
+
 	@Override
 	public void dispose () {
 		batch.dispose();
 	}
 
-	/*
-	public float scale(float valueToBeScaled) {
-		return valueToBeScaled/SCALE;
-	}
-
-	 */
 
 
 }

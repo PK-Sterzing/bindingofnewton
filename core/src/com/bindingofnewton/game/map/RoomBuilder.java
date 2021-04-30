@@ -29,6 +29,7 @@ public class RoomBuilder {
     }
 
     public RoomBuilder setMap(String tmxFilename){
+        System.out.println(tmxFilename);
         room.map = new TmxMapLoader().load(tmxFilename);
         return this;
     }

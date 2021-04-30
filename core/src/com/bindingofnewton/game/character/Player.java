@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Entity;
 
 public class Player extends Entity {
@@ -20,7 +21,7 @@ public class Player extends Entity {
 
     public Player(World world, int startX, int startY, Sprite[] sprites) {
         super(world, startX, startY, sprites);
-        textureAtlas = new TextureAtlas("./newton_run/packed/newton-run.atlas");
+        textureAtlas = new TextureAtlas(AssetsHandler.NEWTON_RUN);
 
         up = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("run-back"), Animation.PlayMode.LOOP);
         down = new Animation<TextureRegion>(SPEEDANIMATION, textureAtlas.findRegions("run-front"), Animation.PlayMode.LOOP);

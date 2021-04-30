@@ -9,10 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.fullscreen = true;
 		config.width = 1920;
-		config.height = 1000;
-		//config.resizable = true;
-
-		//config.setFromDisplayMode(Gdx.graphics.getDisplayMode());
+		config.height = 1081;
 
 		new LwjglApplication(new BindingOfNewton(), config);
 		//new LwjglApplication(new TestGame(), config);

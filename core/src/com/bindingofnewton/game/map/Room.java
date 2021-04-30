@@ -29,6 +29,7 @@ public class Room {
     public Room(){
         ArrayList<String> mapList = (ArrayList<String>) AssetsHandler.getInstance().getMaps();
         int index = (int) (Math.random() * (mapList.size()-2) + 1);
+        System.out.println(mapList.get(index));
         map = new TmxMapLoader().load(mapList.get(index));
     }
 

@@ -62,7 +62,7 @@ public class LevelBuilder {
 
         Room startRoom = builder
                 .setPosition(x, y)
-                .setMap(AssetsHandler.START_MAP)
+                .setMap(AssetsHandler.MAP_TILED + AssetsHandler.START_MAP)
                 .setWorld(level.world)
                 .build();
 
@@ -119,7 +119,7 @@ public class LevelBuilder {
             builder = new RoomBuilder();
 
             if (i == amountRooms-1){
-                builder.setMap(AssetsHandler.END_MAP);
+                builder.setMap( AssetsHandler.MAP_TILED + AssetsHandler.END_MAP);
             }
             Room room = builder
                     .setPosition(

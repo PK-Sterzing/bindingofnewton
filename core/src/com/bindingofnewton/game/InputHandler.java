@@ -44,8 +44,10 @@ public class InputHandler implements InputProcessor {
                 player.setOrientation(Orientation.DOWN);
                 break;
             }
+            case Input.Keys.SHIFT_LEFT: {
+                BindingOfNewton.showDebugInfo = !BindingOfNewton.showDebugInfo;
+            }
         }
-        //player.move(new Vector2(0, 0));
 
         return true;
     }

@@ -14,14 +14,19 @@ public class AssetsHandler {
     public static final String END_MAP = "mapEnd.tmx";
     public static final String MAP = "map1.tmx";
 
-    private final String ASSETS_PATH;
+    public static final String NEWTON = "./character/newton/packed/newton.atlas";
+    public static final String NEWTON_RUN = "./character/newton_run/packed/newton-run.atlas";
+    public static final String EDISON = "./character/edison/packed/edison.atlas";
+    public static final String EDISON_RUN = "./character/edison_run/packed/edison_run.atlas";
+    public static final String MAP_TILED_ABSOLUTE = Paths.get("").toAbsolutePath().toString() + "\\core\\assets\\" + "map\\tiled\\";
+    public static final String MAP_TILED= "./map/tiled/";
+
 
     private static AssetsHandler instance;
     private final TextureAtlas textureAtlas;
 
     private AssetsHandler(){
-        textureAtlas = new TextureAtlas("./newton/packed/newton.atlas");
-        ASSETS_PATH = Paths.get("").toAbsolutePath().toString() + "\\core\\assets\\";
+        textureAtlas = new TextureAtlas(NEWTON);
     }
 
     public static AssetsHandler getInstance(){
@@ -51,13 +56,14 @@ public class AssetsHandler {
 
     public List<String> getMaps(){
         ArrayList<String> list = new ArrayList<>();
-        File file = new File(ASSETS_PATH + START_MAP);
+        File file = new File(MAP_TILED_ABSOLUTE + START_MAP);
 
-        if (file.exists()) list.add(file.getName());
+        System.out.println(MAP_TILED_ABSOLUTE + START_MAP);
+        if (file.exists()) list.add(MAP_TILED + file.getName());
 
-        file = new File(ASSETS_PATH + MAP);
+        file = new File(MAP_TILED_ABSOLUTE + MAP);
         while(file.exists()){
-            list.add(file.getName());
+            list.add(MAP_TILED + file.getName());
             String name = file.getName();
 
             //TODO: catch exceptions
@@ -65,11 +71,11 @@ public class AssetsHandler {
             number++;
             name = name.replace(String.valueOf(number-1), String.valueOf(number));
 
-            file = new File(ASSETS_PATH + name);
+            file = new File(MAP_TILED_ABSOLUTE + name);
         }
 
-        file = new File(ASSETS_PATH + END_MAP);
-        if (file.exists()) list.add(file.getName());
+        file = new File(MAP_TILED_ABSOLUTE + END_MAP);
+        if (file.exists()) list.add(MAP_TILED + file.getName());
 
         return list;
     }
