@@ -20,6 +20,7 @@ public class AssetsHandler {
     public static final String EDISON_RUN = "./character/edison_run/packed/edison_run.atlas";
     public static final String MAP_TILED_ABSOLUTE = Paths.get("").toAbsolutePath().toString() + "\\core\\assets\\" + "map\\tiled\\";
     public static final String MAP_TILED= "./map/tiled/";
+    public static final String HEARTS = "./hearts";
 
 
     private static AssetsHandler instance;

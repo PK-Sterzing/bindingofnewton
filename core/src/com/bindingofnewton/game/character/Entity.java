@@ -21,7 +21,7 @@ public abstract class Entity {
 
 
     protected int speed = 100;
-    protected int health;
+    protected float health;
 
     //<editor-fold desc="Constructors">-
 

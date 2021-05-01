@@ -52,7 +52,6 @@ public class LevelBuilder {
         if (level.rooms.contains(room)) level.currentRoom = room;
     }
 
-    //TODO: improve this method
     public Level build(){
         int amountRooms = (int) (level.minRooms +  Math.random() * (level.randomMaxRooms - level.randomMinRooms) + level.randomMinRooms);
 
@@ -73,11 +72,6 @@ public class LevelBuilder {
             int roomIndex = 0;
             int counter = 0;
 
-                /*
-                do{
-                    //TODO: runden überlegen
-                    roomIndex = (int) (Math.random() * level.rooms.size());
-                }while (level.rooms.get(roomIndex).getDoors().size() - == 4);*/
             boolean doAgain=false;
             while (true){
                 if (counter > 100){
@@ -134,6 +128,7 @@ public class LevelBuilder {
             level.rooms.add(room);
         }
 
+        //Adds all doors to neighbor rooms that did not get added yet
         for (Room room : level.rooms){
             List<Orientation> possibleNeighbors = room.getPossibleDoors();
 

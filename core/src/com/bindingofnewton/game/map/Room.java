@@ -59,7 +59,7 @@ public class Room {
         return map;
     }
 
-    public void setBodies(){
+    public void setDoorBodies(){
         int i=0;
         for (Orientation orientation : Orientation.values()){
 

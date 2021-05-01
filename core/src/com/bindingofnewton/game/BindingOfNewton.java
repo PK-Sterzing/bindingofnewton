@@ -199,6 +199,12 @@ public class BindingOfNewton extends Game{
 
 		checkDoorCollision();
 
+		//renders the players health
+		Sprite[] sprites = player.getHealthSprites();
+		for (int i=0; i< sprites.length; i++){
+			batch.draw(sprites[i], 15*i+20, level.getCurrentRoom().getMap().getProperties().get("height", Integer.class) * 32 - 20, 15, 15);
+		}
+
 		batch.end();
 
 		// Show debug info when the switch is on (SHIFT)
@@ -225,7 +231,7 @@ public class BindingOfNewton extends Game{
 		Room room = level.getNextRoom(orientation);
 
 
-		room.setBodies();
+		room.setDoorBodies();
 		TiledMap map = room.getMap();
 
 

@@ -21,6 +21,8 @@ public class Level {
 
     protected World world;
 
+    protected Level(){ }
+
     /*
     public Level(int width, int height, int minRooms, int randomMinRooms, int randomMaxRooms, ArrayList<Room> rooms){
         this.width = width;
