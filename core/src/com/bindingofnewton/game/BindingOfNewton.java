@@ -227,13 +227,36 @@ public class BindingOfNewton extends Game{
 		}
 
 		//Generating a new player and bodies of the new map
-		player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite("newton"));
 		Room room = level.getNextRoom(orientation);
-
 
 		room.setDoorBodies();
 		TiledMap map = room.getMap();
 
+		int width = (int) map.getProperties().get("width")*32;
+		int height = (int) map.getProperties().get("height")*32;
+
+		int playerX=0, playerY=0;
+		Sprite[] playerSprite = AssetsHandler.getInstance().getPlayerSprite("newton");
+
+		switch (orientation.getOpposite()){
+			case UP:
+				playerY = (int) (height-playerSprite[0].getHeight()-32);
+				playerX = (int) (width/2 - playerSprite[0].getWidth()/2);
+				break;
+			case DOWN:
+				playerY = (int) (playerSprite[0].getHeight()/2);
+				playerX = (int) (width/2 - playerSprite[0].getWidth()/2);
+				break;
+			case LEFT:
+				playerY = (int) (height/2 - playerSprite[0].getHeight()/2);
+				playerX = (int) (32 + playerSprite[0].getWidth()/2);
+				break;
+			case RIGHT:
+				playerY = (int) (height/2 - playerSprite[0].getHeight()/2);
+				playerX = (int) (width-32-playerSprite[0].getWidth());
+				break;
+		}
+		player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getPlayerSprite("newton"));
 
 		mapBuilder = new MapBodyBuilder(map);
 		mapBuilder.buildBodies(world);
