@@ -23,7 +23,7 @@ import com.bindingofnewton.game.map.Room;
 
 import java.util.ArrayList;
 
-public class BindingOfNewton extends Game{
+public class BindingOfNewton implements Screen{
 	private SpriteBatch batch;
 
 	private OrthographicCamera camera;
@@ -32,6 +32,8 @@ public class BindingOfNewton extends Game{
 	private InputHandler inputHandler;
 	private Player player;
 	private World world;
+
+	protected static Game game;
 
 
 	private Level level;
@@ -42,9 +44,13 @@ public class BindingOfNewton extends Game{
 	private Box2DDebugRenderer renderer;
 	public static boolean showDebugInfo = false;
 
+	public BindingOfNewton(Game game) {
+		this.game = game;
+	}
+
+
 	@Override
-	public void create () {
-		setScreen(new MainMenuScreen());
+	public void show() {
 		batch = new SpriteBatch();
 
 
@@ -98,7 +104,7 @@ public class BindingOfNewton extends Game{
 	}
 
 	@Override
-	public void render() {
+	public void render(float delta) {
 		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
 
 
@@ -310,6 +316,26 @@ public class BindingOfNewton extends Game{
 
 	}
 
+
+	@Override
+	public void resize(int width, int height) {
+
+	}
+
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
+
+	}
+
+	@Override
+	public void hide() {
+
+	}
 
 	@Override
 	public void dispose () {

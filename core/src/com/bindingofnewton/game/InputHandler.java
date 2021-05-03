@@ -46,6 +46,11 @@ public class InputHandler implements InputProcessor {
             }
             case Input.Keys.SHIFT_LEFT: {
                 BindingOfNewton.showDebugInfo = !BindingOfNewton.showDebugInfo;
+                break;
+            }
+            case Input.Keys.ESCAPE: {
+                BindingOfNewton.game.setScreen(new MainMenu(BindingOfNewton.game));
+                break;
             }
         }
 
