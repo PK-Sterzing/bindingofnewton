@@ -21,7 +21,6 @@ import com.bindingofnewton.game.map.LevelBuilder;
 import com.bindingofnewton.game.map.MapBodyBuilder;
 import com.bindingofnewton.game.map.Room;
 
-import java.util.ArrayList;
 
 public class BindingOfNewton implements Screen{
 	private SpriteBatch batch;
@@ -36,9 +35,8 @@ public class BindingOfNewton implements Screen{
 	protected static Game game;
 
 
-	private Level level;
+	protected static Level level;
 
-	public static ArrayList<Bullet> bullets;
 	private long lastShot = 0;
 
 	private Box2DDebugRenderer renderer;
@@ -54,19 +52,10 @@ public class BindingOfNewton implements Screen{
 		batch = new SpriteBatch();
 
 
-		Orientation orientation = Orientation.DOWN;
-
 		world = new World(new Vector2(0,0), true);
 		world.setContactListener(new ContactHandler());
 
-		level = new LevelBuilder()
-				.setWorld(world)
-				.setLevelWidthHeight(4, 4)
-				.setMinRooms(6)
-				.setAmountRandomRooms(0, 0)
-				.build();
-
-		makeNewLevel(orientation);
+		makeNewLevel();
 
 		inputHandler = new InputHandler(player);
 		Gdx.input.setInputProcessor(inputHandler);
@@ -97,9 +86,6 @@ public class BindingOfNewton implements Screen{
 		//camera.translate(-translateX * 0.5f, -translateY * 0.5f);
 
 
-		// Create Bullet array
-		bullets = new ArrayList<>();
-
 		camera.update();
 	}
 
@@ -126,7 +112,7 @@ public class BindingOfNewton implements Screen{
 						(int) (player.getSprite().getX() + player.getSprite().getWidth() / 2 - Bullet.WIDTH/2),
 						(int) (player.getSprite().getY()+ 20 + (player.getSprite().getHeight()/2)));
 				bullet.setMovement(new Vector2(0, bullet.getSpeed()));
-				bullets.add(bullet);
+				level.getCurrentRoom().addBullet(bullet);
 
 				lastShot = System.currentTimeMillis();
 			}
@@ -137,7 +123,7 @@ public class BindingOfNewton implements Screen{
 						(int)(player.getSprite().getX() + player.getSprite().getWidth()/2 - Bullet.WIDTH/2),
 						(int)player.getSprite().getY() - 20);
 				bullet.setMovement(new Vector2(0, -bullet.getSpeed()));
-				bullets.add(bullet);
+				level.getCurrentRoom().addBullet(bullet);
 
 				lastShot = System.currentTimeMillis();
 			}
@@ -148,7 +134,7 @@ public class BindingOfNewton implements Screen{
 						(int)player.getSprite().getX() - 20,
 						(int) (player.getSprite().getY() + player.getSprite().getHeight()/2));
 				bullet.setMovement(new Vector2(-bullet.getSpeed(), 0));
-				bullets.add(bullet);
+				level.getCurrentRoom().addBullet(bullet);
 
 				lastShot = System.currentTimeMillis();
 			}
@@ -159,20 +145,20 @@ public class BindingOfNewton implements Screen{
 						(int)(player.getSprite().getX() + 20 + (player.getSprite().getWidth()/2)),
 						(int)(player.getSprite().getY() + player.getSprite().getHeight()/2));
 				bullet.setMovement(new Vector2(bullet.getSpeed(), 0));
-				bullets.add(bullet);
+				level.getCurrentRoom().addBullet(bullet);
 
 				lastShot = System.currentTimeMillis();
 			}
 		}
 
-		// Update all bullets
-		for(int i = 0; i < bullets.size(); i++){
-			if(bullets.get(i).isRemove()){
+		// Update all bullets in current room
+		for(int i = 0; i < level.getCurrentRoom().getBullets().size(); i++){
+			if(level.getCurrentRoom().getBullets().get(i).isRemove()){
 			    // Destroy body, remove bullet
-				world.destroyBody(bullets.get(i).getBody());
-				bullets.remove(i);
+				world.destroyBody(level.getCurrentRoom().getBullets().get(i).getBody());
+				level.getCurrentRoom().getBullets().remove(i);
 			}else{
-				bullets.get(i).update();
+				level.getCurrentRoom().getBullets().get(i).update();
 			}
 
 		}
@@ -199,8 +185,8 @@ public class BindingOfNewton implements Screen{
 		player.move(new Vector2(x, y));
 
 		// Render all bullets
-		for(int i = 0; i < bullets.size(); i++){
-			bullets.get(i).getSprite().draw(batch);
+		for(int i = 0; i < level.getCurrentRoom().getBullets().size(); i++){
+			level.getCurrentRoom().getBullets().get(i).getSprite().draw(batch);
 		}
 
 		checkDoorCollision();
@@ -221,9 +207,38 @@ public class BindingOfNewton implements Screen{
 	}
 
 	/**
-	 * Sets up a new Level. Removes the old bodies of the map, loads and creates the new bodies of the map. A new player gets generated.
+	 * Creates new Level, removes all bodies, creates new Player, loads starting Room
 	 */
-	private void makeNewLevel(Orientation orientation){
+	private void makeNewLevel(){
+		Array<Body> bodies = new Array<>();
+		world.getBodies(bodies);
+
+		//Destroying all bodies of the map and of the player
+		for (Body body : bodies){
+			world.destroyBody(body);
+		}
+
+		// Make new level
+		level = new LevelBuilder()
+				.setWorld(world)
+				.setLevelWidthHeight(4, 4)
+				.setMinRooms(6)
+				.setAmountRandomRooms(0, 0)
+				.build();
+
+
+		// TODO: Set player spawn in the middle
+		player = new Player(world, 100, 100, AssetsHandler.getInstance().getEntitySprites("newton"));
+
+		makeNewRoom(Orientation.UP);
+	}
+
+	/**
+	 * Creates new Room, stores the coordinates and the orientation when entering the door
+	 * @param orientation
+	 */
+	private void makeNewRoom( Orientation orientation){
+		// Remove all bodies in current Room
 		Array<Body> bodies = new Array<>();
 		world.getBodies(bodies);
 
@@ -242,7 +257,7 @@ public class BindingOfNewton implements Screen{
 		int height = (int) map.getProperties().get("height")*32;
 
 		int playerX=0, playerY=0;
-		Sprite[] playerSprite = AssetsHandler.getInstance().getPlayerSprite("newton");
+		Sprite[] playerSprite = AssetsHandler.getInstance().getEntitySprites("newton");
 
 		switch (orientation.getOpposite()){
 			case UP:
@@ -262,7 +277,7 @@ public class BindingOfNewton implements Screen{
 				playerX = (int) (width-32-playerSprite[0].getWidth());
 				break;
 		}
-		player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getPlayerSprite("newton"));
+		player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getEntitySprites("newton"));
 
 		mapBuilder = new MapBodyBuilder(map);
 		mapBuilder.buildBodies(world);
@@ -306,7 +321,7 @@ public class BindingOfNewton implements Screen{
 
 					if (playerRectangle.overlaps(rectangle1)){
 						//The Player enters a door
-						makeNewLevel(orientation);
+						makeNewRoom(player.getOrientation());
 					}
 				}
 			}

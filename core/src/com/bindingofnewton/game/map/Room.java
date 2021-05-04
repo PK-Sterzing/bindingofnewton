@@ -12,8 +12,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bindingofnewton.game.Bullet;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.Orientation;
+import com.bindingofnewton.game.character.Enemy;
+import com.bindingofnewton.game.character.Player;
 
 import java.util.*;
 
@@ -25,12 +28,18 @@ public class Room {
     protected World world;
 
     protected ArrayList<Door> doors;
+    protected ArrayList<Bullet> bullets;
+    protected ArrayList<Enemy> enemies;
+    protected Player player;
 
     public Room(){
         ArrayList<String> mapList = (ArrayList<String>) AssetsHandler.getInstance().getMaps();
         int index = (int) (Math.random() * (mapList.size()-2) + 1);
         System.out.println(mapList.get(index));
         map = new TmxMapLoader().load(mapList.get(index));
+
+        bullets = new ArrayList<>();
+        enemies = new ArrayList<>();
     }
 
     public List<Orientation> getPossibleDoors(){
@@ -45,6 +54,16 @@ public class Room {
             if (!orientations.contains(orientation)) possibleOrientations.add(orientation);
         }
         return possibleOrientations;
+    }
+
+    public void addPlayer(Player player){
+        this.player = player;
+    }
+    public void addEnemies(Player player){
+        this.player = player;
+    }
+    public void addBullet(Bullet bullet){
+        this.bullets.add(bullet);
     }
 
     public int getX() {
@@ -112,5 +131,10 @@ public class Room {
     public ArrayList<Door> getDoors() {
         return doors;
     }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
 
 }

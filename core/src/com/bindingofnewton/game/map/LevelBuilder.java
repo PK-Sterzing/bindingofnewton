@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.character.Enemy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,14 @@ public class LevelBuilder {
         RoomBuilder builder = new RoomBuilder();
         int x = (int) (Math.random() * level.width);
         int y = (int) (Math.random() * level.height);
+
+        // Create all Enemies
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        for(int i = 0; i < enemies.size(); enemies.size()){
+            int startX = 200;
+            int startY = 200;
+            enemies.set(i, new Enemy(level.world, startX, startY, AssetsHandler.getInstance().getEntitySprites("newton")));
+        }
 
         Room startRoom = builder
                 .setPosition(x, y)

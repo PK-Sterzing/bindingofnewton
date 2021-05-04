@@ -37,7 +37,7 @@ public class AssetsHandler {
         return instance;
     }
 
-    public Sprite[] getPlayerSprite(String name){
+    public Sprite[] getEntitySprites(String name){
         Sprite[] array = new Sprite[4];
 
         array[0] = textureAtlas.createSprite(name + "-back");
@@ -53,6 +53,7 @@ public class AssetsHandler {
 
         return array;
     }
+
 
 
     public List<String> getMaps(){

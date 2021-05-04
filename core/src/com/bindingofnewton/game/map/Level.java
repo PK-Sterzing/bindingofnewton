@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.Orientation;
+import com.bindingofnewton.game.character.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +23,6 @@ public class Level {
     protected World world;
 
     protected Level(){ }
-
-    /*
-    public Level(int width, int height, int minRooms, int randomMinRooms, int randomMaxRooms, ArrayList<Room> rooms){
-        this.width = width;
-        this.height = height;
-        this.minRooms = minRooms;
-        this.randomMinRooms = randomMinRooms;
-        this.randomMaxRooms = randomMaxRooms;
-        this.rooms = rooms;
-    }
-
-     */
 
     public Room getNextRoom(Orientation orientation){
         if (currentRoom == null) {
