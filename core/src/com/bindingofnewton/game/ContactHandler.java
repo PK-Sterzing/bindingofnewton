@@ -2,8 +2,6 @@ package com.bindingofnewton.game;
 
 import com.badlogic.gdx.physics.box2d.*;
 
-import java.util.ArrayList;
-
 public class ContactHandler implements ContactListener {
 
     @Override
@@ -15,13 +13,12 @@ public class ContactHandler implements ContactListener {
     }
 
     private void removeFixture(Fixture fixtureA) {
-        ArrayList<Bullet> bullets = BindingOfNewton.level.getCurrentRoom().getBullets();
         if(fixtureA.getUserData() != null) {
             if (fixtureA.getUserData().equals("bullet")) {
-                for (int i = 0; i < bullets.size(); i++) {
-                    if (bullets.get(i).getBody().equals(fixtureA.getBody())) {
+                for (int i = 0; i < BindingOfNewton.level.getCurrentRoom().getBullets().size(); i++) {
+                    if (BindingOfNewton.level.getCurrentRoom().getBullets().get(i).getBody().equals(fixtureA.getBody())) {
                         // Setting remove flag
-                        bullets.get(i).setRemove(true);
+                        BindingOfNewton.level.getCurrentRoom().getBullets().get(i).setRemove(true);
                         break;
                     }
                 }
