@@ -29,13 +29,13 @@ public class Room {
 
     protected ArrayList<Door> doors;
     protected ArrayList<Bullet> bullets;
+
     protected ArrayList<Enemy> enemies;
     protected Player player;
 
     public Room(){
         ArrayList<String> mapList = (ArrayList<String>) AssetsHandler.getInstance().getMaps();
         int index = (int) (Math.random() * (mapList.size()-2) + 1);
-        System.out.println(mapList.get(index));
         map = new TmxMapLoader().load(mapList.get(index));
 
         bullets = new ArrayList<>();
@@ -59,8 +59,8 @@ public class Room {
     public void addPlayer(Player player){
         this.player = player;
     }
-    public void addEnemies(Player player){
-        this.player = player;
+    public void addEnemies(ArrayList<Enemy> enemies){
+        this.enemies = enemies;
     }
     public void addBullet(Bullet bullet){
         this.bullets.add(bullet);
@@ -136,5 +136,8 @@ public class Room {
         return bullets;
     }
 
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
 
 }

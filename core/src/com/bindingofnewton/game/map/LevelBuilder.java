@@ -60,13 +60,6 @@ public class LevelBuilder {
         int x = (int) (Math.random() * level.width);
         int y = (int) (Math.random() * level.height);
 
-        // Create all Enemies
-        ArrayList<Enemy> enemies = new ArrayList<>();
-        for(int i = 0; i < enemies.size(); enemies.size()){
-            int startX = 200;
-            int startY = 200;
-            enemies.set(i, new Enemy(level.world, startX, startY, AssetsHandler.getInstance().getEntitySprites("newton")));
-        }
 
         Room startRoom = builder
                 .setPosition(x, y)
