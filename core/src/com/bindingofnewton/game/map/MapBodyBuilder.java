@@ -39,6 +39,11 @@ public class MapBodyBuilder {
      */
     public void buildBodies(World world) {
         String layer = "border";
+        buildBodiesOfLayer(world, "border", "border");
+        buildBodiesOfLayer(world, "fire", "fire");
+    }
+
+    private void buildBodiesOfLayer(World world, String layer, Object userData){
         MapObjects objects = map.getLayers().get(layer).getObjects();
 
         for (MapObject object : objects) {
@@ -57,12 +62,12 @@ public class MapBodyBuilder {
                 BodyDef def = new BodyDef();
                 def.type = BodyDef.BodyType.StaticBody;
                 Body body = world.createBody(def);
-                body.createFixture(shape, 1);
+                Fixture fixture = body.createFixture(shape, 1);
+                fixture.setUserData(userData);
             }
 
-                //body.setTransform(getTransformedCenterForRectangle(rectangle), 0);
-                shape.dispose();
-
+            //body.setTransform(getTransformedCenterForRectangle(rectangle), 0);
+            shape.dispose();
         }
     }
 

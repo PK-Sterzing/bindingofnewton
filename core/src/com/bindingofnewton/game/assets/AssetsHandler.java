@@ -16,6 +16,7 @@ public class AssetsHandler {
 
     public static final String NEWTON = "./character/newton/packed/newton.atlas";
     public static final String NEWTON_RUN = "./character/newton_run/packed/newton-run.atlas";
+    public static final String BAT_RUN = "./character/bat_run/packed/enemy1.atlas";
     public static final String EDISON = "./character/edison/packed/edison.atlas";
     public static final String EDISON_RUN = "./character/edison_run/packed/edison_run.atlas";
     public static final String MAP_TILED_ABSOLUTE = Paths.get("").toAbsolutePath().toString() + "\\core\\assets\\" + "map\\tiled\\";
@@ -24,10 +25,8 @@ public class AssetsHandler {
 
 
     private static AssetsHandler instance;
-    private final TextureAtlas textureAtlas;
 
     private AssetsHandler(){
-        textureAtlas = new TextureAtlas(NEWTON);
     }
 
     public static AssetsHandler getInstance(){
@@ -37,13 +36,14 @@ public class AssetsHandler {
         return instance;
     }
 
-    public Sprite[] getEntitySprites(String name){
-        Sprite[] array = new Sprite[4];
+    public ArrayList<Sprite> getPlayerSprite(String atlasPath, String name){
+        TextureAtlas textureAtlas = new TextureAtlas(atlasPath);
+        ArrayList<Sprite> array = new ArrayList<>();
 
-        array[0] = textureAtlas.createSprite(name + "-back");
-        array[1] = textureAtlas.createSprite(name + "-front");
-        array[2] = textureAtlas.createSprite(name + "-left");
-        array[3] = textureAtlas.createSprite(name + "-right");
+        array.add(0, textureAtlas.createSprite(name + "-back"));
+        array.add(1, textureAtlas.createSprite(name + "-front"));
+        array.add(2, textureAtlas.createSprite(name + "-left"));
+        array.add(3, textureAtlas.createSprite(name + "-right"));
 
         for (Sprite sprite : array) {
             //array[i].setSize(array[i].);
@@ -55,12 +55,10 @@ public class AssetsHandler {
     }
 
 
-
     public List<String> getMaps(){
         ArrayList<String> list = new ArrayList<>();
         File file = new File(MAP_TILED_ABSOLUTE + START_MAP);
 
-        System.out.println(MAP_TILED_ABSOLUTE + START_MAP);
         if (file.exists()) list.add(MAP_TILED + file.getName());
 
         file = new File(MAP_TILED_ABSOLUTE + MAP);

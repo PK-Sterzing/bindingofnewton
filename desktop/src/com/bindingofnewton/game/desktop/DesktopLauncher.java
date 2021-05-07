@@ -7,7 +7,7 @@ import com.bindingofnewton.game.BindingOfNewtonGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.fullscreen = true;
+		config.fullscreen = false;
 		config.width = 1920;
 		config.height = 1081;
 

@@ -15,11 +15,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.map.Level;
 import com.bindingofnewton.game.map.LevelBuilder;
 import com.bindingofnewton.game.map.MapBodyBuilder;
 import com.bindingofnewton.game.map.Room;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 
 public class BindingOfNewton implements Screen{
@@ -63,7 +67,6 @@ public class BindingOfNewton implements Screen{
 		// Create debug renderer to make collisions visible
 		renderer = new Box2DDebugRenderer();
 
-
 		// Create Camera
 		camera = new OrthographicCamera();
 		//camera.zoom = 0.5f;
@@ -71,19 +74,6 @@ public class BindingOfNewton implements Screen{
 		float w = layer.getTileWidth() * layer.getWidth();
 		float h = layer.getTileHeight() * layer.getHeight();
 		camera.setToOrtho(false, w, h);
-
-		// Get map height and width
-		int mapWidth = mapBuilder.getMap().getProperties().get("width", Integer.class);
-		int mapHeight = mapBuilder.getMap().getProperties().get("height", Integer.class);
-		int tileWidth = mapBuilder.getMap().getProperties().get("tilewidth", Integer.class);
-		int tileHeight = mapBuilder.getMap().getProperties().get("tileheight", Integer.class);
-
-		int translateX = (Gdx.graphics.getWidth() - (mapWidth * tileWidth)) / 4;
-		int translateY = (Gdx.graphics.getHeight() - (mapHeight * tileHeight)) / 4;
-
-		// Move Camera to set map in the middle
-		// * 0.5 because the map is zoomed
-		//camera.translate(-translateX * 0.5f, -translateY * 0.5f);
 
 
 		camera.update();
@@ -121,6 +111,7 @@ public class BindingOfNewton implements Screen{
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
 			player.setOrientation(Orientation.DOWN);
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
+				System.out.println("Bullet down");
 				Bullet bullet = new Bullet(world,
 						(int)(player.getSprite().getX() + player.getSprite().getWidth()/2 - Bullet.WIDTH/2),
 						(int)player.getSprite().getY() - 20);
@@ -159,9 +150,11 @@ public class BindingOfNewton implements Screen{
 		for(int i = 0; i < level.getCurrentRoom().getBullets().size(); i++){
 			if(level.getCurrentRoom().getBullets().get(i).isRemove()){
 			    // Destroy body, remove bullet
+				System.out.println("Removed bullet");
 				world.destroyBody(level.getCurrentRoom().getBullets().get(i).getBody());
 				level.getCurrentRoom().getBullets().remove(i);
 			}else{
+				System.out.println("Updated bullet");
 				level.getCurrentRoom().getBullets().get(i).update();
 			}
 
@@ -186,7 +179,22 @@ public class BindingOfNewton implements Screen{
 			batch.draw(player.getSprite(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
 		}
 
+		// Move player
 		player.move(new Vector2(x, y));
+
+		// Move enemies
+		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
+			// Get random number
+			Random rand = new Random();
+			int randx = rand.nextInt(40) - 20;
+			int randy = rand.nextInt(40) - 20;
+			level.getCurrentRoom().getEnemies().get(i).move(new Vector2(randx, randy));
+		}
+
+		// Render enemies
+		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
+			level.getCurrentRoom().getEnemies().get(i).getSprite().draw(batch);
+		}
 
 		// Render all bullets
 		for(int i = 0; i < level.getCurrentRoom().getBullets().size(); i++){
@@ -219,7 +227,8 @@ public class BindingOfNewton implements Screen{
 
 		//Destroying all bodies of the map and of the player
 		for (Body body : bodies){
-			world.destroyBody(body);
+			if (!(body.getUserData() instanceof Player))
+				world.destroyBody(body);
 		}
 
 		// Make new level
@@ -232,7 +241,7 @@ public class BindingOfNewton implements Screen{
 
 
 		// TODO: Set player spawn in the middle
-		player = new Player(world, 100, 100, AssetsHandler.getInstance().getEntitySprites("newton"));
+		player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON, "newton"));
 
 		makeNewRoom(Orientation.UP);
 	}
@@ -248,11 +257,21 @@ public class BindingOfNewton implements Screen{
 
 		//Destroying all bodies of the map and of the player
 		for (Body body : bodies){
-			world.destroyBody(body);
+		    if(!(body.getUserData() instanceof Player)){
+		    	world.destroyBody(body);
+			}
 		}
 
-		//Generating a new player and bodies of the new map
+		// Load next Room
 		Room room = level.getNextRoom(orientation);
+
+		// Create Enemies
+		ArrayList<Enemy> enemies = new ArrayList<>();
+		for(int i = 0; i < 5; i++){
+			enemies.add(new Enemy(world, 100, 100, AssetsHandler.getInstance().getSingleSprite(
+					"./character/bat_run/run-front1.png")));
+		}
+		room.addEnemies(enemies);
 
 		room.setDoorBodies();
 		TiledMap map = room.getMap();
@@ -261,27 +280,28 @@ public class BindingOfNewton implements Screen{
 		int height = (int) map.getProperties().get("height")*32;
 
 		int playerX=0, playerY=0;
-		Sprite[] playerSprite = AssetsHandler.getInstance().getEntitySprites("newton");
+		ArrayList<Sprite> playerSprite = AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON, "newton");
 
 		switch (orientation.getOpposite()){
 			case UP:
-				playerY = (int) (height-playerSprite[0].getHeight()-32);
-				playerX = (int) (width/2 - playerSprite[0].getWidth()/2);
+				playerY = (int) (height-playerSprite.get(0).getHeight()-32);
+				playerX = (int) (width/2 - playerSprite.get(0).getWidth()/2);
 				break;
 			case DOWN:
-				playerY = (int) (playerSprite[0].getHeight()/2);
-				playerX = (int) (width/2 - playerSprite[0].getWidth()/2);
+				playerY = (int) (playerSprite.get(0).getHeight()/2);
+				playerX = (int) (width/2 - playerSprite.get(0).getWidth()/2);
 				break;
 			case LEFT:
-				playerY = (int) (height/2 - playerSprite[0].getHeight()/2);
-				playerX = (int) (32 + playerSprite[0].getWidth()/2);
+				playerY = (int) (height/2 - playerSprite.get(0).getHeight()/2);
+				playerX = (int) (32 + playerSprite.get(0).getWidth()/2);
 				break;
 			case RIGHT:
-				playerY = (int) (height/2 - playerSprite[0].getHeight()/2);
-				playerX = (int) (width-32-playerSprite[0].getWidth());
+				playerY = (int) (height/2 - playerSprite.get(0).getHeight()/2);
+				playerX = (int) (width-32-playerSprite.get(0).getWidth());
 				break;
 		}
-		player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getEntitySprites("newton"));
+		// TODO: Don't create new player, move player to startx starty
+		player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON,"newton"));
 
 		mapBuilder = new MapBodyBuilder(map);
 		mapBuilder.buildBodies(world);

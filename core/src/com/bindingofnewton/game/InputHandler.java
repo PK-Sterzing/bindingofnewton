@@ -86,7 +86,6 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        System.out.println(activeShootKeys);
 
         if (activeShootKeys.contains(keycode)) {
             activeShootKeys.remove((Object) keycode);
