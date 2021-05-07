@@ -107,6 +107,7 @@ public class BindingOfNewton implements Screen{
 
 		// Create Bullet on arrow click
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+			player.setOrientation(Orientation.UP);
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate){
 				Bullet bullet = new Bullet(world,
 						(int) (player.getSprite().getX() + player.getSprite().getWidth() / 2 - Bullet.WIDTH/2),
@@ -118,6 +119,7 @@ public class BindingOfNewton implements Screen{
 			}
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+			player.setOrientation(Orientation.DOWN);
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
 				Bullet bullet = new Bullet(world,
 						(int)(player.getSprite().getX() + player.getSprite().getWidth()/2 - Bullet.WIDTH/2),
@@ -129,6 +131,7 @@ public class BindingOfNewton implements Screen{
 			}
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+			player.setOrientation(Orientation.LEFT);
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
 				Bullet bullet = new Bullet(world,
 						(int)player.getSprite().getX() - 20,
@@ -140,6 +143,7 @@ public class BindingOfNewton implements Screen{
 			}
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+			player.setOrientation(Orientation.RIGHT);
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
 				Bullet bullet = new Bullet(world,
 						(int)(player.getSprite().getX() + 20 + (player.getSprite().getWidth()/2)),

@@ -13,6 +13,8 @@ public class InputHandler implements InputProcessor {
     protected boolean isShooting;
     private ArrayList<Integer> activeMoveKeys;
     private ArrayList<Integer> activeShootKeys;
+    private int x;
+    private int y;
 
     public InputHandler(Player player){
         activeMoveKeys = new ArrayList<>();
@@ -22,12 +24,30 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+
+
         if (keycode == Input.Keys.W || keycode == Input.Keys.S || keycode == Input.Keys.A || keycode == Input.Keys.D) {
             activeMoveKeys.add(keycode);
-            isMoving = true;
         }
 
         switch (keycode) {
+            case Input.Keys.W: {
+                y += 1;
+                break;
+            }
+            case Input.Keys.S: {
+                y -= 1;
+                break;
+            }
+            case Input.Keys.A: {
+                x -= 1;
+                break;
+            }
+            case Input.Keys.D: {
+                x += 1;
+                break;
+            }
+            /*
             case Input.Keys.LEFT: {
                 player.setOrientation(Orientation.LEFT);
                 break;
@@ -44,6 +64,8 @@ public class InputHandler implements InputProcessor {
                 player.setOrientation(Orientation.DOWN);
                 break;
             }
+
+             */
             case Input.Keys.SHIFT_LEFT: {
                 BindingOfNewton.showDebugInfo = !BindingOfNewton.showDebugInfo;
                 break;
@@ -52,6 +74,11 @@ public class InputHandler implements InputProcessor {
                 BindingOfNewton.game.setScreen(new MainMenu(BindingOfNewton.game));
                 break;
             }
+        }
+
+        isMoving = false;
+        if ((activeMoveKeys.contains(Input.Keys.W) ^ activeMoveKeys.contains(Input.Keys.S)) || (activeMoveKeys.contains(Input.Keys.A) ^ activeMoveKeys.contains(Input.Keys.D))) {
+            isMoving = true;
         }
 
         return true;
@@ -71,6 +98,11 @@ public class InputHandler implements InputProcessor {
             isMoving = false;
         } else if (activeShootKeys.isEmpty()) {
             isShooting = false;
+        }
+
+        isMoving = false;
+        if ((activeMoveKeys.contains(Input.Keys.W) ^ activeMoveKeys.contains(Input.Keys.S)) || (activeMoveKeys.contains(Input.Keys.A) ^ activeMoveKeys.contains(Input.Keys.D))) {
+            isMoving = true;
         }
 
         return true;
