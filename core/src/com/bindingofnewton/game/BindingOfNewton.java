@@ -67,7 +67,6 @@ public class BindingOfNewton implements Screen{
 		// Create debug renderer to make collisions visible
 		renderer = new Box2DDebugRenderer();
 
-
 		// Create Camera
 		camera = new OrthographicCamera();
 		//camera.zoom = 0.5f;
@@ -75,19 +74,6 @@ public class BindingOfNewton implements Screen{
 		float w = layer.getTileWidth() * layer.getWidth();
 		float h = layer.getTileHeight() * layer.getHeight();
 		camera.setToOrtho(false, w, h);
-
-		// Get map height and width
-		int mapWidth = mapBuilder.getMap().getProperties().get("width", Integer.class);
-		int mapHeight = mapBuilder.getMap().getProperties().get("height", Integer.class);
-		int tileWidth = mapBuilder.getMap().getProperties().get("tilewidth", Integer.class);
-		int tileHeight = mapBuilder.getMap().getProperties().get("tileheight", Integer.class);
-
-		int translateX = (Gdx.graphics.getWidth() - (mapWidth * tileWidth)) / 4;
-		int translateY = (Gdx.graphics.getHeight() - (mapHeight * tileHeight)) / 4;
-
-		// Move Camera to set map in the middle
-		// * 0.5 because the map is zoomed
-		//camera.translate(-translateX * 0.5f, -translateY * 0.5f);
 
 
 		camera.update();
@@ -237,7 +223,8 @@ public class BindingOfNewton implements Screen{
 
 		//Destroying all bodies of the map and of the player
 		for (Body body : bodies){
-			world.destroyBody(body);
+			if (!(body.getUserData() instanceof Player))
+				world.destroyBody(body);
 		}
 
 		// Make new level

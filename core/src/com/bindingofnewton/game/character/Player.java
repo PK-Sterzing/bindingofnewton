@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+
 import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
@@ -14,17 +15,19 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import java.util.ArrayList;
 
 public class Player extends Entity {
-    Animation<TextureRegion> up;
-    Animation<TextureRegion> down;
-    Animation<TextureRegion> left;
-    Animation<TextureRegion> right;
-    TextureAtlas textureAtlas;
-
-    private float deltaTime = 0f;
+    private static final float MAX_HEALTH = 10;
     private final float SPEED_ANIMATION = 0.04f;
 
+    private Animation<TextureRegion> up;
+    private Animation<TextureRegion> down;
+    private Animation<TextureRegion> left;
+    private Animation<TextureRegion> right;
+    private TextureAtlas textureAtlas;
+
+    private float deltaTime = 0f;
 
     public Player(World world, int startX, int startY, ArrayList<Sprite> sprites) {
+
         orientation = Orientation.DOWN;
         this.sprites = sprites;
         x = startX;
@@ -60,7 +63,10 @@ public class Player extends Entity {
 
         Fixture fixture = body.createFixture(fixtureDef);
 
+        fixture.setUserData(this);
+
         polygonShape.dispose();
+
         textureAtlas = new TextureAtlas(AssetsHandler.NEWTON_RUN);
 
         up = new Animation<TextureRegion>(SPEED_ANIMATION, textureAtlas.findRegions("run-back"), Animation.PlayMode.LOOP);
@@ -78,24 +84,40 @@ public class Player extends Entity {
             case DOWN: return down.getKeyFrame(deltaTime, true);
             case LEFT: return left.getKeyFrame(deltaTime, true);
             case RIGHT: return right.getKeyFrame(deltaTime, true);
-            // TODO: Add also for up down right and left animations!
             default: return up.getKeyFrame(deltaTime, true);
         }
     }
 
+    /**
+     * Returns the sprites of the current health of the player
+     * @return array with sprites
+     */
     public Sprite[] getHealthSprites(){
-        Sprite[] sprites = new Sprite[(int) Math.ceil(health)];
+        Sprite[] sprites = new Sprite[(int) MAX_HEALTH];
 
         for (int i=0; i<Math.ceil(health); i++){
-            if (i+1 == Math.ceil(health) && health % i < 1){
+            if (i == Math.floor(health) && Math.ceil(health) - health == 0.5f){
                 sprites[i] = AssetsHandler.getInstance().getSingleSprite("half_heart.png");
             }else{
                 sprites[i] = AssetsHandler.getInstance().getSingleSprite("full_heart.png");
             }
         }
 
+        for (int i = (int) Math.ceil(health); i<MAX_HEALTH; i++){
+            sprites[i] = AssetsHandler.getInstance().getSingleSprite("empty_heart.png");
+        }
+
         return sprites;
     }
+
+    /**
+     * Adds/subtracts the health by delta
+     * @param delta
+     */
+    public void setHealth(float delta){
+        health += delta;
+    }
+
 
     /**
      * Moves the player by a Vector2

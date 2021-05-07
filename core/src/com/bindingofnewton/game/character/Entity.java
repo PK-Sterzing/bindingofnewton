@@ -27,6 +27,14 @@ public abstract class Entity {
     protected float health;
 
 
+    //<editor-fold desc="Constructors">-
+
+
+
+    //</editor-fold>
+
+    //<editor-fold desc="Getter and Setter">
+
     /**
      * Gets the x-coordinate of the Entity
      * @return x-coordinate
@@ -63,6 +71,14 @@ public abstract class Entity {
             case UP:
             default: return sprites.get(0);
         }
+    }
+
+    /**
+     * Returns the health of the current entity
+     * @return health
+     */
+    public float getHealth() {
+        return health;
     }
 
     //</editor-fold>
