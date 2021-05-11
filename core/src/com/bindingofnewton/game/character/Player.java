@@ -41,6 +41,7 @@ public class Player extends Entity {
         characterHeight = 28;
 
         body = world.createBody(def);
+        body.setUserData(this);
 
         PolygonShape polygonShape = new PolygonShape();
 
@@ -62,8 +63,6 @@ public class Player extends Entity {
         //fixtureDef.density = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);
-
-        fixture.setUserData(this);
 
         polygonShape.dispose();
 
@@ -149,6 +148,11 @@ public class Player extends Entity {
             sprites.get(0).setPosition(body.getPosition().x, body.getPosition().y);
         }
         polygon.setPosition(body.getPosition().x, body.getPosition().y);
+    }
+
+    public void transform(Vector2 vector){
+        this.body.setLinearVelocity(vector);
+        this.move(new Vector2(0, 0));
     }
 
 }

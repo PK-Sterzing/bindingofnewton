@@ -140,4 +140,9 @@ public class Room {
         return enemies;
     }
 
+
+    public Player getPlayer() {
+        return player;
+    }
+
 }

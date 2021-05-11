@@ -11,22 +11,22 @@ public class ContactHandler implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
 
 
-        if (fixtureA.getUserData() instanceof Bullet){
-            if (fixtureB.getUserData() instanceof Player) {
-                ((Player) fixtureB.getUserData()).setHealth(-0.5f);
+        if (bodyA.getUserData() instanceof Bullet){
+            if (bodyB.getUserData() instanceof Player) {
+                ((Player) bodyB.getUserData()).setHealth(-0.5f);
             }
 
-            removeBulletFixture((Bullet) fixtureA.getUserData());
-        }else if (fixtureB.getUserData() instanceof Bullet) {
-            if (fixtureA.getUserData() instanceof Player) {
-                ((Player) fixtureA.getUserData()).setHealth(-0.5f);
+            removeBulletFixture((Bullet) bodyA.getUserData());
+        }else if (bodyB.getUserData() instanceof Bullet) {
+            if (bodyA.getUserData() instanceof Player) {
+                ((Player) bodyA.getUserData()).setHealth(-0.5f);
             }
 
-            removeBulletFixture((Bullet) fixtureB.getUserData());
+            removeBulletFixture((Bullet) bodyB.getUserData());
         }
 
 

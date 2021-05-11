@@ -33,11 +33,9 @@ public class BindingOfNewton implements Screen{
 	private MapBodyBuilder mapBuilder;
 
 	private InputHandler inputHandler;
-	private Player player;
 	private World world;
 
 	protected static Game game;
-
 
 	protected static Level level;
 
@@ -61,7 +59,7 @@ public class BindingOfNewton implements Screen{
 
 		makeNewLevel();
 
-		inputHandler = new InputHandler(player);
+		inputHandler = new InputHandler();
 		Gdx.input.setInputProcessor(inputHandler);
 
 		// Create debug renderer to make collisions visible
@@ -95,13 +93,20 @@ public class BindingOfNewton implements Screen{
 		int x = 0;
 		int y = 0;
 
-		// Create Bullet on arrow click
+		Player player = level.getCurrentRoom().getPlayer();
+
+		//<editor-fold desc="Creating Bullets test">
+		float posX = player.getBody().getPosition().x;
+		float posY = player.getBody().getPosition().y;
+		float width = player.getSprite().getWidth();
+		float height = player.getSprite().getHeight();
+
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 			player.setOrientation(Orientation.UP);
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate){
 				Bullet bullet = new Bullet(world,
-						(int) (player.getSprite().getX() + player.getSprite().getWidth() / 2 - Bullet.WIDTH/2),
-						(int) (player.getSprite().getY()+ 20 + (player.getSprite().getHeight()/2)));
+						(int) (posX + width / 2 - Bullet.WIDTH/2),
+						(int) (posY + 20 + (height/2)));
 				bullet.setMovement(new Vector2(0, bullet.getSpeed()));
 				level.getCurrentRoom().addBullet(bullet);
 
@@ -111,10 +116,9 @@ public class BindingOfNewton implements Screen{
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
 			player.setOrientation(Orientation.DOWN);
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
-				System.out.println("Bullet down");
 				Bullet bullet = new Bullet(world,
-						(int)(player.getSprite().getX() + player.getSprite().getWidth()/2 - Bullet.WIDTH/2),
-						(int)player.getSprite().getY() - 20);
+						(int)( posX + width/2 - Bullet.WIDTH/2),
+						(int)posY - 20);
 				bullet.setMovement(new Vector2(0, -bullet.getSpeed()));
 				level.getCurrentRoom().addBullet(bullet);
 
@@ -125,36 +129,35 @@ public class BindingOfNewton implements Screen{
 			player.setOrientation(Orientation.LEFT);
 			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
 				Bullet bullet = new Bullet(world,
-						(int)player.getSprite().getX() - 20,
-						(int) (player.getSprite().getY() + player.getSprite().getHeight()/2));
+						(int)posX - 20,
+						(int) (posY + height/2));
 				bullet.setMovement(new Vector2(-bullet.getSpeed(), 0));
 				level.getCurrentRoom().addBullet(bullet);
 
 				lastShot = System.currentTimeMillis();
 			}
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			player.setOrientation(Orientation.RIGHT);
-			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
+			if (System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
 				Bullet bullet = new Bullet(world,
-						(int)(player.getSprite().getX() + 20 + (player.getSprite().getWidth()/2)),
-						(int)(player.getSprite().getY() + player.getSprite().getHeight()/2));
+						(int) (posX + 20 + (width/ 2)),
+						(int) (posY + height/ 2));
 				bullet.setMovement(new Vector2(bullet.getSpeed(), 0));
 				level.getCurrentRoom().addBullet(bullet);
 
 				lastShot = System.currentTimeMillis();
 			}
 		}
+		//</editor-fold>
 
 		// Update all bullets in current room
 		for(int i = 0; i < level.getCurrentRoom().getBullets().size(); i++){
 			if(level.getCurrentRoom().getBullets().get(i).isRemove()){
-			    // Destroy body, remove bullet
-				System.out.println("Removed bullet");
+				// Destroy body, remove bullet
 				world.destroyBody(level.getCurrentRoom().getBullets().get(i).getBody());
 				level.getCurrentRoom().getBullets().remove(i);
 			}else{
-				System.out.println("Updated bullet");
 				level.getCurrentRoom().getBullets().get(i).update();
 			}
 
@@ -222,13 +225,13 @@ public class BindingOfNewton implements Screen{
 	 * Creates new Level, removes all bodies, creates new Player, loads starting Room
 	 */
 	private void makeNewLevel(){
+		System.out.println("Making new Level");
 		Array<Body> bodies = new Array<>();
 		world.getBodies(bodies);
 
 		//Destroying all bodies of the map and of the player
 		for (Body body : bodies){
-			if (!(body.getUserData() instanceof Player))
-				world.destroyBody(body);
+			world.destroyBody(body);
 		}
 
 		// Make new level
@@ -241,7 +244,8 @@ public class BindingOfNewton implements Screen{
 
 
 		// TODO: Set player spawn in the middle
-		player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON, "newton"));
+		Player player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON, "newton"));
+		level.getCurrentRoom().addPlayer(player);
 
 		makeNewRoom(Orientation.UP);
 	}
@@ -251,24 +255,35 @@ public class BindingOfNewton implements Screen{
 	 * @param orientation
 	 */
 	private void makeNewRoom( Orientation orientation){
+		System.out.println("Making new Room: " + level.getCurrentRoom());
+		System.out.println("Player: " + level.getCurrentRoom().getPlayer());
+		System.out.println("User Data in makeNewRoom: " + level.getCurrentRoom().getPlayer().getBody().getUserData());
+		Player playerCached = level.getCurrentRoom().getPlayer();
 		// Remove all bodies in current Room
 		Array<Body> bodies = new Array<>();
 		world.getBodies(bodies);
 
 		//Destroying all bodies of the map and of the player
+		System.out.println("All Bodies: " + bodies);
 		for (Body body : bodies){
-		    if(!(body.getUserData() instanceof Player)){
+			System.out.println(body.getType());
+			if(!(body.getUserData() instanceof Player)){
+				System.out.println("Removing body: " + body.getUserData());
 		    	world.destroyBody(body);
+			}
+		    if(body.getUserData() instanceof Player){
+				System.out.println("Player found and not removed!");
 			}
 		}
 
 		// Load next Room
 		Room room = level.getNextRoom(orientation);
+		level.getCurrentRoom().addPlayer(playerCached);
 
 		// Create Enemies
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		for(int i = 0; i < 5; i++){
-			enemies.add(new Enemy(world, 100, 100, AssetsHandler.getInstance().getSingleSprite(
+			enemies.add(new Enemy(world, 400, 400, AssetsHandler.getInstance().getSingleSprite(
 					"./character/bat_run/run-front1.png")));
 		}
 		room.addEnemies(enemies);
@@ -300,8 +315,10 @@ public class BindingOfNewton implements Screen{
 				playerX = (int) (width-32-playerSprite.get(0).getWidth());
 				break;
 		}
-		// TODO: Don't create new player, move player to startx starty
-		player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON,"newton"));
+		//player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON,"newton"));
+		System.out.println("Player: " + level.getCurrentRoom().getPlayer());
+		level.getCurrentRoom().getPlayer().transform(new Vector2(playerX, playerY));
+
 
 		mapBuilder = new MapBodyBuilder(map);
 		mapBuilder.buildBodies(world);
@@ -313,7 +330,7 @@ public class BindingOfNewton implements Screen{
 	private void checkDoorCollision() {
 		String layerName = "doors-";
 
-		Rectangle playerRectangle = player.getPolygon().getBoundingRectangle();
+		Rectangle playerRectangle = level.getCurrentRoom().getPlayer().getPolygon().getBoundingRectangle();
 
 		for (Orientation orientation : Orientation.values()){
 			MapLayer layer = level.getCurrentRoom().getMap().getLayers().get(layerName + orientation.name());
@@ -321,9 +338,9 @@ public class BindingOfNewton implements Screen{
 
 			MapObjects objects = layer.getObjects();
 
-			for (MapObject object : objects){
-				if (object instanceof RectangleMapObject){
-					Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+			for(int i = 0; i < objects.getCount(); i++){
+				if (objects.get(i) instanceof RectangleMapObject){
+					Rectangle rectangle = ((RectangleMapObject) objects.get(i)).getRectangle();
 
 					Vector2 position, size;
 					if (orientation == Orientation.DOWN || orientation == Orientation.UP){
@@ -345,7 +362,7 @@ public class BindingOfNewton implements Screen{
 
 					if (playerRectangle.overlaps(rectangle1)){
 						//The Player enters a door
-						makeNewRoom(player.getOrientation());
+						makeNewRoom(level.getCurrentRoom().getPlayer().getOrientation());
 					}
 				}
 			}

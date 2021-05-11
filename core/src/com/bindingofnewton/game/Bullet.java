@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.assets.AssetsHandler;
 
 public class Bullet {
-    private int speed = 50;
+    private int speed = 150;
     public static final int WIDTH = 9;
     public static final int HEIGHT = 8;
     private final Body body;
@@ -25,6 +25,7 @@ public class Bullet {
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(startX , startY );
         body = world.createBody(def);
+        body.setUserData(this);
 
         // Create shape for Bullet
         polygonShape = new PolygonShape();
@@ -41,7 +42,6 @@ public class Bullet {
 
 
         Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
 
         polygonShape.dispose();
 

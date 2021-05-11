@@ -62,8 +62,8 @@ public class MapBodyBuilder {
                 BodyDef def = new BodyDef();
                 def.type = BodyDef.BodyType.StaticBody;
                 Body body = world.createBody(def);
+                body.setUserData(userData);
                 Fixture fixture = body.createFixture(shape, 1);
-                fixture.setUserData(userData);
             }
 
             //body.setTransform(getTransformedCenterForRectangle(rectangle), 0);
