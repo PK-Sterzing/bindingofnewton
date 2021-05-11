@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -23,7 +22,6 @@ import com.bindingofnewton.game.map.MapBodyBuilder;
 import com.bindingofnewton.game.map.Room;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 
 public class BindingOfNewton implements Screen{
@@ -163,6 +161,19 @@ public class BindingOfNewton implements Screen{
 
 		}
 
+		// Remove all dead Enemies
+		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
+			if(level.getCurrentRoom().getEnemies().get(i).isDead()){
+				world.destroyBody(level.getCurrentRoom().getEnemies().get(i).getBody());
+				level.getCurrentRoom().getEnemies().remove(i);
+			}
+		}
+		// Remove dead player
+		if(level.getCurrentRoom().getPlayer().isDead()){
+			world.destroyBody(level.getCurrentRoom().getPlayer().getBody());
+			level.getCurrentRoom().setPlayer(null);
+		}
+
 		batch.begin();
 		if (inputHandler.isMoving) {
 			if(Gdx.input.isKeyPressed(Input.Keys.W)){
@@ -188,15 +199,19 @@ public class BindingOfNewton implements Screen{
 		// Move enemies
 		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
 			// Get random number
+			/*
 			Random rand = new Random();
 			int randx = rand.nextInt(40) - 20;
 			int randy = rand.nextInt(40) - 20;
-			level.getCurrentRoom().getEnemies().get(i).move(new Vector2(randx, randy));
+
+			 */
+			level.getCurrentRoom().getEnemies().get(i).move(new Vector2(2,2));
 		}
 
 		// Render enemies
 		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
 			level.getCurrentRoom().getEnemies().get(i).getSprite().draw(batch);
+			System.out.println(level.getCurrentRoom().getEnemies().get(i).getHealth());
 		}
 
 		// Render all bullets
@@ -245,7 +260,7 @@ public class BindingOfNewton implements Screen{
 
 		// TODO: Set player spawn in the middle
 		Player player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON, "newton"));
-		level.getCurrentRoom().addPlayer(player);
+		level.getCurrentRoom().setPlayer(player);
 
 		makeNewRoom(Orientation.UP);
 	}
@@ -255,38 +270,29 @@ public class BindingOfNewton implements Screen{
 	 * @param orientation
 	 */
 	private void makeNewRoom( Orientation orientation){
-		System.out.println("Making new Room: " + level.getCurrentRoom());
-		System.out.println("Player: " + level.getCurrentRoom().getPlayer());
-		System.out.println("User Data in makeNewRoom: " + level.getCurrentRoom().getPlayer().getBody().getUserData());
 		Player playerCached = level.getCurrentRoom().getPlayer();
 		// Remove all bodies in current Room
 		Array<Body> bodies = new Array<>();
 		world.getBodies(bodies);
 
 		//Destroying all bodies of the map and of the player
-		System.out.println("All Bodies: " + bodies);
 		for (Body body : bodies){
-			System.out.println(body.getType());
 			if(!(body.getUserData() instanceof Player)){
-				System.out.println("Removing body: " + body.getUserData());
 		    	world.destroyBody(body);
-			}
-		    if(body.getUserData() instanceof Player){
-				System.out.println("Player found and not removed!");
 			}
 		}
 
 		// Load next Room
 		Room room = level.getNextRoom(orientation);
-		level.getCurrentRoom().addPlayer(playerCached);
+		level.getCurrentRoom().setPlayer(playerCached);
 
 		// Create Enemies
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		for(int i = 0; i < 5; i++){
-			enemies.add(new Enemy(world, 400, 400, AssetsHandler.getInstance().getSingleSprite(
+			enemies.add(new Enemy(world, 200, 200, AssetsHandler.getInstance().getSingleSprite(
 					"./character/bat_run/run-front1.png")));
 		}
-		room.addEnemies(enemies);
+		level.getCurrentRoom().addEnemies(enemies);
 
 		room.setDoorBodies();
 		TiledMap map = room.getMap();
@@ -315,8 +321,6 @@ public class BindingOfNewton implements Screen{
 				playerX = (int) (width-32-playerSprite.get(0).getWidth());
 				break;
 		}
-		//player = new Player(world, playerX, playerY, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON,"newton"));
-		System.out.println("Player: " + level.getCurrentRoom().getPlayer());
 		level.getCurrentRoom().getPlayer().transform(new Vector2(playerX, playerY));
 
 

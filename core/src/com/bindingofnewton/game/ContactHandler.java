@@ -1,6 +1,8 @@
 package com.bindingofnewton.game;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.bindingofnewton.game.character.Enemy;
+import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
 
 import javax.naming.Binding;
@@ -17,13 +19,22 @@ public class ContactHandler implements ContactListener {
 
         if (bodyA.getUserData() instanceof Bullet){
             if (bodyB.getUserData() instanceof Player) {
-                ((Player) bodyB.getUserData()).setHealth(-0.5f);
+                ((Player) bodyB.getUserData()).setHealth(-1.0f);
+            }
+            if (bodyB.getUserData() instanceof Enemy) {
+                ((Enemy) bodyB.getUserData()).setHealth(-1.0f);
             }
 
             removeBulletFixture((Bullet) bodyA.getUserData());
         }else if (bodyB.getUserData() instanceof Bullet) {
             if (bodyA.getUserData() instanceof Player) {
-                ((Player) bodyA.getUserData()).setHealth(-0.5f);
+                ((Player) bodyA.getUserData()).setHealth(-1.0f);
+            }
+            if (bodyA.getUserData() instanceof Enemy) {
+                ((Enemy) bodyA.getUserData()).setHealth(-1.0f);
+            }
+            if(((Entity) bodyA.getUserData()).getHealth() <= 0.0){
+                ((Entity) bodyA.getUserData()).setDead(true);
             }
 
             removeBulletFixture((Bullet) bodyB.getUserData());
@@ -58,19 +69,19 @@ public class ContactHandler implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
 
         //TODO: player kriegt zur zeit jede sekunde schaden, aber nur wenn er wieder am feuer angeht. Ändern!
-        if (fixtureA.getUserData() instanceof Player && fixtureB.getUserData() != null && fixtureB.getUserData().equals("fire")){
+        if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")){
             if (System.currentTimeMillis() - fireLastContact > 1000){
-                ((Player) fixtureA.getUserData()).setHealth(-0.5f);
+                ((Player) bodyA.getUserData()).setHealth(-0.5f);
             }
             fireLastContact = System.currentTimeMillis();
 
-        }else if (fixtureB.getUserData() instanceof Player && fixtureA.getUserData() != null && fixtureA.getUserData().equals("fire")){
+        }else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() != null && bodyA.getUserData().equals("fire")){
             if (System.currentTimeMillis() - fireLastContact > 1000){
-                ((Player) fixtureB.getUserData()).setHealth(-0.5f);
+                ((Player) bodyB.getUserData()).setHealth(-0.5f);
             }
             fireLastContact = System.currentTimeMillis();
         }

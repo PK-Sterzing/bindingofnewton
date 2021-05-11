@@ -27,6 +27,9 @@ public abstract class Entity {
     protected float health;
 
 
+    protected boolean isDead = false;
+
+
     //<editor-fold desc="Constructors">-
 
 
@@ -41,6 +44,14 @@ public abstract class Entity {
      */
     public int getX() {
         return x;
+    }
+
+    /**
+     * Adds/subtracts the health by delta
+     * @param delta
+     */
+    public void setHealth(float delta){
+        health += delta;
     }
 
     public Body getBody() {
@@ -102,4 +113,11 @@ public abstract class Entity {
         this.orientation = orientation;
     }
 
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
 }
