@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class InputHandler implements InputProcessor {
 
-    private Player player;
     protected boolean isMoving;
     protected boolean isShooting;
     private ArrayList<Integer> activeMoveKeys;
@@ -16,10 +15,9 @@ public class InputHandler implements InputProcessor {
     private int x;
     private int y;
 
-    public InputHandler(Player player){
+    public InputHandler(){
         activeMoveKeys = new ArrayList<>();
         activeShootKeys = new ArrayList<>();
-        this.player = player;
     }
 
     @Override
@@ -47,25 +45,7 @@ public class InputHandler implements InputProcessor {
                 x += 1;
                 break;
             }
-            /*
-            case Input.Keys.LEFT: {
-                player.setOrientation(Orientation.LEFT);
-                break;
-            }
-            case Input.Keys.RIGHT: {
-                player.setOrientation(Orientation.RIGHT);
-                break;
-            }
-            case Input.Keys.UP: {
-                player.setOrientation(Orientation.UP);
-                break;
-            }
-            case Input.Keys.DOWN: {
-                player.setOrientation(Orientation.DOWN);
-                break;
-            }
 
-             */
             case Input.Keys.SHIFT_LEFT: {
                 BindingOfNewton.showDebugInfo = !BindingOfNewton.showDebugInfo;
                 break;
