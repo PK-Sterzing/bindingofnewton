@@ -109,13 +109,6 @@ public class Player extends Entity {
         return sprites;
     }
 
-    /**
-     * Adds/subtracts the health by delta
-     * @param delta
-     */
-    public void setHealth(float delta){
-        health += delta;
-    }
 
 
     /**

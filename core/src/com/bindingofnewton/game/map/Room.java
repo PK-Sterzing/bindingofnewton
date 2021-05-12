@@ -56,7 +56,7 @@ public class Room {
         return possibleOrientations;
     }
 
-    public void addPlayer(Player player){
+    public void setPlayer(Player player){
         this.player = player;
     }
     public void addEnemies(ArrayList<Enemy> enemies){

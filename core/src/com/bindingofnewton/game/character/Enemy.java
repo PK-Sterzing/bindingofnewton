@@ -25,7 +25,6 @@ public class Enemy extends Entity {
 
     public Enemy(World world, int startX, int startY, Sprite sprite) {
         this.orientation = Orientation.UP;
-        health = 3.5f;
         orientation = Orientation.DOWN;
         this.sprites = new ArrayList<>();
         this.sprites.add(sprite);
@@ -39,6 +38,7 @@ public class Enemy extends Entity {
         characterHeight = 28;
 
         body = world.createBody(def);
+        body.setUserData(this);
 
         PolygonShape polygonShape = new PolygonShape();
 
@@ -66,6 +66,7 @@ public class Enemy extends Entity {
         textureAtlas = new TextureAtlas(AssetsHandler.BAT_RUN);
 
         up = new Animation<TextureRegion>(SPEED_ANIMATION, textureAtlas.findRegions("run-front"), Animation.PlayMode.LOOP);
+        health = 1.0f;
 
     }
 
