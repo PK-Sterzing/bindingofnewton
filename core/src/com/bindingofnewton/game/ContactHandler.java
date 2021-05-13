@@ -1,11 +1,8 @@
 package com.bindingofnewton.game;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
-
-import javax.naming.Binding;
 
 public class ContactHandler implements ContactListener {
 
@@ -16,32 +13,23 @@ public class ContactHandler implements ContactListener {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
-
         if (bodyA.getUserData() instanceof Bullet){
-            if (bodyB.getUserData() instanceof Player) {
-                ((Player) bodyB.getUserData()).setHealth(-1.0f);
-            }
-            if (bodyB.getUserData() instanceof Enemy) {
-                ((Enemy) bodyB.getUserData()).setHealth(-1.0f);
-            }
-
-            removeBulletFixture((Bullet) bodyA.getUserData());
+            // If bodyB extends from Entity
+            diminishHealth(bodyB, bodyA);
         }else if (bodyB.getUserData() instanceof Bullet) {
-            if (bodyA.getUserData() instanceof Player) {
-                ((Player) bodyA.getUserData()).setHealth(-1.0f);
-            }
-            if (bodyA.getUserData() instanceof Enemy) {
-                ((Enemy) bodyA.getUserData()).setHealth(-1.0f);
-            }
-            if(((Entity) bodyA.getUserData()).getHealth() <= 0.0){
+            // If bodyA extends from Entity
+            diminishHealth(bodyA, bodyB);
+        }
+    }
+
+    private void diminishHealth(Body bodyA, Body bodyB) {
+        if(bodyA.getUserData().getClass().getSuperclass().equals(Entity.class)) {
+            ((Entity) bodyA.getUserData()).setHealth(-1.0f);
+            if (((Entity) bodyA.getUserData()).getHealth() <= 0.0) {
                 ((Entity) bodyA.getUserData()).setDead(true);
             }
-
-            removeBulletFixture((Bullet) bodyB.getUserData());
         }
-
-
-
+        removeBulletFixture((Bullet) bodyB.getUserData());
     }
 
     private void removeBulletFixture(Bullet bullet) {
