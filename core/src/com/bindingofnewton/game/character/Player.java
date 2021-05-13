@@ -25,11 +25,11 @@ public class Player extends Entity {
     private TextureAtlas textureAtlas;
 
     private float deltaTime = 0f;
+    private String playerName;
 
-    public Player(World world, int startX, int startY, ArrayList<Sprite> sprites) {
-
+    public Player(World world, String playerName, int startX, int startY) {
         orientation = Orientation.DOWN;
-        this.sprites = sprites;
+        this.playerName = playerName;
         x = startX;
         y = startY;
         BodyDef def = new BodyDef();
@@ -79,7 +79,6 @@ public class Player extends Entity {
     public TextureRegion getTextureRegion() {
         deltaTime += Gdx.graphics.getDeltaTime();
         switch (orientation) {
-            case UP: return up.getKeyFrame(deltaTime, true);
             case DOWN: return down.getKeyFrame(deltaTime, true);
             case LEFT: return left.getKeyFrame(deltaTime, true);
             case RIGHT: return right.getKeyFrame(deltaTime, true);
@@ -137,15 +136,32 @@ public class Player extends Entity {
 
         body.setLinearVelocity(vector);
 
-        for(int i = 0; i < sprites.size(); i++){
-            sprites.get(0).setPosition(body.getPosition().x, body.getPosition().y);
-        }
         polygon.setPosition(body.getPosition().x, body.getPosition().y);
     }
 
     public void transform(Vector2 vector){
         this.body.setLinearVelocity(vector);
         this.move(new Vector2(0, 0));
+    }
+
+    @Override
+    public Sprite getSprite(){
+        if (sprites.size() < 4){
+            return AssetsHandler.getInstance().getPlayerSprite(this).get(0);
+        }
+        switch (orientation){
+            case DOWN: return AssetsHandler.getInstance().getPlayerSprite(this).get(1);
+            case LEFT: return AssetsHandler.getInstance().getPlayerSprite(this).get(2);
+            case RIGHT: return AssetsHandler.getInstance().getPlayerSprite(this).get(3);
+            case UP:
+            default: return AssetsHandler.getInstance().getPlayerSprite(this).get(0);
+        }
+    }
+
+
+
+    public String getPlayerName() {
+        return playerName;
     }
 
 }

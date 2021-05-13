@@ -259,8 +259,8 @@ public class BindingOfNewton implements Screen{
 
 
 		// TODO: Set player spawn in the middle
-		Player player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON, "newton"));
 		level.getCurrentRoom().setPlayer(player);
+		player = new Player(world, "newton", 100, 100);
 
 		makeNewRoom(Orientation.UP);
 	}
@@ -301,7 +301,7 @@ public class BindingOfNewton implements Screen{
 		int height = (int) map.getProperties().get("height")*32;
 
 		int playerX=0, playerY=0;
-		ArrayList<Sprite> playerSprite = AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON, "newton");
+		ArrayList<Sprite> playerSprite = AssetsHandler.getInstance().getPlayerSprite(player);
 
 		switch (orientation.getOpposite()){
 			case UP:

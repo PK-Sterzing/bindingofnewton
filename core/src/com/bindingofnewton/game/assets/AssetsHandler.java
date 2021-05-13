@@ -1,8 +1,11 @@
 package com.bindingofnewton.game.assets;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.bindingofnewton.game.character.Player;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -14,7 +17,8 @@ public class AssetsHandler {
     public static final String END_MAP = "mapEnd.tmx";
     public static final String MAP = "map1.tmx";
 
-    public static final String NEWTON = "./character/newton/packed/newton.atlas";
+    public static final String BIG_ATLAS = "./big_atlas/packed/big_atlas.atlas";
+
     public static final String NEWTON_RUN = "./character/newton_run/packed/newton-run.atlas";
     public static final String BAT_RUN = "./character/bat_run/packed/enemy1.atlas";
     public static final String EDISON = "./character/edison/packed/edison.atlas";
@@ -23,10 +27,12 @@ public class AssetsHandler {
     public static final String MAP_TILED= "./map/tiled/";
     public static final String HEARTS = "./hearts";
 
-
     private static AssetsHandler instance;
 
+    private final TextureAtlas textureAtlas;
+
     private AssetsHandler(){
+        textureAtlas = new TextureAtlas(BIG_ATLAS);
     }
 
     public static AssetsHandler getInstance(){
@@ -36,22 +42,27 @@ public class AssetsHandler {
         return instance;
     }
 
-    public ArrayList<Sprite> getPlayerSprite(String atlasPath, String name){
-        TextureAtlas textureAtlas = new TextureAtlas(atlasPath);
+    public ArrayList<Sprite> getPlayerSprite(Player player){
         ArrayList<Sprite> array = new ArrayList<>();
 
-        array.add(0, textureAtlas.createSprite(name + "-back"));
-        array.add(1, textureAtlas.createSprite(name + "-front"));
-        array.add(2, textureAtlas.createSprite(name + "-left"));
-        array.add(3, textureAtlas.createSprite(name + "-right"));
+        array.add(0, textureAtlas.createSprite(player.getPlayerName() + "-back"));
+        array.add(1, textureAtlas.createSprite(player.getPlayerName() + "-front"));
+        array.add(2, textureAtlas.createSprite(player.getPlayerName() + "-left"));
+        array.add(3, textureAtlas.createSprite(player.getPlayerName() + "-right"));
 
         for (Sprite sprite : array) {
-            //array[i].setSize(array[i].);
-            //array[i].setScale(0.7f);
             sprite.setSize(sprite.getWidth() * 0.7f, sprite.getHeight() * 0.7f);
         }
 
         return array;
+    }
+
+
+    public Animation<TextureRegion> getPlayerAnimation(String name) {
+        ArrayList<TextureRegion> textureRegions = new ArrayList<>();
+
+        ArrayList<Sprite> animationArrayList = new ArrayList<>();
+        return new Animation<TextureRegion>(20);
     }
 
 
@@ -82,7 +93,7 @@ public class AssetsHandler {
 
     public Sprite getSingleSprite(String name){
         Texture texture = new Texture(name);
-        return  new Sprite(texture);
+        return new Sprite(texture);
     }
 
 }
