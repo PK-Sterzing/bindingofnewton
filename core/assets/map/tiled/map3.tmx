@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="137">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="144">
  <tileset firstgid="1" source="room.tsx"/>
  <layer id="1" name="ground" width="15" height="9">
   <data encoding="csv">
@@ -109,6 +109,29 @@
   </object>
   <object id="136" x="69.385" y="254.87">
    <polygon points="0,0 11.0909,-0.727273 23.2727,-0.181818 24.7273,-22 13.2727,-26.1818 -2.18182,-24.7273 -4.36364,-14.5455"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="fire">
+  <object id="137" x="391.108" y="92">
+   <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
+  </object>
+  <object id="138" x="357.446" y="220.466">
+   <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
+  </object>
+  <object id="139" x="294.931" y="155.89">
+   <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
+  </object>
+  <object id="140" x="421.335" y="190.239">
+   <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
+  </object>
+  <object id="141" x="69.6011" y="221.153">
+   <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
+  </object>
+  <object id="142" x="134.177" y="125.662">
+   <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
+  </object>
+  <object id="143" x="38" y="92">
+   <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
   </object>
  </objectgroup>
 </map>
