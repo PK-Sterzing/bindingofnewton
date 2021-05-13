@@ -113,6 +113,7 @@ public class Room {
                     for (Door door : doors){
                         if (door.getOrientation() == orientation){
                             door.setBody(body);
+                            body.setUserData(door);
                             door.open();
                         }
                     }

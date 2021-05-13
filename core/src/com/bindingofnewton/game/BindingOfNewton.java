@@ -211,7 +211,6 @@ public class BindingOfNewton implements Screen{
 		// Render enemies
 		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
 			level.getCurrentRoom().getEnemies().get(i).getSprite().draw(batch);
-			System.out.println(level.getCurrentRoom().getEnemies().get(i).getHealth());
 		}
 
 		// Render all bullets
@@ -221,7 +220,7 @@ public class BindingOfNewton implements Screen{
 
 		checkDoorCollision();
 
-		//renders the players health
+		// Renders the players health
 		Sprite[] sprites = player.getHealthSprites();
 		for (int i=0; i< sprites.length; i++){
 			batch.draw(sprites[i], 15*i+20, level.getCurrentRoom().getMap().getProperties().get("height", Integer.class) * 32 - 20, 15, 15);
