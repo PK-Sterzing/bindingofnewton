@@ -4,6 +4,13 @@ size: 2048, 256
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+apple_bullet
+  rotate: false
+  xy: 1396, 180
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 boss_run1
   rotate: false
   xy: 132, 36
@@ -118,7 +125,7 @@ boss_standup4
   index: -1
 bullet
   rotate: false
-  xy: 262, 53
+  xy: 1956, 183
   size: 15, 13
   orig: 15, 13
   offset: 0, 0
@@ -198,6 +205,13 @@ instruction_walk
   xy: 1396, 198
   size: 48, 48
   orig: 48, 48
+  offset: 0, 0
+  index: -1
+magic_bullet
+  rotate: false
+  xy: 262, 50
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
 newton-front
