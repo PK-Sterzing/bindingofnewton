@@ -44,14 +44,6 @@ public abstract class Entity {
         return x;
     }
 
-    /**
-     * Adds/subtracts the health by delta
-     * @param delta
-     */
-    public void setHealth(float delta){
-        health += delta;
-    }
-
     public Body getBody() {
         return body;
     }
@@ -92,8 +84,13 @@ public abstract class Entity {
 
     //</editor-fold>
 
-
-
+    /**
+     * Adds/subtracts the health by delta
+     * @param delta
+     */
+    public void setHealth(float delta){
+        health += delta;
+    }
 
     public int getSpeed() {
         return speed;

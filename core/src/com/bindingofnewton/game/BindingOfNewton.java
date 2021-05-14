@@ -23,6 +23,7 @@ import com.bindingofnewton.game.map.MapBodyBuilder;
 import com.bindingofnewton.game.map.Room;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class BindingOfNewton implements Screen{
@@ -98,8 +99,8 @@ public class BindingOfNewton implements Screen{
 		//<editor-fold desc="Creating Bullets">
 		float posX = player.getBody().getPosition().x;
 		float posY = player.getBody().getPosition().y;
-		float width = player.getSprite().getWidth();
-		float height = player.getSprite().getHeight();
+		float width = AssetsHandler.getInstance().getPlayerSprite(player.getPlayerName(), player.getOrientation()).getWidth();
+		float height = AssetsHandler.getInstance().getPlayerSprite(player.getPlayerName(), player.getOrientation()).getHeight();
 
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 			player.setOrientation(Orientation.UP);
@@ -192,7 +193,7 @@ public class BindingOfNewton implements Screen{
 			}
 			batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
 		} else {
-			batch.draw(player.getSprite(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
+			batch.draw(AssetsHandler.getInstance().getPlayerSprite(player.getPlayerName(), player.getOrientation()), player.getBody().getPosition().x, player.getBody().getPosition().y);
 		}
 
 		// Move player
@@ -230,9 +231,9 @@ public class BindingOfNewton implements Screen{
 		checkDoorCollision();
 
 		// Renders the players health
-		Sprite[] sprites = player.getHealthSprites();
-		for (int i=0; i< sprites.length; i++){
-			batch.draw(sprites[i], 15*i+20, level.getCurrentRoom().getMap().getProperties().get("height", Integer.class) * 32 - 20, 15, 15);
+		List<Sprite> sprites = player.getHealthSprites();
+		for (int i=0; i< sprites.size(); i++){
+			batch.draw(sprites.get(i), 15*i+20, level.getCurrentRoom().getMap().getProperties().get("height", Integer.class) * 32 - 20, 15, 15);
 		}
 
 		batch.end();
@@ -267,7 +268,7 @@ public class BindingOfNewton implements Screen{
 
 
 		// TODO: Set player spawn in the middle
-		Player player = new Player(world, 100, 100, AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON, "newton"));
+		Player player = new Player(world, AssetsHandler.PlayerName.NEWTON, 100, 100);
 		level.getCurrentRoom().setPlayer(player);
 
 		makeNewRoom(Orientation.UP);
@@ -309,7 +310,7 @@ public class BindingOfNewton implements Screen{
 		int height = (int) map.getProperties().get("height")*32;
 
 		int playerX=0, playerY=0;
-		ArrayList<Sprite> playerSprite = AssetsHandler.getInstance().getPlayerSprite(AssetsHandler.NEWTON, "newton");
+		ArrayList<Sprite> playerSprite = AssetsHandler.getInstance().getPlayerSprites(level.getCurrentRoom().getPlayer().getPlayerName());
 
 		switch (orientation.getOpposite()){
 			case UP:
