@@ -77,6 +77,10 @@ public class LevelBuilder {
             createNewRoom();
         }
 
+        for (Room room : level.rooms){
+            System.out.println("Room: " + room.getX() + ",   " + room.getY());
+        }
+
         generateBossRoom();
 
         for (int i=0; i<level.rooms.size()-1; i++){
@@ -86,7 +90,7 @@ public class LevelBuilder {
                 for (Room nextRoom : level.rooms){
                     if (nextRoom.x == pos.x && nextRoom.y == pos.y && nextRoom != level.rooms.get(level.rooms.size()-1)){
                         nextRoom.addDoor(new Door(level.world, nextRoom.map, orientation.getOpposite()));
-                        room.addDoor(new Door(level.world, room.map, orientation.getOpposite()));
+                        room.addDoor(new Door(level.world, room.map, orientation));
                     }
                 }
             }
@@ -144,11 +148,11 @@ public class LevelBuilder {
     private void generateBossRoom(){
         Orientation orientation = Orientation.getRandom();
 
-        int maxX = -100;
-        int maxY = -100;
-        int x = -100, y = -100;
+        int maxX = level.rooms.get(0).getX();
+        int maxY = level.rooms.get(0).getY();
+        int x = level.rooms.get(0).getX(), y = level.rooms.get(0).getY();
         RoomBuilder builder = new RoomBuilder();
-        Room maxRoom = null;
+        Room maxRoom = level.rooms.get(0);
         while(true){
             for (Room room : level.rooms){
                 switch (orientation){
@@ -158,24 +162,28 @@ public class LevelBuilder {
                             y = room.y;
                             maxRoom = room;
                         }
+                        break;
                     case LEFT:
                         if (room.x < maxX){
                             maxX = room.x;
                             y = room.y;
                             maxRoom = room;
                         }
+                        break;
                     case DOWN:
                         if (room.y < maxY){
                             maxY = room.y;
                             x = room.x;
                             maxRoom = room;
                         }
+                        break;
                     case UP:
                         if (room.y > maxY){
                             maxY = room.y;
                             x = room.x;
                             maxRoom = room;
                         }
+                        break;
                 }
             }
 
@@ -186,6 +194,8 @@ public class LevelBuilder {
                 break;
             }
         }
+
+        System.out.println("Orientation: " + orientation.name());
 
         builder
                 .setWorld(level.world)
@@ -204,5 +214,6 @@ public class LevelBuilder {
         room.addDoor(new Door(level.world, room.getMap(), orientation.getOpposite()));
 
         level.rooms.add(room);
+        System.out.println("Room: " + room.getX() + ",   " + room.getY());
     }
 }

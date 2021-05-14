@@ -33,6 +33,8 @@ public class Room {
     protected ArrayList<Enemy> enemies;
     protected Player player;
 
+    private boolean isCleared;
+
     public Room(){
         ArrayList<String> mapList = (ArrayList<String>) AssetsHandler.getInstance().getMaps();
         int index = (int) (Math.random() * (mapList.size()-2) + 1);
@@ -40,6 +42,7 @@ public class Room {
 
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
+        isCleared = false;
     }
 
     public List<Orientation> getPossibleDoors(){
@@ -146,4 +149,7 @@ public class Room {
         return player;
     }
 
+    public boolean isCleared() {
+        return isCleared;
+    }
 }

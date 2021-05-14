@@ -1,5 +1,6 @@
 package com.bindingofnewton.game.character;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.*;
@@ -115,5 +116,7 @@ public abstract class Entity {
     public void setDead(boolean dead) {
         isDead = dead;
     }
+
+    public abstract void render(Batch batch);
 
 }

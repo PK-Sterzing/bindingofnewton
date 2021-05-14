@@ -1,10 +1,7 @@
 package com.bindingofnewton.game.character;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
@@ -104,5 +101,10 @@ public class Enemy extends Entity {
 
     public static int getPathChangingRate() {
         return pathChangingRate;
+    }
+
+    @Override
+    public void render(Batch batch) {
+
     }
 }

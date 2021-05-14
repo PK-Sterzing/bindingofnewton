@@ -17,10 +17,7 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
-import com.bindingofnewton.game.map.Level;
-import com.bindingofnewton.game.map.LevelBuilder;
-import com.bindingofnewton.game.map.MapBodyBuilder;
-import com.bindingofnewton.game.map.Room;
+import com.bindingofnewton.game.map.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +35,7 @@ public class BindingOfNewton implements Screen{
 	protected static Game game;
 
 	protected static Level level;
+	private Minimap minimap;
 
 	private long lastShot = 0;
 	private long lastPathChange = 0;
@@ -191,7 +189,9 @@ public class BindingOfNewton implements Screen{
 			if(Gdx.input.isKeyPressed(Input.Keys.A)){
 				x -= player.getSpeed();
 			}
-			batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
+			//TODO: Nur testweise auskommentiert
+			//batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
+			batch.draw(AssetsHandler.getInstance().getPlayerSprite(player.getPlayerName(), player.getOrientation()), player.getBody().getPosition().x, player.getBody().getPosition().y);
 		} else {
 			batch.draw(AssetsHandler.getInstance().getPlayerSprite(player.getPlayerName(), player.getOrientation()), player.getBody().getPosition().x, player.getBody().getPosition().y);
 		}
@@ -209,7 +209,6 @@ public class BindingOfNewton implements Screen{
 							level.getCurrentRoom().getEnemies().get(i).getBody().getPosition().y);
 
 				move = move.scl(level.getCurrentRoom().getEnemies().get(i).getSpeed() / move.len());
-				System.out.println(move);
 
 				level.getCurrentRoom().getEnemies().get(i).move(move);
 				lastPathChange = System.currentTimeMillis();
@@ -221,7 +220,6 @@ public class BindingOfNewton implements Screen{
 			level.getCurrentRoom().getEnemies().get(i).move(new Vector2(0, 0));
 			level.getCurrentRoom().getEnemies().get(i).getSprite().draw(batch);
 		}
-		System.out.println(level.getCurrentRoom().getEnemies().size());
 
 		// Render all bullets
 		for(int i = 0; i < level.getCurrentRoom().getBullets().size(); i++){
@@ -243,6 +241,8 @@ public class BindingOfNewton implements Screen{
 			renderer.render(world, camera.combined);
 		}
 
+		minimap.render(batch);
+
 	}
 
 	/**
@@ -261,8 +261,8 @@ public class BindingOfNewton implements Screen{
 		// Make new level
 		level = new LevelBuilder()
 				.setWorld(world)
-				.setLevelWidthHeight(4, 4)
-				.setMinRooms(6)
+				.setLevelWidthHeight(8, 8)
+				.setMinRooms(8)
 				.setAmountRandomRooms(0, 0)
 				.build();
 
@@ -270,6 +270,9 @@ public class BindingOfNewton implements Screen{
 		// TODO: Set player spawn in the middle
 		Player player = new Player(world, AssetsHandler.PlayerName.NEWTON, 100, 100);
 		level.getCurrentRoom().setPlayer(player);
+
+		//Creating a new minimap
+		minimap = new Minimap(level);
 
 		makeNewRoom(Orientation.UP);
 	}
@@ -297,7 +300,7 @@ public class BindingOfNewton implements Screen{
 
 		// Create Enemies
 		ArrayList<Enemy> enemies = new ArrayList<>();
-		for(int i = 0; i < 5; i++){
+		for(int i = 0; i < 0; i++){
 			enemies.add(new Enemy(world, 200, 200, 100, AssetsHandler.getInstance().getSingleSprite(
 					"./character/bat_run/run-front1.png")));
 		}
@@ -331,7 +334,7 @@ public class BindingOfNewton implements Screen{
 				break;
 		}
 		level.getCurrentRoom().getPlayer().transform(new Vector2(playerX, playerY));
-
+		//level.getCurrentRoom().getPlayer().move(new Vector2(playerX, playerY));
 
 		mapBuilder = new MapBodyBuilder(map);
 		mapBuilder.buildBodies(world);

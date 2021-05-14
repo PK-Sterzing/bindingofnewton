@@ -1,10 +1,7 @@
 package com.bindingofnewton.game.character;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
@@ -150,7 +147,7 @@ public class Player extends Entity {
     }
 
     public void transform(Vector2 vector) {
-        this.body.setLinearVelocity(vector);
+        this.body.setTransform(vector, 0);
         this.move(new Vector2(0, 0));
     }
 
@@ -160,5 +157,10 @@ public class Player extends Entity {
 
     public HashMap<Orientation, Animation<TextureRegion>> getAnimations() {
         return animations;
+    }
+
+    @Override
+    public void render(Batch batch) {
+
     }
 }
