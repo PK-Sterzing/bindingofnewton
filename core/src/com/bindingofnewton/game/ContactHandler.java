@@ -1,6 +1,7 @@
 package com.bindingofnewton.game;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
 
@@ -12,42 +13,40 @@ public class ContactHandler implements ContactListener {
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
-
-        if (bodyA.getUserData() instanceof Bullet){
-            // If bodyB extends from Entity
-            diminishHealth(bodyB, bodyA);
-        }else if (bodyB.getUserData() instanceof Bullet) {
-            // If bodyA extends from Entity
-            diminishHealth(bodyA, bodyB);
+        if(!(bodyA.getUserData() == null || bodyB.getUserData() == null)){
+            if (bodyA.getUserData() instanceof Bullet){
+                // If bodyB extends from Entity
+                diminishHealth(bodyB);
+                removeBulletFixture((Bullet) bodyA.getUserData());
+            }else if (bodyB.getUserData() instanceof Bullet) {
+                // If bodyA extends from Entity
+                diminishHealth(bodyA);
+                removeBulletFixture((Bullet) bodyB.getUserData());
+            }else if (bodyA.getUserData() instanceof Enemy) {
+                if(bodyB.getUserData() instanceof Player){
+                    diminishHealth(bodyB);
+                }
+            }else if(bodyB.getUserData() instanceof Enemy) {
+                if(bodyA.getUserData() instanceof Player){
+                    diminishHealth(bodyA);
+                }
+            }
         }
     }
 
-    private void diminishHealth(Body bodyA, Body bodyB) {
+    private void diminishHealth(Body bodyA) {
         if(bodyA.getUserData().getClass().getSuperclass().equals(Entity.class)) {
             ((Entity) bodyA.getUserData()).setHealth(-1.0f);
             if (((Entity) bodyA.getUserData()).getHealth() <= 0.0) {
                 ((Entity) bodyA.getUserData()).setDead(true);
             }
         }
-        removeBulletFixture((Bullet) bodyB.getUserData());
     }
 
     private void removeBulletFixture(Bullet bullet) {
             if (BindingOfNewton.level.getCurrentRoom().getBullets().contains(bullet)){
                 bullet.setRemove(true);
             }
-            /*
-            if (fixtureA.getUserData().equals("bullet")) {
-                for (int i = 0; i < BindingOfNewton.level.getCurrentRoom().getBullets().size(); i++) {
-                    if (BindingOfNewton.level.getCurrentRoom().getBullets().get(i).getBody().equals(fixtureA.getBody())) {
-                        // Setting remove flag
-                        BindingOfNewton.level.getCurrentRoom().getBullets().get(i).setRemove(true);
-                        break;
-                    }
-                }
-
-            }*/
-
     }
 
     @Override

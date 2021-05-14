@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.Orientation;
@@ -15,15 +17,19 @@ import java.util.ArrayList;
 
 public class Enemy extends Entity {
 
-    Animation<TextureRegion> up;
-    TextureAtlas textureAtlas;
+    protected Animation<TextureRegion> up;
+    protected TextureAtlas textureAtlas;
+
+    // How many times should the enemy update the path to the player
+    protected static int pathChangingRate = 500;
 
     private float deltaTime = 0f;
     private final float SPEED_ANIMATION = 0.04f;
 
 
 
-    public Enemy(World world, int startX, int startY, Sprite sprite) {
+    public Enemy(World world, int startX, int startY, int speed, Sprite sprite) {
+        this.speed = speed;
         this.orientation = Orientation.UP;
         orientation = Orientation.DOWN;
         this.sprites = new ArrayList<>();
@@ -43,18 +49,15 @@ public class Enemy extends Entity {
         PolygonShape polygonShape = new PolygonShape();
 
         float[] vertices = new float[] {
-                7.7f, 0.0f,
-                14.0f, 0.0f,
-                20.3f, 18.2f,
-                16.0f, 28.0f,
-                5.6f, 28.0f,
-                1.4f, 18.2f,
+                5.0f, 2.0f,
+                24.0f, 2.0f,
+                27.0f, 18.0f,
+                4.0f, 18.0f,
         };
 
         polygonShape.set(vertices);
 
         polygon = new Polygon(vertices);
-
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = polygonShape;
         //fixtureDef.density = 1f;
@@ -90,10 +93,16 @@ public class Enemy extends Entity {
 
         this.x += x;
         this.y += y;
+        if(!(x == 0.0f && y == 0.0f)){
+            body.setLinearVelocity(vector);
+        }
 
-        body.setLinearVelocity(vector);
 
         this.sprites.get(0).setPosition(body.getPosition().x, body.getPosition().y);
         polygon.setPosition(body.getPosition().x, body.getPosition().y);
+    }
+
+    public static int getPathChangingRate() {
+        return pathChangingRate;
     }
 }

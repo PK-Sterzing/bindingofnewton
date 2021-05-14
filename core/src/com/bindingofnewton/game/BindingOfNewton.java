@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Enemy;
+import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.map.Level;
 import com.bindingofnewton.game.map.LevelBuilder;
@@ -38,6 +39,7 @@ public class BindingOfNewton implements Screen{
 	protected static Level level;
 
 	private long lastShot = 0;
+	private long lastPathChange = 0;
 
 	private Box2DDebugRenderer renderer;
 	public static boolean showDebugInfo = false;
@@ -93,7 +95,7 @@ public class BindingOfNewton implements Screen{
 
 		Player player = level.getCurrentRoom().getPlayer();
 
-		//<editor-fold desc="Creating Bullets test">
+		//<editor-fold desc="Creating Bullets">
 		float posX = player.getBody().getPosition().x;
 		float posY = player.getBody().getPosition().y;
 		float width = player.getSprite().getWidth();
@@ -197,21 +199,28 @@ public class BindingOfNewton implements Screen{
 		player.move(new Vector2(x, y));
 
 		// Move enemies
-		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
-			// Get random number
-			/*
-			Random rand = new Random();
-			int randx = rand.nextInt(40) - 20;
-			int randy = rand.nextInt(40) - 20;
+		if (System.currentTimeMillis() - lastPathChange >= Enemy.getPathChangingRate()) {
+			for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
+			    Vector2 move = new Vector2(
+						level.getCurrentRoom().getPlayer().getBody().getPosition().x -
+							level.getCurrentRoom().getEnemies().get(i).getBody().getPosition().x,
+						level.getCurrentRoom().getPlayer().getBody().getPosition().y -
+							level.getCurrentRoom().getEnemies().get(i).getBody().getPosition().y);
 
-			 */
-			level.getCurrentRoom().getEnemies().get(i).move(new Vector2(2,2));
+				move = move.scl(level.getCurrentRoom().getEnemies().get(i).getSpeed() / move.len());
+				System.out.println(move);
+
+				level.getCurrentRoom().getEnemies().get(i).move(move);
+				lastPathChange = System.currentTimeMillis();
+			}
 		}
 
 		// Render enemies
 		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
+			level.getCurrentRoom().getEnemies().get(i).move(new Vector2(0, 0));
 			level.getCurrentRoom().getEnemies().get(i).getSprite().draw(batch);
 		}
+		System.out.println(level.getCurrentRoom().getEnemies().size());
 
 		// Render all bullets
 		for(int i = 0; i < level.getCurrentRoom().getBullets().size(); i++){
@@ -288,7 +297,7 @@ public class BindingOfNewton implements Screen{
 		// Create Enemies
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		for(int i = 0; i < 5; i++){
-			enemies.add(new Enemy(world, 200, 200, AssetsHandler.getInstance().getSingleSprite(
+			enemies.add(new Enemy(world, 200, 200, 100, AssetsHandler.getInstance().getSingleSprite(
 					"./character/bat_run/run-front1.png")));
 		}
 		level.getCurrentRoom().addEnemies(enemies);
