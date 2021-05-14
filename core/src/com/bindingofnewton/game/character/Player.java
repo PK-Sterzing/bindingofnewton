@@ -1,6 +1,5 @@
 package com.bindingofnewton.game.character;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -146,21 +145,45 @@ public class Player extends Entity {
         polygon.setPosition(body.getPosition().x, body.getPosition().y);
     }
 
+    /**
+     * Transforms the player to the given position
+     * @param vector the new position of the player
+     */
     public void transform(Vector2 vector) {
         this.body.setTransform(vector, 0);
         this.move(new Vector2(0, 0));
     }
 
+    /**
+     * Gets the name of the player
+     * @return The name of the player
+     */
     public AssetsHandler.PlayerName getPlayerName() {
         return playerName;
     }
 
+    /**
+     * Gets the animation for each direction
+     * @return A hashmap with the direction as the keys and the animation as the values
+     */
     public HashMap<Orientation, Animation<TextureRegion>> getAnimations() {
         return animations;
     }
 
     @Override
-    public void render(Batch batch) {
+    public void render(SpriteBatch batch, boolean isMoving) {
+        //TODO: Nur testweise auskommentiert! Sobald animationen verfügbar sind hier ändern!
+        if (isMoving){
+            //batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
+            batch.draw(AssetsHandler.getInstance().getPlayerSprite(playerName, orientation), body.getPosition().x, body.getPosition().y);
+        }else{
+            batch.draw(AssetsHandler.getInstance().getPlayerSprite(playerName, orientation), body.getPosition().x, body.getPosition().y);
+        }
 
+        //Renders the hearts of the player
+        List<Sprite> sprites = getHealthSprites();
+        for (int i=0; i< sprites.size(); i++){
+            batch.draw(sprites.get(i), 15*i+20, 9 * 32 - 20, 15, 15);
+        }
     }
 }

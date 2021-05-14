@@ -37,11 +37,11 @@ public class BindingOfNewton implements Screen{
 	protected static Level level;
 	private Minimap minimap;
 
-	private long lastShot = 0;
 	private long lastPathChange = 0;
 
 	private Box2DDebugRenderer renderer;
 	public static boolean showDebugInfo = false;
+	private ContactHandler contactHandler;
 
 	public BindingOfNewton(Game game) {
 		this.game = game;
@@ -52,13 +52,14 @@ public class BindingOfNewton implements Screen{
 	public void show() {
 		batch = new SpriteBatch();
 
-
 		world = new World(new Vector2(0,0), true);
-		world.setContactListener(new ContactHandler());
 
 		makeNewLevel();
+		contactHandler = new ContactHandler(level);
 
-		inputHandler = new InputHandler();
+		world.setContactListener(contactHandler);
+
+		inputHandler = new InputHandler(level);
 		Gdx.input.setInputProcessor(inputHandler);
 
 		// Create debug renderer to make collisions visible
@@ -72,14 +73,12 @@ public class BindingOfNewton implements Screen{
 		float h = layer.getTileHeight() * layer.getHeight();
 		camera.setToOrtho(false, w, h);
 
-
 		camera.update();
 	}
 
 	@Override
 	public void render(float delta) {
 		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
-
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -89,152 +88,37 @@ public class BindingOfNewton implements Screen{
 		camera.update();
 		mapBuilder.setViewAndRender(camera);
 
-		int x = 0;
-		int y = 0;
-
 		Player player = level.getCurrentRoom().getPlayer();
 
-		//<editor-fold desc="Creating Bullets">
-		float posX = player.getBody().getPosition().x;
-		float posY = player.getBody().getPosition().y;
-		float width = AssetsHandler.getInstance().getPlayerSprite(player.getPlayerName(), player.getOrientation()).getWidth();
-		float height = AssetsHandler.getInstance().getPlayerSprite(player.getPlayerName(), player.getOrientation()).getHeight();
+		inputHandler.handleBullets();
 
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-			player.setOrientation(Orientation.UP);
-			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate){
-				Bullet bullet = new Bullet(world,
-						(int) (posX + width / 2 - Bullet.WIDTH/2),
-						(int) (posY + 20 + (height/2)));
-				bullet.setMovement(new Vector2(0, bullet.getSpeed()));
-				level.getCurrentRoom().addBullet(bullet);
-
-				lastShot = System.currentTimeMillis();
-			}
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-			player.setOrientation(Orientation.DOWN);
-			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
-				Bullet bullet = new Bullet(world,
-						(int)( posX + width/2 - Bullet.WIDTH/2),
-						(int)posY - 20);
-				bullet.setMovement(new Vector2(0, -bullet.getSpeed()));
-				level.getCurrentRoom().addBullet(bullet);
-
-				lastShot = System.currentTimeMillis();
-			}
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-			player.setOrientation(Orientation.LEFT);
-			if(System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
-				Bullet bullet = new Bullet(world,
-						(int)posX - 20,
-						(int) (posY + height/2));
-				bullet.setMovement(new Vector2(-bullet.getSpeed(), 0));
-				level.getCurrentRoom().addBullet(bullet);
-
-				lastShot = System.currentTimeMillis();
-			}
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			player.setOrientation(Orientation.RIGHT);
-			if (System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
-				Bullet bullet = new Bullet(world,
-						(int) (posX + 20 + (width/ 2)),
-						(int) (posY + height/ 2));
-				bullet.setMovement(new Vector2(bullet.getSpeed(), 0));
-				level.getCurrentRoom().addBullet(bullet);
-
-				lastShot = System.currentTimeMillis();
-			}
-		}
-		//</editor-fold>
-
-		// Update all bullets in current room
-		for(int i = 0; i < level.getCurrentRoom().getBullets().size(); i++){
-			if(level.getCurrentRoom().getBullets().get(i).isRemove()){
-				// Destroy body, remove bullet
-				world.destroyBody(level.getCurrentRoom().getBullets().get(i).getBody());
-				level.getCurrentRoom().getBullets().remove(i);
-			}else{
-				level.getCurrentRoom().getBullets().get(i).update();
-			}
-
-		}
-
-		// Remove all dead Enemies
-		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
-			if(level.getCurrentRoom().getEnemies().get(i).isDead()){
-				world.destroyBody(level.getCurrentRoom().getEnemies().get(i).getBody());
-				level.getCurrentRoom().getEnemies().remove(i);
-			}
-		}
-		// Remove dead player
-		if(level.getCurrentRoom().getPlayer().isDead()){
-			world.destroyBody(level.getCurrentRoom().getPlayer().getBody());
-			level.getCurrentRoom().setPlayer(null);
-		}
+		level.getCurrentRoom().update();
 
 		batch.begin();
-		if (inputHandler.isMoving) {
-			if(Gdx.input.isKeyPressed(Input.Keys.W)){
-				y += player.getSpeed();
-			}
-			if(Gdx.input.isKeyPressed(Input.Keys.S)){
-				y -= player.getSpeed();
-			}
-			if(Gdx.input.isKeyPressed(Input.Keys.D)){
-				x += player.getSpeed();
-			}
-			if(Gdx.input.isKeyPressed(Input.Keys.A)){
-				x -= player.getSpeed();
-			}
-			//TODO: Nur testweise auskommentiert
-			//batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
-			batch.draw(AssetsHandler.getInstance().getPlayerSprite(player.getPlayerName(), player.getOrientation()), player.getBody().getPosition().x, player.getBody().getPosition().y);
-		} else {
-			batch.draw(AssetsHandler.getInstance().getPlayerSprite(player.getPlayerName(), player.getOrientation()), player.getBody().getPosition().x, player.getBody().getPosition().y);
+
+		//Render the player
+		Vector2 movementPlayer = inputHandler.getPlayerMovement();
+		if (movementPlayer.x != 0 && movementPlayer.y != 0){
+			player.render(batch, true);
+		}else{
+			player.render(batch, false);
 		}
 
 		// Move player
-		player.move(new Vector2(x, y));
-
-		// Move enemies
-		if (System.currentTimeMillis() - lastPathChange >= Enemy.getPathChangingRate()) {
-			for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
-			    Vector2 move = new Vector2(
-						level.getCurrentRoom().getPlayer().getBody().getPosition().x -
-							level.getCurrentRoom().getEnemies().get(i).getBody().getPosition().x,
-						level.getCurrentRoom().getPlayer().getBody().getPosition().y -
-							level.getCurrentRoom().getEnemies().get(i).getBody().getPosition().y);
-
-				move = move.scl(level.getCurrentRoom().getEnemies().get(i).getSpeed() / move.len());
-
-				level.getCurrentRoom().getEnemies().get(i).move(move);
-				lastPathChange = System.currentTimeMillis();
-			}
-		}
+		player.move(movementPlayer);
 
 		// Render enemies
-		for(int i = 0; i < level.getCurrentRoom().getEnemies().size(); i++){
-			level.getCurrentRoom().getEnemies().get(i).move(new Vector2(0, 0));
-			level.getCurrentRoom().getEnemies().get(i).getSprite().draw(batch);
+		for(Enemy enemy : level.getCurrentRoom().getEnemies()){
+			enemy.render(batch, true);
 		}
 
 		// Render all bullets
-		for(int i = 0; i < level.getCurrentRoom().getBullets().size(); i++){
-			level.getCurrentRoom().getBullets().get(i).getSprite().draw(batch);
+		for(Bullet bullet : level.getCurrentRoom().getBullets()){
+			bullet.render(batch);
 		}
 
-		checkDoorCollision();
-
-		// Renders the players health
-		List<Sprite> sprites = player.getHealthSprites();
-		for (int i=0; i< sprites.size(); i++){
-			batch.draw(sprites.get(i), 15*i+20, level.getCurrentRoom().getMap().getProperties().get("height", Integer.class) * 32 - 20, 15, 15);
-		}
-
-		batch.end();
+		if (contactHandler.isDoorCollision())
+			makeNewRoom(level.getCurrentRoom().getPlayer().getOrientation());
 
 		// Show debug info when the switch is on (SHIFT)
 		if(showDebugInfo){
@@ -242,7 +126,7 @@ public class BindingOfNewton implements Screen{
 		}
 
 		minimap.render(batch);
-
+		batch.end();
 	}
 
 	/**
@@ -299,12 +183,14 @@ public class BindingOfNewton implements Screen{
 		level.getCurrentRoom().setPlayer(playerCached);
 
 		// Create Enemies
-		ArrayList<Enemy> enemies = new ArrayList<>();
-		for(int i = 0; i < 0; i++){
-			enemies.add(new Enemy(world, 200, 200, 100, AssetsHandler.getInstance().getSingleSprite(
-					"./character/bat_run/run-front1.png")));
+		if (!level.getCurrentRoom().isCleared()){
+			ArrayList<Enemy> enemies = new ArrayList<>();
+			for(int i = 0; i < 5; i++){
+				enemies.add(new Enemy(world, 200, 200, 50, AssetsHandler.getInstance().getSingleSprite(
+						"./character/bat_run/run-front1.png")));
+			}
+			level.getCurrentRoom().addEnemies(enemies);
 		}
-		level.getCurrentRoom().addEnemies(enemies);
 
 		room.setDoorBodies();
 		TiledMap map = room.getMap();
@@ -334,58 +220,9 @@ public class BindingOfNewton implements Screen{
 				break;
 		}
 		level.getCurrentRoom().getPlayer().transform(new Vector2(playerX, playerY));
-		//level.getCurrentRoom().getPlayer().move(new Vector2(playerX, playerY));
 
 		mapBuilder = new MapBodyBuilder(map);
 		mapBuilder.buildBodies(world);
-	}
-
-	/**
-	 * Checks if a collision with a door happened
-	 */
-	private void checkDoorCollision() {
-		String layerName = "doors-";
-
-		Rectangle playerRectangle = level.getCurrentRoom().getPlayer().getPolygon().getBoundingRectangle();
-
-		for (Orientation orientation : Orientation.values()){
-			MapLayer layer = level.getCurrentRoom().getMap().getLayers().get(layerName + orientation.name());
-			if (layer == null) return;
-
-			MapObjects objects = layer.getObjects();
-
-			for(int i = 0; i < objects.getCount(); i++){
-				if (objects.get(i) instanceof RectangleMapObject){
-					Rectangle rectangle = ((RectangleMapObject) objects.get(i)).getRectangle();
-
-					Vector2 position, size;
-					if (orientation == Orientation.DOWN || orientation == Orientation.UP){
-						position = orientation.moveCoord(new Vector2(0,0), 16);
-
-						size = new Vector2(-16, 0);
-					}else{
-						position = new Vector2(0,0);
-
-						size = new Vector2(0, -16);
-					}
-
-					Rectangle rectangle1 = new Rectangle(
-							rectangle.x + position.x,
-							rectangle.y + position.y,
-							rectangle.width + size.x,
-							rectangle.height + size.y);
-
-
-					if (playerRectangle.overlaps(rectangle1)){
-						//The Player enters a door
-						makeNewRoom(level.getCurrentRoom().getPlayer().getOrientation());
-					}
-				}
-			}
-
-		}
-
-
 	}
 
 

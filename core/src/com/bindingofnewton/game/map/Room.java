@@ -117,7 +117,6 @@ public class Room {
                         if (door.getOrientation() == orientation){
                             door.setBody(body);
                             body.setUserData(door);
-                            door.open();
                         }
                     }
                     shape.dispose();
@@ -151,5 +150,68 @@ public class Room {
 
     public boolean isCleared() {
         return isCleared;
+    }
+
+    public void update() {
+        updateBullets();
+        removeDeadEnemies();
+        removeDeadPlayer();
+        moveAllEnemies();
+    }
+
+
+
+    private void moveAllEnemies() {
+        if (System.currentTimeMillis() - Enemy.getLastPathChange() >= Enemy.getPathChangingRate()) {
+            for(int i = 0; i < enemies.size(); i++){
+                Vector2 move = new Vector2(
+                        player.getBody().getPosition().x -
+                                enemies.get(i).getBody().getPosition().x,
+                        player.getBody().getPosition().y -
+                                enemies.get(i).getBody().getPosition().y);
+
+                move = move.scl(enemies.get(i).getSpeed() / move.len());
+
+                enemies.get(i).move(move);
+                Enemy.setLastPathChange(System.currentTimeMillis());
+            }
+        }
+    }
+
+    private void removeDeadPlayer() {
+        if(player.isDead()){
+            world.destroyBody(player.getBody());
+            player = null;
+        }
+    }
+
+    private void removeDeadEnemies() {
+        for(int i = 0; i < enemies.size(); i++){
+            if(enemies.get(i).isDead()){
+                world.destroyBody(enemies.get(i).getBody());
+                enemies.remove(i);
+            }
+        }
+
+        if (enemies.isEmpty()) {
+            isCleared = true;
+            for (Door door : doors){
+                door.open();
+            }
+        }
+
+    }
+
+    private void updateBullets(){
+        for(int i = 0; i < bullets.size(); i++){
+            if(bullets.get(i).isRemove()){
+                // Destroy body, remove bullet
+                world.destroyBody(bullets.get(i).getBody());
+                bullets.remove(i);
+            }else{
+                bullets.get(i).update();
+            }
+
+        }
     }
 }

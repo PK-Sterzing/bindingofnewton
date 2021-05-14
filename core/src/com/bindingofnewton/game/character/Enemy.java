@@ -2,9 +2,7 @@ package com.bindingofnewton.game.character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.Orientation;
@@ -19,6 +17,7 @@ public class Enemy extends Entity {
 
     // How many times should the enemy update the path to the player
     protected static int pathChangingRate = 500;
+    private static long lastPathChange = 0;
 
     private float deltaTime = 0f;
     private final float SPEED_ANIMATION = 0.04f;
@@ -78,7 +77,6 @@ public class Enemy extends Entity {
         }
     }
 
-
     /**
      * Moves the Enemy by a Vector2
      * @param vector 2D Vector
@@ -99,12 +97,33 @@ public class Enemy extends Entity {
         polygon.setPosition(body.getPosition().x, body.getPosition().y);
     }
 
+    /**
+     * Gets the changing rate of the path
+     * @return path changing rate
+     */
     public static int getPathChangingRate() {
         return pathChangingRate;
     }
 
-    @Override
-    public void render(Batch batch) {
+    /**
+     * Gets the last change of the path
+     * @return last change of the path
+     */
+    public static long getLastPathChange(){
+        return lastPathChange;
+    }
 
+    /**
+     * Sets the last change of the path
+     * @param lastPathChange last change of the path
+     */
+    public static void setLastPathChange(long lastPathChange){
+        Enemy.lastPathChange = lastPathChange;
+    }
+
+    @Override
+    public void render(SpriteBatch batch, boolean isMoving) {
+        move(new Vector2(0, 0));
+        getSprite().draw(batch);
     }
 }

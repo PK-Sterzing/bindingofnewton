@@ -24,7 +24,7 @@ public class Door {
         this.world = world;
         this.orientation = orientation;
         this.map = map;
-        isOpen = false;
+        close();
         setDoorOnMap();
     }
 

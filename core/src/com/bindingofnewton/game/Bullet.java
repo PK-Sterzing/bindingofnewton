@@ -2,6 +2,7 @@ package com.bindingofnewton.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.assets.AssetsHandler;
@@ -91,6 +92,11 @@ public class Bullet {
         this.remove = remove;
     }
 
-
-
+    /**
+     * Renders the bullet
+     * @param batch the batch to be rendered with
+     */
+    public void render(SpriteBatch batch) {
+        sprite.draw(batch);
+    }
 }

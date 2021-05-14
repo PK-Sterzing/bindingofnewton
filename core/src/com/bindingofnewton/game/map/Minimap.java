@@ -72,8 +72,6 @@ public class Minimap {
     public void render(Batch batch){
         currentRoom = level.currentRoom;
 
-        batch.begin();
-
         float posX = width-spriteWidth * 3.5f;
         float posY = height-spriteHeight * 2.5f;
 
@@ -100,7 +98,6 @@ public class Minimap {
             }
         }
 
-        batch.end();
     }
 
 

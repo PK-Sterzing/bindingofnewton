@@ -1,7 +1,7 @@
 package com.bindingofnewton.game.character;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.Orientation;
@@ -117,6 +117,12 @@ public abstract class Entity {
         isDead = dead;
     }
 
-    public abstract void render(Batch batch);
+    /**
+     * Renders the entity
+     * @param batch the batch to be rendered with
+     * @param isMoving true - the entity is moving
+     *                 false - the entity is not moving
+     */
+    public abstract void render(SpriteBatch batch, boolean isMoving);
 
 }

@@ -53,4 +53,8 @@ public class Level {
         return currentRoom;
     }
 
+    public World getWorld(){
+        return world;
+    }
+
 }
