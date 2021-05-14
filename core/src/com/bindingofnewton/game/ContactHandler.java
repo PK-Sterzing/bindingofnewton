@@ -33,26 +33,21 @@ public class ContactHandler implements ContactListener {
     }
 
     private void removeBulletFixture(Bullet bullet) {
-            if (BindingOfNewton.level.getCurrentRoom().getBullets().contains(bullet)){
-                bullet.setRemove(true);
-            }
-            /*
-            if (fixtureA.getUserData().equals("bullet")) {
-                for (int i = 0; i < BindingOfNewton.level.getCurrentRoom().getBullets().size(); i++) {
-                    if (BindingOfNewton.level.getCurrentRoom().getBullets().get(i).getBody().equals(fixtureA.getBody())) {
-                        // Setting remove flag
-                        BindingOfNewton.level.getCurrentRoom().getBullets().get(i).setRemove(true);
-                        break;
-                    }
-                }
-
-            }*/
-
+        if (BindingOfNewton.level.getCurrentRoom().getBullets().contains(bullet)){
+            bullet.setRemove(true);
+        }
     }
 
     @Override
     public void endContact(Contact contact) {
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
 
+        if (fixtureA.getUserData() instanceof Player && fixtureB.getUserData() != null && fixtureB.getUserData().equals("fire")){
+            fixtureB.getBody().setActive(true);
+        }else if (fixtureB.getUserData() instanceof Player && fixtureA.getUserData() != null && fixtureA.getUserData().equals("fire")){
+            fixtureA.getBody().setActive(true);
+        }
     }
 
     @Override
@@ -62,6 +57,7 @@ public class ContactHandler implements ContactListener {
 
         //TODO: player kriegt zur zeit jede sekunde schaden, aber nur wenn er wieder am feuer angeht. Ändern!
         if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")){
+
             if (System.currentTimeMillis() - fireLastContact > 1000){
                 ((Player) bodyA.getUserData()).setHealth(-0.5f);
             }

@@ -109,7 +109,6 @@ public class Player extends Entity {
     }
 
 
-
     /**
      * Moves the player by a Vector2
      * @param vector 2D Vector

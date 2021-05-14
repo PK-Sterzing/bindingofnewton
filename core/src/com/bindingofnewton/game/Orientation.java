@@ -61,6 +61,14 @@ public enum Orientation {
         }
     }
 
+    /**
+     * Returns a random Orientation
+     * @return
+     */
+    public static Orientation getRandom(){
+        return values()[(int) (Math.random() * values().length)];
+    }
+
     public boolean isOpposite(){
         return this.getOpposite() == this;
     }
