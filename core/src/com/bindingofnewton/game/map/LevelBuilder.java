@@ -11,49 +11,89 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class to build a level.
+ */
 public class LevelBuilder {
     private Level level;
 
+    /**
+     * Creates the LevelBuilder
+     */
     public LevelBuilder(){
         level = new Level();
         level.rooms = new ArrayList<>();
     }
 
+    //<editor-fold desc="Getter and Setter">
+
+    /**
+     * Sets the world
+     * @param world world
+     * @return this builder
+     */
     public LevelBuilder setWorld(World world){
         level.world = world;
         return this;
     }
 
+    /**
+     * Sets the width of the level
+     * @param width width
+     * @return this builder
+     */
     public LevelBuilder setLevelWidth(int width){
         level.width = width;
         return this;
     }
 
+    /**
+     * Sets the height of the level
+     * @param height height
+     * @return this builder
+     */
     public LevelBuilder setLevelHeight(int height){
         level.height = height;
         return this;
     }
 
+    /**
+     * Sets the width and the height of the level
+     * @param width width
+     * @param height height
+     * @return this builder
+     */
     public LevelBuilder setLevelWidthHeight(int width, int height){
         setLevelWidth(width);
         setLevelHeight(height);
         return this;
     }
 
+    /**
+     * Sets the minimum of rooms
+     * @param min
+     * @return this builder
+     */
     public LevelBuilder setMinRooms(int min){
         level.minRooms = min;
         return this;
     }
 
+    /**
+     * Sets the minimum and the maximum
+     * @param min
+     * @param max
+     * @return
+     */
     public LevelBuilder setAmountRandomRooms(int min, int max){
         level.randomMaxRooms = max;
         level.randomMinRooms = min;
         return this;
     }
 
-    public void setStartRoom(Room room){
-        if (level.rooms.contains(room)) level.currentRoom = room;
-    }
+    //</editor-fold >
+
+    //<editor-fold desc="Methods">
 
     /**
      * Builds the level with all the rooms
@@ -109,6 +149,8 @@ public class LevelBuilder {
             room = level.rooms.get((int) (Math.random()*level.rooms.size()));
         }
 
+        System.out.println("1");
+
         Vector2 pos = null;
         String map = null;
         Orientation orientationNextRoom = null;
@@ -123,7 +165,10 @@ public class LevelBuilder {
             pos = orientationNextRoom.moveCoord(new Vector2(room.x, room.y), 1);
 
             counter++;
-        }while(pos.x < 0 || pos.x > level.width || pos.y < 0 || pos.y > level.height || counter < 25);
+            System.out.println("Counter: " + counter);
+        }while(counter < 25 && (pos.x < 0 || pos.x > level.width || pos.y < 0 || pos.y > level.height));
+
+        System.out.println("2");
 
         //Creating new room
         Room newRoom = new RoomBuilder()
@@ -131,6 +176,8 @@ public class LevelBuilder {
                 .setMap(map)
                 .setPosition((int)pos.x, (int) pos.y)
                 .build();
+
+        System.out.println("3");
 
         //Adds the door in the old and in the new room
         room.addDoor(new Door(level.world, room.getMap(), orientationNextRoom));
@@ -215,4 +262,6 @@ public class LevelBuilder {
         level.rooms.add(bossRoom);
         System.out.println("Room: " + bossRoom.getX() + ",   " + bossRoom.getY());
     }
+
+    //</editor-fold>
 }

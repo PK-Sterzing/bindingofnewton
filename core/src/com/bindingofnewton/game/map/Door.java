@@ -43,6 +43,10 @@ public class Door {
         close();
     }
 
+    /**
+     * Sets the door on the map
+     * @param id the id of the tile of the door
+     */
     private void setDoorOnMap(int id){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("ground");
         TiledMapTileSet tileSet = map.getTileSets().getTileSet(0);
@@ -72,14 +76,25 @@ public class Door {
         }
     }
 
+    /**
+     * Sets the body
+     * @param body body
+     */
     public void setBody(Body body){
         this.body = body;
     }
 
+    /**
+     * @return true - door is open
+     *          false - door is closed
+     */
     public boolean isOpen() {
         return isOpen;
     }
 
+    /**
+     * opens the door
+     */
     public void open() {
         isOpen = true;
         if (body != null)
@@ -87,6 +102,9 @@ public class Door {
         setDoorOnMap(isLastDoor ? 0 : 18);
     }
 
+    /**
+     * closes the door
+     */
     public void close(){
         isOpen = false;
         if (body != null)
@@ -94,14 +112,26 @@ public class Door {
         setDoorOnMap(isLastDoor ? 0 : 17);
     }
 
+    /**
+     * Gets the orientation
+     * @return the orientation
+     */
     public Orientation getOrientation() {
         return orientation;
     }
 
+    /**
+     * Gets the body
+     * @return the body
+     */
     public Body getBody() {
         return body;
     }
 
+    /**
+     * Gets if the door is the last door
+     * @return last door
+     */
     public boolean isLastDoor() {
         return isLastDoor;
     }
