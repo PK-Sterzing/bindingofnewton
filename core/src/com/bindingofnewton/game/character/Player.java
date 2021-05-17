@@ -172,12 +172,13 @@ public class Player extends Entity {
 
     @Override
     public void render(SpriteBatch batch, boolean isMoving) {
-        //TODO: Nur testweise auskommentiert! Sobald animationen verfügbar sind hier ändern!
+        // TODO: Change here to add animations
         if (isMoving){
             //batch.draw(player.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
-            batch.draw(AssetsHandler.getInstance().getPlayerSprite(playerName, orientation), body.getPosition().x, body.getPosition().y);
-        }else{
-            batch.draw(AssetsHandler.getInstance().getPlayerSprite(playerName, orientation), body.getPosition().x, body.getPosition().y);
+            // TODO: setScale and don't set fixe width height
+            batch.draw(AssetsHandler.getInstance().getPlayerSprite(playerName, orientation), body.getPosition().x, body.getPosition().y, 27, 40);
+        }else {
+            batch.draw(AssetsHandler.getInstance().getPlayerSprite(playerName, orientation), body.getPosition().x, body.getPosition().y, 27, 40);
         }
 
         //Renders the hearts of the player

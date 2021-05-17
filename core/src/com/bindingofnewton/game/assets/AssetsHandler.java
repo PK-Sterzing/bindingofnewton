@@ -60,7 +60,8 @@ public class AssetsHandler {
         array.add(3, textureAtlas.createSprite(player.name().toLowerCase() + "-right"));
 
         for (Sprite sprite : array) {
-            sprite.setSize(sprite.getWidth() * 0.7f, sprite.getHeight() * 0.7f);
+            //sprite.setSize(sprite.getWidth() * 0.5f, sprite.getHeight() * 0.5f);
+            sprite.scale(0.5f);
         }
 
         return array;
@@ -84,7 +85,8 @@ public class AssetsHandler {
                 sprite = getPlayerSprites(playerName).get(0);
         }
 
-        sprite.setSize(sprite.getWidth() * 0.7f, sprite.getHeight() * 0.7f);
+        //sprite.setSize(sprite.getWidth() * 0.7f, sprite.getHeight() * 0.7f);
+        sprite.scale(0.5f);
         return sprite;
     }
 

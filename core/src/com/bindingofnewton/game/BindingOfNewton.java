@@ -21,6 +21,7 @@ import com.bindingofnewton.game.map.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class BindingOfNewton implements Screen{
@@ -67,7 +68,7 @@ public class BindingOfNewton implements Screen{
 
 		// Create Camera
 		camera = new OrthographicCamera();
-		//camera.zoom = 0.5f;
+
 		TiledMapTileLayer layer = (TiledMapTileLayer) level.getCurrentRoom().getMap().getLayers().get("ground");
 		float w = layer.getTileWidth() * layer.getWidth();
 		float h = layer.getTileHeight() * layer.getHeight();
@@ -96,7 +97,7 @@ public class BindingOfNewton implements Screen{
 
 		batch.begin();
 
-		//Render the player
+		// Render the player
 		Vector2 movementPlayer = inputHandler.getPlayerMovement();
 		if (movementPlayer.x != 0 && movementPlayer.y != 0){
 			player.render(batch, true);
@@ -184,9 +185,15 @@ public class BindingOfNewton implements Screen{
 
 		// Create Enemies
 		if (!level.getCurrentRoom().isCleared()){
+			int minX = 40;
+			int maxX = 400;
+			int minY = 40;
+			int maxY = 250;
 			ArrayList<Enemy> enemies = new ArrayList<>();
 			for(int i = 0; i < 5; i++){
-				enemies.add(new Enemy(world, 200, 200, 50, AssetsHandler.getInstance().getSingleSprite(
+				double startX = Math.floor(Math.random()*(maxX-minX+1)+minX);
+				double startY = Math.floor(Math.random()*(maxY-minY+1)+minY);
+				enemies.add(new Enemy(world, (int)startX, (int)startY, 50, AssetsHandler.getInstance().getSingleSprite(
 						"./character/bat_run/run-front1.png")));
 			}
 			level.getCurrentRoom().addEnemies(enemies);

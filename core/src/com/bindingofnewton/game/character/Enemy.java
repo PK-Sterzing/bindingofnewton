@@ -126,4 +126,18 @@ public class Enemy extends Entity {
         move(new Vector2(0, 0));
         getSprite().draw(batch);
     }
+
+    public void calculateMoveToPlayer(Player player){
+        Vector2 move = new Vector2(
+                player.getBody().getPosition().x -
+                        this.getBody().getPosition().x,
+                player.getBody().getPosition().y -
+                        this.getBody().getPosition().y);
+
+        // Change length of vector to the speed of the enemy
+        move = move.scl(this.getSpeed() / move.len());
+
+        this.move(move);
+        Enemy.setLastPathChange(System.currentTimeMillis());
+    }
 }

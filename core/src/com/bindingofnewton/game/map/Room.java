@@ -82,9 +82,7 @@ public class Room {
     }
 
     public void setDoorBodies(){
-        int i=0;
         for (Orientation orientation : Orientation.values()){
-
             String layerName = "doors-" + orientation.name();
             MapLayer layer = map.getLayers().get(layerName);
             if (layer == null){
@@ -122,7 +120,6 @@ public class Room {
                     shape.dispose();
                 }
             }
-            i++;
         }
 
     }
@@ -162,18 +159,11 @@ public class Room {
 
 
     private void moveAllEnemies() {
+        // Move Enemy after cooldown
         if (System.currentTimeMillis() - Enemy.getLastPathChange() >= Enemy.getPathChangingRate()) {
             for(int i = 0; i < enemies.size(); i++){
-                Vector2 move = new Vector2(
-                        player.getBody().getPosition().x -
-                                enemies.get(i).getBody().getPosition().x,
-                        player.getBody().getPosition().y -
-                                enemies.get(i).getBody().getPosition().y);
-
-                move = move.scl(enemies.get(i).getSpeed() / move.len());
-
-                enemies.get(i).move(move);
-                Enemy.setLastPathChange(System.currentTimeMillis());
+                // Get vector from enemy to player
+                enemies.get(i).calculateMoveToPlayer(player);
             }
         }
     }
