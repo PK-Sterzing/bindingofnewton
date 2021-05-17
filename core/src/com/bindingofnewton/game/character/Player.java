@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.bindingofnewton.game.BindingOfNewton;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
 
@@ -147,14 +148,14 @@ public class Player extends Entity {
 
     @Override
     public void render(SpriteBatch batch, boolean isMoving) {
-        // TODO: Change here to add animations
         Sprite sprite;
-        if (isMoving){
+        if (isDead) {
+            sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-dead.png");
+        } else if (isMoving){
             sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(orientation));
-            batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
-        }else{
+        } else{
             sprite = AssetsHandler.getInstance().getPlayerSprite(playerName, orientation);
-            batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
         }
+        batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
     }
 }

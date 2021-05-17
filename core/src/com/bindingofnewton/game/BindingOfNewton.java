@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BindingOfNewton implements Screen{
-	private static SpriteBatch batch;
+	private static BindingOfNewton instance;
+
+	private SpriteBatch batch;
 
 	private OrthographicCamera camera;
 	private MapBodyBuilder mapBuilder;
@@ -26,20 +28,25 @@ public class BindingOfNewton implements Screen{
 	private InputHandler inputHandler;
 	private World world;
 
-	protected static Game game;
+	protected Game game;
 
-	protected static Level level;
+	protected Level level;
 	private Minimap minimap;
 
 	private long lastPathChange = 0;
 
 	private Box2DDebugRenderer renderer;
-	public static boolean showDebugInfo = false;
+	public boolean showDebugInfo = false;
 	private ContactHandler contactHandler;
-	protected static boolean isPaused = false;
+	protected boolean isPaused = false;
 
-	public BindingOfNewton(Game game) {
-		this.game = game;
+	private BindingOfNewton() { }
+
+	public static BindingOfNewton getInstance(){
+		if (instance == null){
+			instance = new BindingOfNewton();
+		}
+		return instance;
 	}
 
 	@Override
@@ -279,27 +286,27 @@ public class BindingOfNewton implements Screen{
 				break;
 		}
 
-		BossEnemy enemy = new BossEnemy(world, x, y, 30, AssetsHandler.getInstance().getSingleSprite("./character/boss/boss_run1.png"));
+		BossEnemy enemy = new BossEnemy(world, x, y, 30, AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/boss_run1.png"));
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		enemies.add(enemy);
 		room.addEnemies(enemies);
 	}
 
-	/**
-	 * Draws dead player and pauses game
-	 */
-	public static void playerDeath() {
-		Sprite deadSprite = AssetsHandler.getInstance().getSingleSprite("./character/newton/newton-dead.png");
-		System.out.println("Dead Player drawn");
-		// Set Player sprite to dead sprite
-        level.getCurrentRoom().getPlayer().setSingleSprites(deadSprite);
+	public void setGame(Game game){
+		this.game = game;
+	}
 
-        // Pause game
-		isPaused = true;
+	/**
+	 * Pauses game, removes player, changes screen
+	 */
+	public void gameOver() {
+		// Pause game
+		BindingOfNewton.getInstance().isPaused = true;
 		// Remove Body and player
 		level.getWorld().destroyBody(level.getCurrentRoom().getPlayer().getBody());
+		level.getCurrentRoom().getPlayer().setDead(true);
 		level.getCurrentRoom().setPlayer(null);
-
+		// TODO: Change to main menu screen or dedicated game over screen
 	}
 
 	@Override

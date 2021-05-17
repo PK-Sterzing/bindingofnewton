@@ -110,7 +110,7 @@ public class ContactHandler implements ContactListener {
     }
 
     private void removeBulletFixture(Bullet bullet) {
-        if (BindingOfNewton.level.getCurrentRoom().getBullets().contains(bullet)){
+        if (BindingOfNewton.getInstance().level.getCurrentRoom().getBullets().contains(bullet)){
             bullet.setRemove(true);
         }
     }

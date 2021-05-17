@@ -70,7 +70,8 @@ public class MainMenu implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new BindingOfNewton(game));
+                game.setScreen(BindingOfNewton.getInstance());
+                BindingOfNewton.getInstance().setGame(game);
             }
         });
         exitButton.addListener(new ClickListener(){

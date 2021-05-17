@@ -1,6 +1,7 @@
 package com.bindingofnewton.game;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
@@ -48,7 +49,7 @@ public class InputHandler implements InputProcessor {
     public boolean keyDown(int keycode) {
 
         if (keycode == Input.Keys.SHIFT_LEFT){
-            BindingOfNewton.showDebugInfo = !BindingOfNewton.showDebugInfo;
+            BindingOfNewton.getInstance().showDebugInfo = !BindingOfNewton.getInstance().showDebugInfo;
         }
 
         if (movingKeys.containsKey(keycode)){
