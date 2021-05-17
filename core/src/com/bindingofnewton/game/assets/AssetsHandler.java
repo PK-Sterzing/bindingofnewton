@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.character.Player;
 
@@ -86,6 +87,18 @@ public class AssetsHandler {
 
         sprite.setSize(sprite.getWidth() * 0.7f, sprite.getHeight() * 0.7f);
         return sprite;
+    }
+
+    public Animation<Sprite> getPlayerAnimation(PlayerName playerName, String suffix, float duration) {
+        Array<Sprite> sprites = new Array<>();
+        int counter = 0;
+
+        while(true) {
+            Sprite sprite = getSprite(playerName.name().toLowerCase() + "-" + suffix + "-" + counter);
+            if (sprite == null) break;
+            sprites.add(sprite);
+        }
+        return new Animation<Sprite>(duration, sprites, Animation.PlayMode.LOOP);
     }
 
     public Sprite getPlayerAnimationFrame(Animation<Sprite> animation) {
