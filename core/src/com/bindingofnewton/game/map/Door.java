@@ -31,7 +31,7 @@ public class Door {
         this.map = map;
         this.isBossDoor = isBossDoor;
         close();
-        setDoorOnMap(isBossDoor ? 0 : 8);
+        setDoorOnMap(isBossDoor ? 0 : 17);
     }
 
     private void setDoorOnMap(int id){
