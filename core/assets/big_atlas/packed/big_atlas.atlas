@@ -6,14 +6,14 @@ filter: Nearest, Nearest
 repeat: none
 apple_bullet
   rotate: false
-  xy: 1306, 148
+  xy: 1374, 148
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 boss
   rotate: false
-  xy: 262, 50
+  xy: 1396, 180
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -137,30 +137,23 @@ bullet
   orig: 15, 13
   offset: 0, 0
   index: -1
-cleaned
-  rotate: false
-  xy: 1396, 180
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
 current
   rotate: false
-  xy: 173, 18
+  xy: 241, 18
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 door
   rotate: false
-  xy: 37, 2
+  xy: 1238, 132
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 empty_heart
   rotate: false
-  xy: 1204, 132
+  xy: 105, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -195,21 +188,42 @@ fire3
   index: -1
 floor
   rotate: false
-  xy: 1272, 132
+  xy: 173, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+floor-stone
+  rotate: false
+  xy: 1204, 132
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+floor-stone-hole
+  rotate: false
+  xy: 37, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+floor-stone-spikes
+  rotate: false
+  xy: 1340, 132
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 full_heart
   rotate: false
-  xy: 1238, 132
+  xy: 139, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 half_heart
   rotate: false
-  xy: 71, 2
+  xy: 1272, 132
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -545,35 +559,42 @@ stein1
   index: -1
 stein2
   rotate: false
-  xy: 105, 2
+  xy: 1306, 132
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 stein3
   rotate: false
-  xy: 1990, 214
+  xy: 1170, 132
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-uncleaned
-  rotate: false
-  xy: 280, 50
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
 wall
   rotate: false
-  xy: 1170, 132
+  xy: 71, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 wall-corner
   rotate: false
-  xy: 139, 2
+  xy: 207, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wall-stone
+  rotate: false
+  xy: 1990, 214
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wall-stone-corner
+  rotate: false
+  xy: 262, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
