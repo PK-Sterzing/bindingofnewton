@@ -1,6 +1,5 @@
 package com.bindingofnewton.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -8,15 +7,9 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.map.Level;
 
-import javax.naming.Binding;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InputHandler implements InputProcessor {
-
-    protected boolean isMoving;
-    protected boolean isShooting;
-
     private HashMap<Integer, Boolean> movingKeys;
     private HashMap<Integer, Boolean> shootingKeys;
 

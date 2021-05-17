@@ -1,17 +1,14 @@
 package com.bindingofnewton.game.map;
 
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.Orientation;
 
+/**
+ * A door of the map
+ */
 public class Door {
     private World world;
     private Orientation orientation;
@@ -19,19 +16,31 @@ public class Door {
     private Body body;
 
     private boolean isOpen;
-    private boolean isBossDoor;
+    private boolean isLastDoor;
 
+    /**
+     * Creates a new Door
+     * @param world the world of the door
+     * @param map the map where the door should be
+     * @param orientation the orientation where the door should be
+     */
     public Door(World world, TiledMap map, Orientation orientation){
         this(world, map, orientation, false);
     }
 
-    public Door(World world, TiledMap map, Orientation orientation, boolean isBossDoor){
+    /**
+     * Creates a new Door
+     * @param world the world of the door
+     * @param map the map where the door should be
+     * @param orientation the orientation where the door should be
+     * @param isLastDoor true - the door is the door to the next level
+     */
+    public Door(World world, TiledMap map, Orientation orientation, boolean isLastDoor){
         this.world = world;
         this.orientation = orientation;
         this.map = map;
-        this.isBossDoor = isBossDoor;
+        this.isLastDoor = isLastDoor;
         close();
-        setDoorOnMap(isBossDoor ? 0 : 17);
     }
 
     private void setDoorOnMap(int id){
@@ -75,14 +84,14 @@ public class Door {
         isOpen = true;
         if (body != null)
             body.setActive(false);
-        setDoorOnMap(17);
+        setDoorOnMap(isLastDoor ? 0 : 18);
     }
 
     public void close(){
         isOpen = false;
         if (body != null)
             body.setActive(true);
-        setDoorOnMap(17);
+        setDoorOnMap(isLastDoor ? 0 : 17);
     }
 
     public Orientation getOrientation() {
@@ -91,5 +100,9 @@ public class Door {
 
     public Body getBody() {
         return body;
+    }
+
+    public boolean isLastDoor() {
+        return isLastDoor;
     }
 }

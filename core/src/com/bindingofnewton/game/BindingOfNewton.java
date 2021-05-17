@@ -160,19 +160,20 @@ public class BindingOfNewton implements Screen{
 
 		// TODO: Set player spawn in the middle
 		Player player = new Player(world, AssetsHandler.PlayerName.NEWTON, 100, 100);
+
 		level.getCurrentRoom().setPlayer(player);
 
 		//Creating a new minimap
 		minimap = new Minimap(level);
 
-		makeNewRoom(Orientation.UP);
+		makeNewRoom(null);
 	}
 
 	/**
 	 * Creates new Room, stores the coordinates and the orientation when entering the door
 	 * @param orientation
 	 */
-	private void makeNewRoom( Orientation orientation){
+	private void makeNewRoom(Orientation orientation){
 		Player playerCached = level.getCurrentRoom().getPlayer();
 		// Remove all bodies in current Room
 		Array<Body> bodies = new Array<>();
@@ -187,6 +188,10 @@ public class BindingOfNewton implements Screen{
 
 		// Load next Room
 		Room room = level.getNextRoom(orientation);
+		if (orientation == null && room == level.getRooms().get(0)){
+			orientation = Orientation.DOWN;
+		}
+
 		level.getCurrentRoom().setPlayer(playerCached);
 
 		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){

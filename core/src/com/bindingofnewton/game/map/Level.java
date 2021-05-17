@@ -35,7 +35,7 @@ public class Level {
             return currentRoom;
         }
 
-        if (orientation == null) return null;
+        if (orientation == null) return currentRoom;
 
         int x = currentRoom.getX();
         int y = currentRoom.getY();
