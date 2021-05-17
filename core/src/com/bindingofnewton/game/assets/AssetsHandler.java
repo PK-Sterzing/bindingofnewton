@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.character.Player;
@@ -86,24 +85,34 @@ public class AssetsHandler {
                 sprite = getPlayerSprites(playerName).get(0);
         }
 
-        //sprite.setSize(sprite.getWidth() * 0.7f, sprite.getHeight() * 0.7f);
-        sprite.scale(0.5f);
+        sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
         return sprite;
     }
 
-    public Animation<Sprite> getPlayerAnimation(PlayerName playerName, String suffix, float duration) {
+    public Animation<Sprite> getAnimation(String name, float duration) {
         Array<Sprite> sprites = new Array<>();
-        int counter = 0;
+        int counter = 1;
 
         while(true) {
-            Sprite sprite = getSprite(playerName.name().toLowerCase() + "-" + suffix + "-" + counter);
+            Sprite sprite = getSingeSpriteFromAtlas(name + "-" + counter);
             if (sprite == null) break;
+            sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
             sprites.add(sprite);
+            counter++;
         }
-        return new Animation<Sprite>(duration, sprites, Animation.PlayMode.LOOP);
+        return new Animation<>(duration, sprites, Animation.PlayMode.LOOP);
     }
 
-    public Sprite getPlayerAnimationFrame(Animation<Sprite> animation) {
+    public Animation<Sprite> getPlayerRunAnimation(PlayerName playerName, Orientation orientation, float duration) {
+        switch (orientation) {
+            case DOWN: return getAnimation(playerName.toString().toLowerCase() + "-run-front", duration);
+            case LEFT: return getAnimation(playerName.toString().toLowerCase() + "-run-left", duration);
+            case RIGHT: return getAnimation(playerName.toString().toLowerCase() + "-run-right", duration);
+            default: return getAnimation(playerName.toString().toLowerCase() + "-run-back", duration);
+        }
+    }
+
+    public Sprite getAnimationFrame(Animation<Sprite> animation) {
         deltaTime += Gdx.graphics.getDeltaTime();
         return animation.getKeyFrame(deltaTime, true);
     }
@@ -134,12 +143,12 @@ public class AssetsHandler {
         return list;
     }
 
-    public Sprite getSingleSprite(String name) {
+    public Sprite getSingleSpriteFromFile(String name) {
         Texture texture = new Texture(name);
         return new Sprite(texture);
     }
 
-    public Sprite getSprite(String name) {
+    public Sprite getSingeSpriteFromAtlas(String name) {
         return textureAtlas.createSprite(name);
     }
 }

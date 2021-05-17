@@ -94,7 +94,7 @@ public class BindingOfNewton implements Screen{
 
 		// Render the player
 		Vector2 movementPlayer = inputHandler.getPlayerMovement();
-		if (movementPlayer.x != 0 && movementPlayer.y != 0){
+		if (movementPlayer.x != 0 || movementPlayer.y != 0){
 			player.render(batch, true);
 		}else{
 			player.render(batch, false);
@@ -208,7 +208,7 @@ public class BindingOfNewton implements Screen{
 			for(int i = 0; i < 5; i++){
 				double startX = Math.floor(Math.random()*(maxX-minX+1)+minX);
 				double startY = Math.floor(Math.random()*(maxY-minY+1)+minY);
-				enemies.add(new Enemy(world, (int)startX, (int)startY, 50, AssetsHandler.getInstance().getSingleSprite(
+				enemies.add(new Enemy(world, (int)startX, (int)startY, 50, AssetsHandler.getInstance().getSingleSpriteFromFile(
 						"./character/bat_run/run-front1.png")));
 			}
 			level.getCurrentRoom().addEnemies(enemies);
