@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BindingOfNewton implements Screen{
-	private SpriteBatch batch;
+	private static SpriteBatch batch;
 
 	private OrthographicCamera camera;
 	private MapBodyBuilder mapBuilder;
@@ -36,6 +36,7 @@ public class BindingOfNewton implements Screen{
 	private Box2DDebugRenderer renderer;
 	public static boolean showDebugInfo = false;
 	private ContactHandler contactHandler;
+	protected static boolean isPaused = false;
 
 	public BindingOfNewton(Game game) {
 		this.game = game;
@@ -71,7 +72,10 @@ public class BindingOfNewton implements Screen{
 
 	@Override
 	public void render(float delta) {
-		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+		if(isPaused){
+			delta = 0;
+		}
+		world.step(delta, 6, 2);
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -274,6 +278,23 @@ public class BindingOfNewton implements Screen{
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		enemies.add(enemy);
 		room.addEnemies(enemies);
+	}
+
+	/**
+	 * Draws dead player and pauses game
+	 */
+	public static void playerDeath() {
+		Sprite deadSprite = AssetsHandler.getInstance().getSingleSprite("./character/newton/newton-dead.png");
+		System.out.println("Dead Player drawn");
+		// Set Player sprite to dead sprite
+        level.getCurrentRoom().getPlayer().setSingleSprites(deadSprite);
+
+        // Pause game
+		isPaused = true;
+		// Remove Body and player
+		level.getWorld().destroyBody(level.getCurrentRoom().getPlayer().getBody());
+		level.getCurrentRoom().setPlayer(null);
+
 	}
 
 	@Override

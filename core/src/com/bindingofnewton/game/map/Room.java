@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bindingofnewton.game.BindingOfNewton;
 import com.bindingofnewton.game.Bullet;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.Orientation;
@@ -156,6 +157,9 @@ public class Room {
         moveAllEnemies();
     }
 
+    /**
+     * Moves enemy after cooldown
+     */
     private void moveAllEnemies() {
         // Move Enemy after cooldown
         if (System.currentTimeMillis() - Enemy.getLastPathChange() >= Enemy.getPathChangingRate()) {
@@ -166,13 +170,22 @@ public class Room {
         }
     }
 
+    /**
+     * Checks if player is dead and removes him
+     */
     private void removeDeadPlayer() {
         if(player.isDead()){
-            world.destroyBody(player.getBody());
-            player = null;
+            float playerX = player.getBody().getPosition().x;
+            float playerY = player.getBody().getPosition().x;
+            //world.destroyBody(player.getBody());
+            //player = null;
+            BindingOfNewton.playerDeath();
         }
     }
 
+    /**
+     * Goes trough enemies and deletes the dead ones
+     */
     private void removeDeadEnemies() {
         for(int i = 0; i < enemies.size(); i++){
             if(enemies.get(i).isDead()){
@@ -190,6 +203,9 @@ public class Room {
 
     }
 
+    /**
+     * Removes all bullets that have to be removed
+     */
     private void updateBullets(){
         for(int i = 0; i < bullets.size(); i++){
             if(bullets.get(i).isRemove()){

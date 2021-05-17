@@ -127,6 +127,10 @@ public class Enemy extends Entity {
         getSprite().draw(batch);
     }
 
+    /**
+     * Calcultes vector with fixed length to player and moves enemy to that vector
+     * @param player to which the enemy has to move
+     */
     public void calculateMoveToPlayer(Player player){
         Vector2 move = new Vector2(
                 player.getBody().getPosition().x -

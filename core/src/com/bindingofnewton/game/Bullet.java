@@ -57,10 +57,19 @@ public class Bullet {
         movement = new Vector2(0, 0);
     }
 
+    /**
+     * Set constant enemy movement
+     * The movement set will be executed ever render
+     * @param vector
+     */
     public void setMovement(Vector2 vector){
         this.movement = vector;
     }
 
+    /**
+     * Move body according to movement set by setMovement
+     * removes bullet if out of bounds
+     */
     public void update(){
         body.setLinearVelocity(movement);
         if(body.getPosition().x > Gdx.graphics.getWidth() || body.getPosition().x < 0){

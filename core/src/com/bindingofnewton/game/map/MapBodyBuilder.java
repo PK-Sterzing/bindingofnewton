@@ -91,6 +91,12 @@ public class MapBodyBuilder {
 
         return polygonShape;
     }
+
+    /**
+     * Converts PolygonMapObject to PolygonShape
+     * @param polygonObject
+     * @return polygonShape
+     */
     private static PolygonShape getPolygon(PolygonMapObject polygonObject) {
         PolygonShape polygon = new PolygonShape();
         float[] vertices = polygonObject.getPolygon().getTransformedVertices();

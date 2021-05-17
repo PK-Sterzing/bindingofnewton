@@ -76,6 +76,14 @@ public abstract class Entity {
     }
 
     /**
+     * Sets same sprite for player in all directions
+     * @param sprite
+     */
+    public void setSingleSprites(Sprite sprite){
+        // TODO: Implement this
+    }
+
+    /**
      * Returns the health of the current entity
      * @return health
      */
@@ -93,26 +101,51 @@ public abstract class Entity {
         health += delta;
     }
 
+    /**
+     * Get speed
+     * @return speed
+     */
     public int getSpeed() {
         return speed;
     }
 
+    /**
+     * Get Polygon shape of hitbox
+     * @return Polygon
+     */
     public Polygon getPolygon() {
         return polygon;
     }
 
+    /**
+     * Get current Orientation of Entity
+     * @return Orientation
+     */
     public Orientation getOrientation() {
         return orientation;
     }
 
+    /**
+     * Set Orientation
+     * @param orientation
+     */
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
 
+    /**
+     * Check if Entity is dead
+     * Check if dead flag is set
+     * @return
+     */
     public boolean isDead() {
         return isDead;
     }
 
+    /**
+     * Set dead flag
+     * @param dead
+     */
     public void setDead(boolean dead) {
         isDead = dead;
     }

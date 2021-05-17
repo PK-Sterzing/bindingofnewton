@@ -137,12 +137,18 @@ public class ContactHandler implements ContactListener {
 
             if (System.currentTimeMillis() - fireLastContact > 1000){
                 ((Player) bodyA.getUserData()).setHealth(-0.5f);
+                if (((Entity) bodyA.getUserData()).getHealth() <= 0.0) {
+                    ((Entity) bodyA.getUserData()).setDead(true);
+                }
             }
             fireLastContact = System.currentTimeMillis();
 
         }else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() != null && bodyA.getUserData().equals("fire")){
             if (System.currentTimeMillis() - fireLastContact > 1000){
                 ((Player) bodyB.getUserData()).setHealth(-0.5f);
+                if (((Entity) bodyA.getUserData()).getHealth() <= 0.0) {
+                    ((Entity) bodyA.getUserData()).setDead(true);
+                }
             }
             fireLastContact = System.currentTimeMillis();
         }

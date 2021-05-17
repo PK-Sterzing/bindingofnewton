@@ -126,7 +126,7 @@ public class LevelBuilder {
             pos = orientationNextRoom.moveCoord(new Vector2(room.x, room.y), 1);
 
             counter++;
-        }while(pos.x < 0 || pos.x > level.width || pos.y < 0 || pos.y > level.height || counter > 25);
+        }while(pos.x < 0 || pos.x > level.width || pos.y < 0 || pos.y > level.height || counter < 25);
 
         System.out.println("3");
 
