@@ -98,7 +98,7 @@ public class BindingOfNewton implements Screen{
 
 		// Render the player
 		Vector2 movementPlayer = inputHandler.getPlayerMovement();
-		if (movementPlayer.x != 0 && movementPlayer.y != 0){
+		if (movementPlayer.x != 0 || movementPlayer.y != 0){
 			player.render(batch, true);
 		}else{
 			player.render(batch, false);
@@ -164,19 +164,20 @@ public class BindingOfNewton implements Screen{
 
 		// TODO: Set player spawn in the middle
 		Player player = new Player(world, AssetsHandler.PlayerName.NEWTON, 100, 100);
+
 		level.getCurrentRoom().setPlayer(player);
 
 		//Creating a new minimap
 		minimap = new Minimap(level);
 
-		makeNewRoom(Orientation.UP);
+		makeNewRoom(null);
 	}
 
 	/**
 	 * Creates new Room, stores the coordinates and the orientation when entering the door
 	 * @param orientation
 	 */
-	private void makeNewRoom( Orientation orientation){
+	private void makeNewRoom(Orientation orientation){
 		Player playerCached = level.getCurrentRoom().getPlayer();
 		// Remove all bodies in current Room
 		Array<Body> bodies = new Array<>();
@@ -191,6 +192,10 @@ public class BindingOfNewton implements Screen{
 
 		// Load next Room
 		Room room = level.getNextRoom(orientation);
+		if (orientation == null && room == level.getRooms().get(0)){
+			orientation = Orientation.DOWN;
+		}
+
 		level.getCurrentRoom().setPlayer(playerCached);
 
 		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
@@ -207,7 +212,7 @@ public class BindingOfNewton implements Screen{
 			for(int i = 0; i < 5; i++){
 				double startX = Math.floor(Math.random()*(maxX-minX+1)+minX);
 				double startY = Math.floor(Math.random()*(maxY-minY+1)+minY);
-				enemies.add(new Enemy(world, (int)startX, (int)startY, 50, AssetsHandler.getInstance().getSingleSprite(
+				enemies.add(new Enemy(world, (int)startX, (int)startY, 50, AssetsHandler.getInstance().getSingleSpriteFromFile(
 						"./character/bat_run/run-front1.png")));
 			}
 			level.getCurrentRoom().addEnemies(enemies);

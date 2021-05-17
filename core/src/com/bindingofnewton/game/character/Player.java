@@ -16,11 +16,8 @@ public class Player extends Entity {
     private static final float MAX_HEALTH = 10;
     private final float SPEED_ANIMATION = 0.04f;
 
-    private TextureAtlas textureAtlas;
+    private HashMap<Orientation, Animation<Sprite>> animations = new HashMap<>();
 
-    private HashMap<Orientation, Animation<TextureRegion>> animations = new HashMap<>();
-
-    private float deltaTime = 0f;
     private AssetsHandler.PlayerName playerName;
 
     public Player(World world, AssetsHandler.PlayerName playerName, int startX, int startY) {
@@ -62,34 +59,12 @@ public class Player extends Entity {
 
         polygonShape.dispose();
 
-        textureAtlas = new TextureAtlas(AssetsHandler.NEWTON_RUN);
-
-        animations.put(Orientation.UP, new Animation<TextureRegion>(SPEED_ANIMATION, textureAtlas.findRegions("run-back"), Animation.PlayMode.LOOP));
-        animations.put(Orientation.DOWN, new Animation<TextureRegion>(SPEED_ANIMATION, textureAtlas.findRegions("run-front"), Animation.PlayMode.LOOP));
-        animations.put(Orientation.RIGHT, new Animation<TextureRegion>(SPEED_ANIMATION, textureAtlas.findRegions("run-right"), Animation.PlayMode.LOOP));
-        animations.put(Orientation.LEFT, new Animation<TextureRegion>(SPEED_ANIMATION, textureAtlas.findRegions("run-right"), Animation.PlayMode.LOOP));
-
+        animations.put(Orientation.UP, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.UP, SPEED_ANIMATION));
+        animations.put(Orientation.DOWN, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.DOWN, SPEED_ANIMATION));
+        animations.put(Orientation.RIGHT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.RIGHT, SPEED_ANIMATION));
+        animations.put(Orientation.LEFT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.LEFT, SPEED_ANIMATION));
         health = 3.5f;
     }
-
-    public TextureRegion getTextureRegion() {
-        return new TextureRegion();
-        /*
-        deltaTime += Gdx.graphics.getDeltaTime();
-        switch (orientation) {
-            case DOWN:
-                return down.getKeyFrame(deltaTime, true);
-            case LEFT:
-                return left.getKeyFrame(deltaTime, true);
-            case RIGHT:
-                return right.getKeyFrame(deltaTime, true);
-            default:
-                return up.getKeyFrame(deltaTime, true);
-        }
-
-         */
-    }
-
 
     /**
      * Returns the sprites of the current health of the player
@@ -101,14 +76,14 @@ public class Player extends Entity {
 
         for (int i = 0; i < Math.ceil(health); i++) {
             if (i == Math.floor(health) && Math.ceil(health) - health == 0.5f) {
-                sprites.add(AssetsHandler.getInstance().getSingleSprite("half_heart.png"));
+                sprites.add(AssetsHandler.getInstance().getSingleSpriteFromFile("half_heart.png"));
             } else {
-                sprites.add(AssetsHandler.getInstance().getSingleSprite("full_heart.png"));
+                sprites.add(AssetsHandler.getInstance().getSingleSpriteFromFile("full_heart.png"));
             }
         }
 
         for (int i = (int) Math.ceil(health); i < MAX_HEALTH; i++) {
-            sprites.add(AssetsHandler.getInstance().getSingleSprite("empty_heart.png"));
+            sprites.add(AssetsHandler.getInstance().getSingleSpriteFromFile("empty_heart.png"));
         }
 
         return sprites;
@@ -166,19 +141,20 @@ public class Player extends Entity {
      * Gets the animation for each direction
      * @return A hashmap with the direction as the keys and the animation as the values
      */
-    public HashMap<Orientation, Animation<TextureRegion>> getAnimations() {
+    public HashMap<Orientation, Animation<Sprite>> getAnimations() {
         return animations;
     }
 
     @Override
     public void render(SpriteBatch batch, boolean isMoving) {
         // TODO: Change here to add animations
+        Sprite sprite;
         if (isMoving){
-            //batch.draw(A.getTextureRegion(), player.getBody().getPosition().x, player.getBody().getPosition().y, player.getSprite().getWidth(), player.getSprite().getHeight());
-            // TODO: setScale and don't set fixe width height
-            batch.draw(AssetsHandler.getInstance().getPlayerSprite(playerName, orientation), body.getPosition().x, body.getPosition().y);
-        }else {
-            batch.draw(AssetsHandler.getInstance().getPlayerSprite(playerName, orientation), body.getPosition().x, body.getPosition().y);
+            sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(orientation));
+            batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
+        }else{
+            sprite = AssetsHandler.getInstance().getPlayerSprite(playerName, orientation);
+            batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
         }
     }
 }

@@ -1,10 +1,7 @@
 package com.bindingofnewton.game.map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.bindingofnewton.game.assets.AssetsHandler;
 
@@ -19,10 +16,10 @@ public class Minimap {
      * Enum for the State of a room
      */
     private enum RoomState{
-        BOSS(AssetsHandler.getInstance().getSingleSprite("./minimap/boss.png")),
-        CLEARED(AssetsHandler.getInstance().getSingleSprite("./minimap/cleared.png")),
-        CURRENT(AssetsHandler.getInstance().getSingleSprite("./minimap/current.png")),
-        UNCLEARED(AssetsHandler.getInstance().getSingleSprite("./minimap/uncleared.png"));
+        BOSS(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/boss.png")),
+        CLEARED(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/cleared.png")),
+        CURRENT(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/current.png")),
+        UNCLEARED(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/uncleared.png"));
 
         private Sprite sprite;
 

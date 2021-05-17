@@ -105,12 +105,9 @@ public class LevelBuilder {
     private void createNewRoom(){
         //Gets a random room
         Room room = level.rooms.get((int) (Math.random()*level.rooms.size()));
-        System.out.println("1");
         while (room.getPossibleDoors().size() == 0){
             room = level.rooms.get((int) (Math.random()*level.rooms.size()));
-
         }
-        System.out.println("2");
 
         Vector2 pos = null;
         String map = null;
@@ -128,16 +125,12 @@ public class LevelBuilder {
             counter++;
         }while(pos.x < 0 || pos.x > level.width || pos.y < 0 || pos.y > level.height || counter < 25);
 
-        System.out.println("3");
-
         //Creating new room
         Room newRoom = new RoomBuilder()
                 .setWorld(level.world)
                 .setMap(map)
                 .setPosition((int)pos.x, (int) pos.y)
                 .build();
-
-        System.out.println("4");
 
         //Adds the door in the old and in the new room
         room.addDoor(new Door(level.world, room.getMap(), orientationNextRoom));
@@ -213,12 +206,13 @@ public class LevelBuilder {
             pos = orientation.moveCoord(new Vector2(x, maxY), 1);
         }
         builder.setPosition((int)pos.x, (int)pos.y);
-        Room room = builder.build();
+        Room bossRoom = builder.build();
 
         maxRoom.addDoor(new Door(level.world, maxRoom.getMap(), orientation));
-        room.addDoor(new Door(level.world, room.getMap(), orientation.getOpposite()));
+        bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), orientation.getOpposite()));
+        bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), orientation.getOpposite(), true));
 
-        level.rooms.add(room);
-        System.out.println("Room: " + room.getX() + ",   " + room.getY());
+        level.rooms.add(bossRoom);
+        System.out.println("Room: " + bossRoom.getX() + ",   " + bossRoom.getY());
     }
 }

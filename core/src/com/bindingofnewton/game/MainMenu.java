@@ -43,7 +43,7 @@ public class MainMenu implements Screen {
 
         stage = new Stage(viewport, batch);
 
-        backgroundSprite = AssetsHandler.getInstance().getSingleSprite("main_menu.png");
+        backgroundSprite = AssetsHandler.getInstance().getSingleSpriteFromFile("main_menu.png");
     }
 
 
