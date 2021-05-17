@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.bindingofnewton.game.assets.AssetsHandler;
-import javafx.scene.shape.Rectangle;
+//import javafx.scene.shape.Rectangle;
 
 /**
  * The class for the minimap on the top left corner of the game.
