@@ -63,7 +63,7 @@ public class Player extends Entity {
         animations.put(Orientation.DOWN, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.DOWN, SPEED_ANIMATION));
         animations.put(Orientation.RIGHT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.RIGHT, SPEED_ANIMATION));
         animations.put(Orientation.LEFT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.LEFT, SPEED_ANIMATION));
-        health = 3.5f;
+        health = 5.0f;
     }
 
     /**

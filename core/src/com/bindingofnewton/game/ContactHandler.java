@@ -45,6 +45,13 @@ public class ContactHandler implements ContactListener {
                 }
             }
         }
+        // Remove Bullet if other body is unknown
+        if(bodyA.getUserData() instanceof Bullet) {
+            removeBulletFixture((Bullet) bodyA.getUserData());
+        }
+        if(bodyB.getUserData() instanceof Bullet) {
+            removeBulletFixture((Bullet) bodyB.getUserData());
+        }
     }
 
     /**

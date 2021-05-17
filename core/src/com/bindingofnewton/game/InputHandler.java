@@ -1,5 +1,6 @@
 package com.bindingofnewton.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
@@ -145,7 +146,7 @@ public class InputHandler implements InputProcessor {
                     (int) pos.x,
                     (int) pos.y);
             Sound shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/shiasn.mp3"));
-            shootSound.play();
+            //shootSound.play();
             bullet.setMovement(orientation.moveCoord(new Vector2(0,0), bullet.getSpeed()));
             level.getCurrentRoom().addBullet(bullet);
 

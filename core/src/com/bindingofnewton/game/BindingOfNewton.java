@@ -197,6 +197,7 @@ public class BindingOfNewton implements Screen{
 		}
 
 		level.getCurrentRoom().setPlayer(playerCached);
+		level.getCurrentRoom().getPlayer().setHealth(1f);
 
 		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
 			makeBossEnemy();
@@ -279,7 +280,7 @@ public class BindingOfNewton implements Screen{
 				break;
 		}
 
-		BossEnemy enemy = new BossEnemy(world, x, y, 30, AssetsHandler.getInstance().getSingleSprite("./character/boss/boss_run1.png"));
+		BossEnemy enemy = new BossEnemy(world, x, y, 30, AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/boss_run1.png"));
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		enemies.add(enemy);
 		room.addEnemies(enemies);
@@ -289,7 +290,7 @@ public class BindingOfNewton implements Screen{
 	 * Draws dead player and pauses game
 	 */
 	public static void playerDeath() {
-		Sprite deadSprite = AssetsHandler.getInstance().getSingleSprite("./character/newton/newton-dead.png");
+		Sprite deadSprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-dead.png");
 		System.out.println("Dead Player drawn");
 		// Set Player sprite to dead sprite
         level.getCurrentRoom().getPlayer().setSingleSprites(deadSprite);

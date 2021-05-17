@@ -43,7 +43,7 @@ public class MapBodyBuilder {
         buildBodiesOfLayer(world, "fire", "fire");
     }
 
-    private void buildBodiesOfLayer(World world, String layer, Object userData){
+    private void buildBodiesOfLayer(World world, String layer, Object userData) {
         MapObjects objects = map.getLayers().get(layer).getObjects();
 
         for (MapObject object : objects) {
