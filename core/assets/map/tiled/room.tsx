@@ -44,9 +44,6 @@
    </object>
   </objectgroup>
  </tile>
- <tile id="7">
-  <image width="32" height="32" source="../img/door.png"/>
- </tile>
  <tile id="11">
   <image width="32" height="48" source="../img/fire1.png"/>
   <animation>
@@ -66,5 +63,8 @@
  </tile>
  <tile id="15">
   <image width="48" height="48" source="../../instruction_walk.png"/>
+ </tile>
+ <tile id="16">
+  <image width="32" height="32" source="../img/door.png"/>
  </tile>
 </tileset>

@@ -33,7 +33,7 @@ public class Door {
         TiledMapTileSet tileSet = map.getTileSets().getTileSet(0);
 
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
-        cell.setTile(tileSet.getTile(8));
+        cell.setTile(tileSet.getTile(17));
 
         int width = layer.getWidth();
         int height = layer.getHeight();
