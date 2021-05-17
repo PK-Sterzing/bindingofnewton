@@ -117,7 +117,6 @@ public class AssetsHandler {
         return animation.getKeyFrame(deltaTime, true);
     }
 
-
     public List<String> getMaps() {
         ArrayList<String> list = new ArrayList<>();
         File file = new File(MAP_TILED_ABSOLUTE + START_MAP);

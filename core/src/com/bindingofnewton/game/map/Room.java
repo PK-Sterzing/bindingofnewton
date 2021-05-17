@@ -153,7 +153,6 @@ public class Room {
     public void update() {
         updateBullets();
         removeDeadEnemies();
-        removeDeadPlayer();
         moveAllEnemies();
     }
 
@@ -170,18 +169,7 @@ public class Room {
         }
     }
 
-    /**
-     * Checks if player is dead and removes him
-     */
-    private void removeDeadPlayer() {
-        if(player.isDead()){
-            float playerX = player.getBody().getPosition().x;
-            float playerY = player.getBody().getPosition().x;
-            //world.destroyBody(player.getBody());
-            //player = null;
-            BindingOfNewton.playerDeath();
-        }
-    }
+
 
     /**
      * Goes trough enemies and deletes the dead ones

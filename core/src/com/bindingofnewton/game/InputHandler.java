@@ -2,6 +2,7 @@ package com.bindingofnewton.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +12,9 @@ import com.bindingofnewton.game.map.Level;
 
 import java.util.HashMap;
 
+/**
+ * Handles the keyboard input. Implements the InputProcessor to get notified when a key was pressed
+ */
 public class InputHandler implements InputProcessor {
     private HashMap<Integer, Boolean> movingKeys;
     private HashMap<Integer, Boolean> shootingKeys;
@@ -46,7 +50,7 @@ public class InputHandler implements InputProcessor {
     public boolean keyDown(int keycode) {
 
         if (keycode == Input.Keys.SHIFT_LEFT){
-            BindingOfNewton.showDebugInfo = !BindingOfNewton.showDebugInfo;
+            BindingOfNewton.getInstance().showDebugInfo = !BindingOfNewton.getInstance().showDebugInfo;
         }
 
         if (movingKeys.containsKey(keycode)){
@@ -105,6 +109,9 @@ public class InputHandler implements InputProcessor {
 
     }
 
+    /**
+     * Handles the bullets
+     */
     public void handleBullets() {
         Player player = level.getCurrentRoom().getPlayer();
 
@@ -138,6 +145,11 @@ public class InputHandler implements InputProcessor {
 
     }
 
+    /**
+     * Shoots a bullet
+     * @param orientation the orientation where the bullet gets shot at
+     * @param pos the start position of the bullet
+     */
     private void shootBullet(Orientation orientation, Vector2 pos){
         Player player = level.getCurrentRoom().getPlayer();
         player.setOrientation(orientation);

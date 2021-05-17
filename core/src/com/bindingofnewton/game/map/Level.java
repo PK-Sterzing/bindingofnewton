@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
+
+    //<editor-fold desc="Members">
+
     protected ArrayList<Room> rooms;
     protected Room currentRoom;
 
@@ -22,7 +25,11 @@ public class Level {
 
     protected World world;
 
+    //</editor-fold>
+
     protected Level(){ }
+
+    //<editor-fold desc="Getter">
 
     /**
      * Gets the neighbor room of the orientation
@@ -78,4 +85,5 @@ public class Level {
         return world;
     }
 
+    //</editor-fold>
 }
