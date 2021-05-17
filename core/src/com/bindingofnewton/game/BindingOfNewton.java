@@ -4,25 +4,18 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.character.BossEnemy;
 import com.bindingofnewton.game.character.Enemy;
-import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.map.*;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 
 public class BindingOfNewton implements Screen{
 	private SpriteBatch batch;
@@ -47,7 +40,6 @@ public class BindingOfNewton implements Screen{
 	public BindingOfNewton(Game game) {
 		this.game = game;
 	}
-
 
 	@Override
 	public void show() {
@@ -95,6 +87,9 @@ public class BindingOfNewton implements Screen{
 
 		level.getCurrentRoom().update();
 
+		if (contactHandler.isDoorCollision())
+			makeNewRoom(level.getCurrentRoom().getPlayer().getOrientation());
+
 		batch.begin();
 
 		// Render the player
@@ -110,7 +105,11 @@ public class BindingOfNewton implements Screen{
 
 		// Render enemies
 		for(Enemy enemy : level.getCurrentRoom().getEnemies()){
-			enemy.render(batch, true);
+			if (enemy instanceof BossEnemy){
+				((BossEnemy)enemy).render(batch, true);
+			}else{
+				enemy.render(batch, true);
+			}
 		}
 
 		// Render all bullets
@@ -118,12 +117,19 @@ public class BindingOfNewton implements Screen{
 			bullet.render(batch);
 		}
 
-		if (contactHandler.isDoorCollision())
-			makeNewRoom(level.getCurrentRoom().getPlayer().getOrientation());
 
 		// Show debug info when the switch is on (SHIFT)
 		if(showDebugInfo){
 			renderer.render(world, camera.combined);
+		}
+
+		//Renders the hearts of the player
+		List<Sprite> sprites = player.getHealthSprites();
+		for (int i=0; i< sprites.size(); i++){
+			batch.draw(sprites.get(i),
+					(int) level.getCurrentRoom().getMap().getProperties().get("width")*i+20,
+					(int) level.getCurrentRoom().getMap().getProperties().get("height") * 32 - 20,
+					15, 15);
 		}
 
 		minimap.render(batch);
@@ -183,6 +189,10 @@ public class BindingOfNewton implements Screen{
 		Room room = level.getNextRoom(orientation);
 		level.getCurrentRoom().setPlayer(playerCached);
 
+		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
+			makeBossEnemy();
+		}
+
 		// Create Enemies
 		if (!level.getCurrentRoom().isCleared()){
 			int minX = 40;
@@ -232,6 +242,39 @@ public class BindingOfNewton implements Screen{
 		mapBuilder.buildBodies(world);
 	}
 
+	private void makeBossEnemy() {
+		Room room = level.getCurrentRoom();
+		int width = (int) room.getMap().getProperties().get("width");
+		int height = (int) room.getMap().getProperties().get("height");
+
+		int x=0, y=0;
+
+		Orientation orientation = room.getDoors().get(0).getOrientation();
+
+		switch(orientation.getOpposite()){
+			case UP:
+				x = width/2;
+				y = height-200;
+				break;
+			case DOWN:
+				x = width/2;
+				y = 200;
+				break;
+			case LEFT:
+				x = 200;
+				y = height/2;
+				break;
+			case RIGHT:
+				x = width-200;
+				y = height/2;
+				break;
+		}
+
+		BossEnemy enemy = new BossEnemy(world, x, y, 30, AssetsHandler.getInstance().getSingleSprite("./character/boss/boss_run1.png"));
+		ArrayList<Enemy> enemies = new ArrayList<>();
+		enemies.add(enemy);
+		room.addEnemies(enemies);
+	}
 
 	@Override
 	public void resize(int width, int height) {

@@ -24,6 +24,11 @@ public class Level {
 
     protected Level(){ }
 
+    /**
+     * Gets the neighbor room of the orientation
+     * @param orientation the direction of the neighbor room
+     * @return the neighbor room
+     */
     public Room getNextRoom(Orientation orientation){
         if (currentRoom == null) {
             currentRoom = rooms.get(0);
@@ -46,6 +51,10 @@ public class Level {
         return currentRoom;
     }
 
+    /**
+     * Gets the current room
+     * @return current room
+     */
     public Room getCurrentRoom(){
         if (currentRoom == null){
             currentRoom = rooms.get(0);
@@ -53,6 +62,18 @@ public class Level {
         return currentRoom;
     }
 
+    /**
+     * Gets the rooms of the level
+     * @return rooms list
+     */
+    public List<Room> getRooms(){
+        return rooms;
+    }
+
+    /**
+     * Gets the world
+     * @return world
+     */
     public World getWorld(){
         return world;
     }

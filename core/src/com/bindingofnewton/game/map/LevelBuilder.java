@@ -105,9 +105,12 @@ public class LevelBuilder {
     private void createNewRoom(){
         //Gets a random room
         Room room = level.rooms.get((int) (Math.random()*level.rooms.size()));
+        System.out.println("1");
         while (room.getPossibleDoors().size() == 0){
             room = level.rooms.get((int) (Math.random()*level.rooms.size()));
+
         }
+        System.out.println("2");
 
         Vector2 pos = null;
         String map = null;
@@ -125,7 +128,7 @@ public class LevelBuilder {
             counter++;
         }while(pos.x < 0 || pos.x > level.width || pos.y < 0 || pos.y > level.height || counter > 25);
 
-
+        System.out.println("3");
 
         //Creating new room
         Room newRoom = new RoomBuilder()
@@ -133,6 +136,8 @@ public class LevelBuilder {
                 .setMap(map)
                 .setPosition((int)pos.x, (int) pos.y)
                 .build();
+
+        System.out.println("4");
 
         //Adds the door in the old and in the new room
         room.addDoor(new Door(level.world, room.getMap(), orientationNextRoom));
