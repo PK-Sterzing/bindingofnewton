@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.bindingofnewton.game</OriginalElement>
+  <nodes>
+    <node x="2330.164417037799" y="0.0">com.bindingofnewton.game.MainMenuScreen</node>
+    <node x="945.8668493776415" y="3096.5">com.bindingofnewton.game.map.Minimap</node>
+    <node x="1098.578288797533" y="3622.0">com.bindingofnewton.game.BindingOfNewton</node>
+    <node x="330.28351604430827" y="77.5">com.bindingofnewton.game.assets.AssetsHandler.PlayerName</node>
+    <node x="1678.5929884663701" y="1199.5">com.bindingofnewton.game.character.BossEnemy</node>
+    <node x="488.65851604430827" y="2579.0">com.bindingofnewton.game.map.RoomBuilder</node>
+    <node x="481.841004339386" y="4626.0">com.bindingofnewton.game.BindingOfNewtonGame</node>
+    <node x="154.11684937764164" y="2931.0">com.bindingofnewton.game.InputHandler</node>
+    <node x="1969.1644170377988" y="3096.0">com.bindingofnewton.game.map.MapBodyBuilder</node>
+    <node x="229.78351604430827" y="466.0">com.bindingofnewton.game.assets.AssetsHandler</node>
+    <node x="528.2688163754713" y="1571.0">com.bindingofnewton.game.map.Door</node>
+    <node x="659.7835160443083" y="1969.0">com.bindingofnewton.game.map.Room</node>
+    <node x="1567.0096551330366" y="576.5">com.bindingofnewton.game.character.Entity</node>
+    <node x="1420.5929884663701" y="1516.0">com.bindingofnewton.game.character.Enemy</node>
+    <node x="450.11684937764164" y="3052.0">com.bindingofnewton.game.map.LevelBuilder</node>
+    <node x="1007.4442303300227" y="0.0">com.bindingofnewton.game.Orientation</node>
+    <node x="987.6585160443083" y="2557.5">com.bindingofnewton.game.map.Minimap.RoomState</node>
+    <node x="497.841004339386" y="4730.0">com.bindingofnewton.game.desktop.DesktopLauncher</node>
+    <node x="1152.5929884663701" y="1077.0">com.bindingofnewton.game.character.Player</node>
+    <node x="480.341004339386" y="4190.0">com.bindingofnewton.game.MainMenu</node>
+    <node x="729.6585160443083" y="2524.0">com.bindingofnewton.game.map.Level</node>
+    <node x="156.1882779490702" y="1538.0">com.bindingofnewton.game.Bullet</node>
+    <node x="1298.232836587873" y="3074.0">com.bindingofnewton.game.ContactHandler</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.bindingofnewton.game.ContactHandler" target="com.bindingofnewton.game.character.Entity">
+      <point x="76.0" y="-127.5" />
+      <point x="1507.232836587873" y="2901.0" />
+      <point x="1668.0929884663701" y="2901.0" />
+      <point x="1668.0929884663701" y="1057.0" />
+      <point x="1736.5096551330366" y="1057.0" />
+      <point x="56.5" y="160.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="-97.71428571428578" y="-259.0" />
+      <point x="1114.8640030832473" y="3592.0" />
+      <point x="21.857142857143003" y="3592.0" />
+      <point x="21.857142857143003" y="1037.0" />
+      <point x="296.11684937764164" y="1037.0" />
+      <point x="-132.66666666666663" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.BossEnemy" target="com.bindingofnewton.game.character.Entity">
+      <point x="0.0" y="-27.0" />
+      <point x="1791.5929884663701" y="1057.0" />
+      <point x="1774.1763217997036" y="1057.0" />
+      <point x="94.16666666666674" y="160.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.ContactHandler" target="com.bindingofnewton.game.BindingOfNewton">
+      <point x="88.66666666666674" y="127.5" />
+      <point x="1519.8995032545397" y="3542.0" />
+      <point x="1256.0068602261044" y="3542.0" />
+      <point x="43.42857142857133" y="-259.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.map.Minimap">
+      <point x="-21.71428571428578" y="-259.0" />
+      <point x="1190.8640030832473" y="3522.0" />
+      <point x="984.3668493776415" y="3522.0" />
+      <point x="-38.5" y="105.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.InputHandler" target="com.bindingofnewton.game.Bullet">
+      <point x="0.0" y="-270.5" />
+      <point x="292.11684937764164" y="2881.0" />
+      <point x="241.1882779490702" y="2881.0" />
+      <point x="-17.0" y="149.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.MainMenu" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="-50.75" y="-193.0" />
+      <point x="531.091004339386" y="4165.0" />
+      <point x="0.0" y="4165.0" />
+      <point x="0.0" y="1027.0" />
+      <point x="251.89462715541936" y="1027.0" />
+      <point x="-176.8888888888889" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.ContactHandler" target="com.bindingofnewton.game.Orientation">
+      <point x="114.0" y="-127.5" />
+      <point x="1545.232836587873" y="2911.0" />
+      <point x="1915.0929884663701" y="2911.0" />
+      <point x="1915.0929884663701" y="306.0" />
+      <point x="1344.0513731871656" y="306.0" />
+      <point x="148.1071428571429" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.ContactHandler" target="com.bindingofnewton.game.character.Enemy">
+      <point x="38.0" y="-127.5" />
+      <point x="1469.232836587873" y="2891.0" />
+      <point x="1584.3813492063496" y="2891.0" />
+      <point x="1584.3813492063496" y="1949.0" />
+      <point x="1586.4929884663702" y="1949.0" />
+      <point x="47.40000000000009" y="171.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.InputHandler" target="com.bindingofnewton.game.character.Player">
+      <point x="39.428571428571445" y="-270.5" />
+      <point x="331.5454208062131" y="2861.0" />
+      <point x="370.6882779490702" y="2861.0" />
+      <point x="370.6882779490702" y="1476.0" />
+      <point x="1179.450131323513" y="1476.0" />
+      <point x="-161.1428571428571" y="149.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Minimap.RoomState" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="0.0" y="-105.0" />
+      <point x="1083.1585160443083" y="2504.0" />
+      <point x="1098.0929884663701" y="2504.0" />
+      <point x="1098.0929884663701" y="1436.0" />
+      <point x="983.2835160443083" y="1436.0" />
+      <point x="983.2835160443083" y="1047.0" />
+      <point x="517.2279604887527" y="1047.0" />
+      <point x="88.44444444444446" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.character.Enemy">
+      <point x="54.28571428571422" y="-259.0" />
+      <point x="1266.8640030832473" y="3552.0" />
+      <point x="1926.0929884663701" y="3552.0" />
+      <point x="1926.0929884663701" y="1949.0" />
+      <point x="1633.89298846637" y="1949.0" />
+      <point x="94.79999999999995" y="171.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.ContactHandler" target="com.bindingofnewton.game.map.Level">
+      <point x="-114.0" y="-127.5" />
+      <point x="1317.232836587873" y="2861.0" />
+      <point x="921.7585160443082" y="2861.0" />
+      <point x="79.09999999999991" y="138.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Minimap.RoomState" target="com.bindingofnewton.game.map.Minimap">
+      <point x="47.75" y="105.0" />
+      <point x="1130.9085160443083" y="2911.0" />
+      <point x="1087.0335160443083" y="2911.0" />
+      <point x="64.16666666666674" y="-105.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.Player" target="com.bindingofnewton.game.Orientation">
+      <point x="0.0" y="-149.5" />
+      <point x="1340.5929884663701" y="1057.0" />
+      <point x="1300.7718253968255" y="1057.0" />
+      <point x="1300.7718253968255" y="356.0" />
+      <point x="1209.4085160443083" y="356.0" />
+      <point x="13.464285714285666" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.LevelBuilder" target="com.bindingofnewton.game.map.Level">
+      <point x="66.44444444444446" y="-149.5" />
+      <point x="666.0612938220861" y="2891.0" />
+      <point x="786.1585160443083" y="2891.0" />
+      <point x="-56.5" y="138.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Minimap" target="com.bindingofnewton.game.map.Room">
+      <point x="12.833333333333371" y="-105.0" />
+      <point x="1035.700182710975" y="2881.0" />
+      <point x="977.1585160443083" y="2881.0" />
+      <point x="977.1585160443083" y="2474.0" />
+      <point x="868.0335160443083" y="2474.0" />
+      <point x="85.75" y="237.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.Player" target="com.bindingofnewton.game.assets.AssetsHandler.PlayerName">
+      <point x="-53.71428571428555" y="-149.5" />
+      <point x="1286.8787027520846" y="1057.0" />
+      <point x="1241.479944615737" y="1057.0" />
+      <point x="1241.479944615737" y="366.0" />
+      <point x="507.58351604430834" y="366.0" />
+      <point x="78.80000000000007" y="60.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Room" target="com.bindingofnewton.game.Orientation">
+      <point x="12.25" y="-237.5" />
+      <point x="794.5335160443083" y="1899.0" />
+      <point x="841.7835160443083" y="1899.0" />
+      <point x="841.7835160443083" y="1456.0" />
+      <point x="1005.2835160443083" y="1456.0" />
+      <point x="1005.2835160443083" y="436.0" />
+      <point x="1155.5513731871656" y="436.0" />
+      <point x="-40.39285714285711" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.assets.AssetsHandler" target="com.bindingofnewton.game.Orientation">
+      <point x="132.66666666666663" y="-270.5" />
+      <point x="561.4501827109749" y="396.0" />
+      <point x="1047.8370874728798" y="396.0" />
+      <point x="-148.1071428571429" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.InputHandler">
+      <point x="-76.0" y="-259.0" />
+      <point x="1136.578288797533" y="3572.0" />
+      <point x="200.11684937764164" y="3572.0" />
+      <point x="-92.0" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.LevelBuilder" target="com.bindingofnewton.game.Orientation">
+      <point x="-99.66666666666674" y="-149.5" />
+      <point x="499.9501827109749" y="2851.0" />
+      <point x="456.15851604430827" y="2851.0" />
+      <point x="456.15851604430827" y="1426.0" />
+      <point x="735.9085160443083" y="1426.0" />
+      <point x="735.9085160443083" y="406.0" />
+      <point x="1074.7656589014512" y="406.0" />
+      <point x="-121.17857142857144" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.Bullet" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="0.0" y="-149.5" />
+      <point x="258.1882779490702" y="1057.0" />
+      <point x="384.5612938220861" y="1057.0" />
+      <point x="-44.22222222222217" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.InputHandler" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="-78.85714285714278" y="-270.5" />
+      <point x="213.25970652049887" y="2901.0" />
+      <point x="145.6882779490702" y="2901.0" />
+      <point x="145.6882779490702" y="1047.0" />
+      <point x="340.3390715998638" y="1047.0" />
+      <point x="-88.44444444444446" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.LevelBuilder" target="com.bindingofnewton.game.map.Door">
+      <point x="-66.44444444444446" y="-149.5" />
+      <point x="533.1724049331972" y="2841.0" />
+      <point x="467.15851604430827" y="2841.0" />
+      <point x="467.15851604430827" y="1949.0" />
+      <point x="568.1021497088046" y="1949.0" />
+      <point x="-79.66666666666663" y="116.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.Bullet">
+      <point x="-86.85714285714289" y="-259.0" />
+      <point x="1125.7211459403902" y="3582.0" />
+      <point x="32.71428571428601" y="3582.0" />
+      <point x="32.71428571428601" y="1949.0" />
+      <point x="173.1882779490702" y="1949.0" />
+      <point x="-85.0" y="149.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.LevelBuilder" target="com.bindingofnewton.game.map.RoomBuilder">
+      <point x="0.0" y="-149.5" />
+      <point x="599.6168493776416" y="2821.0" />
+      <point x="543.9085160443083" y="2821.0" />
+      <point x="-55.25" y="83.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Room" target="com.bindingofnewton.game.map.Door">
+      <point x="-61.25" y="-237.5" />
+      <point x="721.0335160443083" y="1919.0" />
+      <point x="647.7688163754713" y="1919.0" />
+      <point x="0.0" y="116.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.map.Level">
+      <point x="-32.571428571428555" y="-259.0" />
+      <point x="1180.0068602261044" y="3532.0" />
+      <point x="853.9585160443082" y="3532.0" />
+      <point x="11.299999999999955" y="138.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.character.Player">
+      <point x="65.14285714285711" y="-259.0" />
+      <point x="1277.7211459403902" y="3562.0" />
+      <point x="1936.950131323513" y="3562.0" />
+      <point x="1936.950131323513" y="1406.0" />
+      <point x="1448.0215598949414" y="1406.0" />
+      <point x="107.42857142857133" y="149.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.desktop.DesktopLauncher" target="com.bindingofnewton.game.BindingOfNewtonGame">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.Enemy" target="com.bindingofnewton.game.Orientation">
+      <point x="0.0" y="-171.5" />
+      <point x="1539.0929884663701" y="336.0" />
+      <point x="1263.2656589014512" y="336.0" />
+      <point x="67.32142857142844" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.Enemy" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="-94.79999999999995" y="-171.5" />
+      <point x="1444.2929884663702" y="1426.0" />
+      <point x="1016.2835160443083" y="1426.0" />
+      <point x="1016.2835160443083" y="1037.0" />
+      <point x="561.450182710975" y="1037.0" />
+      <point x="132.66666666666674" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.assets.AssetsHandler.PlayerName" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="0.0" y="60.5" />
+      <point x="0.0" y="-270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.MainMenu" target="com.bindingofnewton.game.BindingOfNewton">
+      <point x="50.75" y="-193.0" />
+      <point x="632.591004339386" y="4165.0" />
+      <point x="1212.578288797533" y="4165.0" />
+      <point x="0.0" y="259.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.RoomBuilder" target="com.bindingofnewton.game.map.Room">
+      <point x="-73.66666666666669" y="-83.5" />
+      <point x="525.4918493776415" y="2484.0" />
+      <point x="696.5335160443083" y="2484.0" />
+      <point x="-85.75" y="237.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Level" target="com.bindingofnewton.game.Orientation">
+      <point x="84.75" y="-138.5" />
+      <point x="927.4085160443083" y="2504.0" />
+      <point x="915.2835160443083" y="2504.0" />
+      <point x="915.2835160443083" y="1466.0" />
+      <point x="1027.2835160443083" y="1466.0" />
+      <point x="1027.2835160443083" y="446.0" />
+      <point x="1182.479944615737" y="446.0" />
+      <point x="-13.46428571428578" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.Enemy" target="com.bindingofnewton.game.character.Entity">
+      <point x="94.79999999999995" y="-171.5" />
+      <point x="1633.89298846637" y="1496.0" />
+      <point x="1655.9263217997036" y="1496.0" />
+      <point x="1655.9263217997036" y="1047.0" />
+      <point x="1698.8429884663701" y="1047.0" />
+      <point x="18.833333333333258" y="160.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Room" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="-12.25" y="-237.5" />
+      <point x="770.0335160443083" y="1889.0" />
+      <point x="830.7835160443083" y="1889.0" />
+      <point x="830.7835160443083" y="1416.0" />
+      <point x="724.9085160443083" y="1416.0" />
+      <point x="724.9085160443083" y="1057.0" />
+      <point x="473.00573826653056" y="1057.0" />
+      <point x="44.222222222222285" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.assets.AssetsHandler" target="com.bindingofnewton.game.assets.AssetsHandler.PlayerName">
+      <point x="-132.66666666666663" y="-270.5" />
+      <point x="296.11684937764164" y="376.0" />
+      <point x="389.3835160443083" y="376.0" />
+      <point x="-39.39999999999998" y="60.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.Player" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="-161.1428571428571" y="-149.5" />
+      <point x="1179.450131323513" y="1027.0" />
+      <point x="605.6724049331972" y="1027.0" />
+      <point x="176.8888888888889" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.Player" target="com.bindingofnewton.game.character.Entity">
+      <point x="107.42857142857156" y="-149.5" />
+      <point x="1448.0215598949417" y="1047.0" />
+      <point x="1585.8429884663701" y="1047.0" />
+      <point x="-94.16666666666674" y="160.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.map.MapBodyBuilder">
+      <point x="97.71428571428578" y="-259.0" />
+      <point x="1310.2925745118189" y="3592.0" />
+      <point x="2048.1644170377986" y="3592.0" />
+      <point x="-79.0" y="105.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewtonGame" target="com.bindingofnewton.game.MainMenu">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="193.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Level" target="com.bindingofnewton.game.map.Room">
+      <point x="-84.75" y="-138.5" />
+      <point x="757.9085160443083" y="2504.0" />
+      <point x="770.0335160443083" y="2504.0" />
+      <point x="-12.25" y="237.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.map.LevelBuilder">
+      <point x="-43.428571428571445" y="-259.0" />
+      <point x="1169.1497173689618" y="3542.0" />
+      <point x="599.6168493776416" y="3542.0" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.Orientation">
+      <point x="86.85714285714289" y="-259.0" />
+      <point x="1299.435431654676" y="3582.0" />
+      <point x="1958.6644170377988" y="3582.0" />
+      <point x="1958.6644170377988" y="296.0" />
+      <point x="1370.979944615737" y="296.0" />
+      <point x="175.03571428571422" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.ContactHandler" target="com.bindingofnewton.game.character.Player">
+      <point x="0.0" y="-127.5" />
+      <point x="1431.232836587873" y="2831.0" />
+      <point x="1340.5929884663701" y="2831.0" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.Entity" target="com.bindingofnewton.game.Orientation">
+      <point x="-56.5" y="-160.0" />
+      <point x="1623.5096551330366" y="326.0" />
+      <point x="1290.1942303300227" y="326.0" />
+      <point x="94.25" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.ContactHandler" target="com.bindingofnewton.game.Bullet">
+      <point x="-38.0" y="-127.5" />
+      <point x="1393.232836587873" y="2841.0" />
+      <point x="1325.0215598949417" y="2841.0" />
+      <point x="1325.0215598949417" y="1879.0" />
+      <point x="343.1882779490702" y="1879.0" />
+      <point x="85.0" y="149.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.ContactHandler">
+      <point x="21.714285714285666" y="-259.0" />
+      <point x="1234.2925745118187" y="3522.0" />
+      <point x="1342.5661699212062" y="3522.0" />
+      <point x="-88.66666666666674" y="127.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.InputHandler" target="com.bindingofnewton.game.Orientation">
+      <point x="-118.28571428571422" y="-270.5" />
+      <point x="173.83113509192742" y="2911.0" />
+      <point x="110.96921320086801" y="2911.0" />
+      <point x="110.96921320086801" y="386.0" />
+      <point x="1020.9085160443085" y="386.0" />
+      <point x="-175.03571428571422" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.map.Room">
+      <point x="0.0" y="-259.0" />
+      <point x="1212.578288797533" y="3502.0" />
+      <point x="1189.1585160443083" y="3502.0" />
+      <point x="1189.1585160443083" y="2464.0" />
+      <point x="892.5335160443083" y="2464.0" />
+      <point x="110.25" y="237.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Room" target="com.bindingofnewton.game.character.Enemy">
+      <point x="85.75" y="-237.5" />
+      <point x="868.0335160443083" y="1929.0" />
+      <point x="1444.2929884663702" y="1929.0" />
+      <point x="-94.79999999999995" y="171.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.InputHandler" target="com.bindingofnewton.game.BindingOfNewton">
+      <point x="92.0" y="270.5" />
+      <point x="384.11684937764164" y="3552.0" />
+      <point x="1158.2925745118187" y="3552.0" />
+      <point x="-54.285714285714334" y="-259.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.InputHandler" target="com.bindingofnewton.game.map.Level">
+      <point x="78.85714285714289" y="-270.5" />
+      <point x="370.97399223478453" y="2871.0" />
+      <point x="740.9585160443082" y="2871.0" />
+      <point x="-101.70000000000005" y="138.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Room" target="com.bindingofnewton.game.Bullet">
+      <point x="-110.25" y="-237.5" />
+      <point x="672.0335160443083" y="1939.0" />
+      <point x="275.1882779490702" y="1939.0" />
+      <point x="17.0" y="149.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.LevelBuilder" target="com.bindingofnewton.game.map.Room">
+      <point x="-33.222222222222285" y="-149.5" />
+      <point x="566.3946271554194" y="2831.0" />
+      <point x="478.15851604430827" y="2831.0" />
+      <point x="478.15851604430827" y="2474.0" />
+      <point x="672.0335160443083" y="2474.0" />
+      <point x="-110.25" y="237.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Minimap" target="com.bindingofnewton.game.map.Minimap.RoomState">
+      <point x="38.5" y="-105.0" />
+      <point x="1061.3668493776415" y="2871.0" />
+      <point x="1035.4085160443083" y="2871.0" />
+      <point x="-47.75" y="105.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Door" target="com.bindingofnewton.game.Orientation">
+      <point x="-59.75" y="-116.5" />
+      <point x="588.0188163754713" y="1436.0" />
+      <point x="746.9085160443083" y="1436.0" />
+      <point x="746.9085160443083" y="416.0" />
+      <point x="1101.6942303300227" y="416.0" />
+      <point x="-94.25" y="138.0" />
+    </edge>
+    <edge source="com.bindingofnewton.game.character.Enemy" target="com.bindingofnewton.game.character.Player">
+      <point x="-47.40000000000009" y="-171.5" />
+      <point x="1491.69298846637" y="1416.0" />
+      <point x="1394.3072741806557" y="1416.0" />
+      <point x="53.71428571428555" y="149.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Minimap" target="com.bindingofnewton.game.map.Level">
+      <point x="-64.16666666666674" y="-105.0" />
+      <point x="958.7001827109748" y="2911.0" />
+      <point x="876.5585160443082" y="2911.0" />
+      <point x="33.89999999999998" y="138.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.BindingOfNewton" target="com.bindingofnewton.game.assets.AssetsHandler.PlayerName">
+      <point x="-108.57142857142867" y="-259.0" />
+      <point x="1104.0068602261044" y="3602.0" />
+      <point x="11.0" y="3602.0" />
+      <point x="11.0" y="366.0" />
+      <point x="349.9835160443083" y="366.0" />
+      <point x="-78.79999999999995" y="60.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.LevelBuilder" target="com.bindingofnewton.game.assets.AssetsHandler">
+      <point x="-132.8888888888889" y="-149.5" />
+      <point x="466.72796048875273" y="2861.0" />
+      <point x="428.78351604430827" y="2861.0" />
+      <point x="0.0" y="270.5" />
+    </edge>
+    <edge source="com.bindingofnewton.game.map.Room" target="com.bindingofnewton.game.character.Player">
+      <point x="61.25" y="-237.5" />
+      <point x="843.5335160443083" y="1919.0" />
+      <point x="863.7835160443083" y="1919.0" />
+      <point x="863.7835160443083" y="1496.0" />
+      <point x="1286.8787027520843" y="1496.0" />
+      <point x="-53.71428571428578" y="149.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.35936719400499617" x="381.692831180766" y="957.6344518603031" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
