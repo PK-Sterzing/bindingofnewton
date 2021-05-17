@@ -3,6 +3,7 @@ package com.bindingofnewton.game;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -54,7 +55,11 @@ public class ContactHandler implements ContactListener {
     public boolean isDoorCollision(){
         String layerName = "doors-";
 
-        Rectangle playerRectangle = level.getCurrentRoom().getPlayer().getPolygon().getBoundingRectangle();
+        Player player = level.getCurrentRoom().getPlayer();
+        Polygon polygon = player.getPolygon();
+        Rectangle playerRectangle = polygon.getBoundingRectangle();
+
+        //Rectangle playerRectangle = level.getCurrentRoom().getPlayer().getPolygon().getBoundingRectangle();
 
         for (Orientation orientation : Orientation.values()){
             MapLayer layer = level.getCurrentRoom().getMap().getLayers().get(layerName + orientation.name());

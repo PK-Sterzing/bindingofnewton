@@ -156,8 +156,6 @@ public class Room {
         moveAllEnemies();
     }
 
-
-
     private void moveAllEnemies() {
         // Move Enemy after cooldown
         if (System.currentTimeMillis() - Enemy.getLastPathChange() >= Enemy.getPathChangingRate()) {

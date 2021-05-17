@@ -78,7 +78,7 @@ public class Minimap {
         batch.draw(RoomState.CURRENT.sprite, posX, posY);
 
         //Check if rooms in near of current room
-        for (int x = currentRoom.getX() - 2; x < currentRoom.getX()+3; x++){
+        for (int x = currentRoom.getX() - 1; x < currentRoom.getX()+2; x++){
             for (int y = currentRoom.getY()-1; y < currentRoom.getY() + 2; y++) {
                 for (Room room : level.rooms){
                     if (room.getX() == x && room.getY() == y && room != currentRoom){

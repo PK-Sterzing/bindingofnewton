@@ -16,8 +16,6 @@ public class InputHandler implements InputProcessor {
 
     protected boolean isMoving;
     protected boolean isShooting;
-    private ArrayList<Integer> activeMoveKeys;
-    private ArrayList<Integer> activeShootKeys;
 
     private HashMap<Integer, Boolean> movingKeys;
     private HashMap<Integer, Boolean> shootingKeys;
@@ -33,8 +31,6 @@ public class InputHandler implements InputProcessor {
      * @param level The level
      */
     public InputHandler(Level level){
-        activeMoveKeys = new ArrayList<>();
-        activeShootKeys = new ArrayList<>();
         movingKeys = new HashMap<>();
         shootingKeys = new HashMap<>();
 
@@ -66,16 +62,6 @@ public class InputHandler implements InputProcessor {
         }
 
         return true;
-    }
-
-    private void checkPlayerShooting(int keycode) {
-        if (keycode == Input.Keys.UP || keycode == Input.Keys.DOWN || keycode == Input.Keys.LEFT || keycode == Input.Keys.RIGHT){
-            activeShootKeys.add(keycode);
-        }
-
-        if ((activeMoveKeys.contains(Input.Keys.UP) ^ activeMoveKeys.contains(Input.Keys.DOWN)) || (activeMoveKeys.contains(Input.Keys.LEFT) ^ activeMoveKeys.contains(Input.Keys.RIGHT))) {
-            isShooting = true;
-        }
     }
 
     @Override

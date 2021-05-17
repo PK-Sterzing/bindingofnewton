@@ -180,11 +180,5 @@ public class Player extends Entity {
         }else {
             batch.draw(AssetsHandler.getInstance().getPlayerSprite(playerName, orientation), body.getPosition().x, body.getPosition().y, 27, 40);
         }
-
-        //Renders the hearts of the player
-        List<Sprite> sprites = getHealthSprites();
-        for (int i=0; i< sprites.size(); i++){
-            batch.draw(sprites.get(i), 15*i+20, 9 * 32 - 20, 15, 15);
-        }
     }
 }

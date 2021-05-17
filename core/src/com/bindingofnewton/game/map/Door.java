@@ -16,24 +16,30 @@ public class Door {
     private World world;
     private Orientation orientation;
     private TiledMap map;
-
-    private boolean isOpen;
     private Body body;
 
+    private boolean isOpen;
+    private boolean isBossDoor;
+
     public Door(World world, TiledMap map, Orientation orientation){
+        this(world, map, orientation, false);
+    }
+
+    public Door(World world, TiledMap map, Orientation orientation, boolean isBossDoor){
         this.world = world;
         this.orientation = orientation;
         this.map = map;
+        this.isBossDoor = isBossDoor;
         close();
-        setDoorOnMap();
+        setDoorOnMap(isBossDoor ? 0 : 8);
     }
 
-    private void setDoorOnMap(){
+    private void setDoorOnMap(int id){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("ground");
         TiledMapTileSet tileSet = map.getTileSets().getTileSet(0);
 
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
-        cell.setTile(tileSet.getTile(8));
+        cell.setTile(tileSet.getTile(id));
 
         int width = layer.getWidth();
         int height = layer.getHeight();
@@ -69,12 +75,14 @@ public class Door {
         isOpen = true;
         if (body != null)
             body.setActive(false);
+        setDoorOnMap(8);
     }
 
     public void close(){
         isOpen = false;
         if (body != null)
             body.setActive(true);
+        setDoorOnMap(8);
     }
 
     public Orientation getOrientation() {
