@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.BindingOfNewton;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.items.Item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,11 +18,11 @@ public class Player extends Entity {
     private static final float MAX_HEALTH = 10;
     private final float SPEED_ANIMATION = 0.04f;
 
-
-
     private HashMap<Orientation, Animation<Sprite>> animations = new HashMap<>();
 
     private AssetsHandler.PlayerName playerName;
+
+    private Item currentItem;
 
     public Player(World world, AssetsHandler.PlayerName playerName, int startX, int startY) {
 
@@ -167,6 +168,14 @@ public class Player extends Entity {
             sprite = AssetsHandler.getInstance().getPlayerSprite(playerName, orientation);
         }
         batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
+    }
+
+    public Item getCurrentItem() {
+        return currentItem;
+    }
+
+    public void setCurrentItem(Item currentItem) {
+        this.currentItem = currentItem;
     }
 
 }

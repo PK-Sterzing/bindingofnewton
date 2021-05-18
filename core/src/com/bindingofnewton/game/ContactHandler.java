@@ -1,5 +1,7 @@
 package com.bindingofnewton.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -10,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
+import com.bindingofnewton.game.items.HealthBoostItem;
+import com.bindingofnewton.game.items.Item;
 import com.bindingofnewton.game.map.Level;
 
 public class ContactHandler implements ContactListener {
@@ -26,24 +30,29 @@ public class ContactHandler implements ContactListener {
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
-        if(!(bodyA.getUserData() == null || bodyB.getUserData() == null)){
-            if (bodyA.getUserData() instanceof Bullet){
+        if(!(bodyA.getUserData() == null || bodyB.getUserData() == null)) {
+            if (bodyA.getUserData() instanceof Bullet) {
                 // If bodyB extends from Entity
                 diminishHealth(bodyB);
                 removeBulletFixture((Bullet) bodyA.getUserData());
-            }else if (bodyB.getUserData() instanceof Bullet) {
+            } else if (bodyB.getUserData() instanceof Bullet) {
                 // If bodyA extends from Entity
                 diminishHealth(bodyA);
                 removeBulletFixture((Bullet) bodyB.getUserData());
-            }else if (bodyA.getUserData() instanceof Enemy) {
-                if(bodyB.getUserData() instanceof Player){
+            } else if (bodyA.getUserData() instanceof Enemy) {
+                if (bodyB.getUserData() instanceof Player) {
                     diminishHealth(bodyB);
                 }
-            }else if(bodyB.getUserData() instanceof Enemy) {
-                if(bodyA.getUserData() instanceof Player){
+            } else if (bodyB.getUserData() instanceof Enemy) {
+                if (bodyA.getUserData() instanceof Player) {
                     diminishHealth(bodyA);
                 }
             }
+        }
+        // Collision with item
+        if(bodyA.getUserData().getClass().getSuperclass().equals(Item.class) || bodyB.getUserData().getClass().getSuperclass().equals(Item.class)){
+            giveItemEffect(bodyB, bodyA);
+            giveItemEffect(bodyA, bodyB);
         }
         // Remove Bullet if other body is unknown
         if(bodyA.getUserData() instanceof Bullet) {
@@ -51,6 +60,15 @@ public class ContactHandler implements ContactListener {
         }
         if(bodyB.getUserData() instanceof Bullet) {
             removeBulletFixture((Bullet) bodyB.getUserData());
+        }
+    }
+
+    private void giveItemEffect(Body bodyA, Body bodyB) {
+        if(bodyB.getUserData() instanceof Player && bodyA.getUserData().getClass().getSuperclass().equals(Item.class)){
+            // Give buff
+            ((Item)bodyA.getUserData()).use((Player) bodyB.getUserData());
+            // Remove item
+            ((Item)bodyA.getUserData()).setShouldBeRemoved(true);
         }
     }
 
@@ -108,7 +126,6 @@ public class ContactHandler implements ContactListener {
     }
 
     private void diminishHealth(Body body) {
-
         // Check if body extends from Entity
         if(body.getUserData().getClass().getSuperclass().equals(Entity.class)) {
 
