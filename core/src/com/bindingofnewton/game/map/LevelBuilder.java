@@ -113,6 +113,9 @@ public class LevelBuilder {
         String map = null;
         Orientation orientationNextRoom = null;
         int counter = 0;
+
+        System.out.println("1");
+
         do{
 
             //Gets a random possible orientation of the chosen room
@@ -122,8 +125,12 @@ public class LevelBuilder {
             map = AssetsHandler.getInstance().getMaps().get((int)(Math.random() * AssetsHandler.getInstance().getMaps().size()));
             pos = orientationNextRoom.moveCoord(new Vector2(room.x, room.y), 1);
 
+            System.out.println("Counter: " + counter);
+
             counter++;
-        }while(pos.x < 0 || pos.x > level.width || pos.y < 0 || pos.y > level.height || counter < 25);
+        }while((pos.x < 0 || pos.x > level.width || pos.y < 0 || pos.y > level.height) && counter < 25);
+
+        System.out.println("2");
 
         //Creating new room
         Room newRoom = new RoomBuilder()

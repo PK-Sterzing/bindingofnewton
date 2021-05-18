@@ -17,6 +17,6 @@ public class BossEnemy extends Enemy{
     @Override
     public void render(SpriteBatch batch, boolean isMoving) {
         move(new Vector2(0, 0));
-        ,getSprite().draw(batch);
+        getSprite().draw(batch);
     }
 }
