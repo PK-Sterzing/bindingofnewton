@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.5.0" name="room" tilewidth="48" tileheight="48" tilecount="18" columns="0">
+<tileset version="1.5" tiledversion="1.5.0" name="room" tilewidth="48" tileheight="48" tilecount="21" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="32" height="32" source="../img/wall.png"/>
@@ -84,5 +84,14 @@
  </tile>
  <tile id="22">
   <image width="32" height="32" source="../img/wall-stone-corner.png"/>
+ </tile>
+ <tile id="23">
+  <image width="32" height="32" source="../img/floor-stone-hole-full.png"/>
+ </tile>
+ <tile id="24">
+  <image width="32" height="32" source="../img/floor-stone-hole-corner.png"/>
+ </tile>
+ <tile id="25">
+  <image width="32" height="32" source="../img/floor-stone-hole-edge.png"/>
  </tile>
 </tileset>
