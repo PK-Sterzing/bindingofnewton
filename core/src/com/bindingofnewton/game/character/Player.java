@@ -157,7 +157,8 @@ public class Player extends Entity {
     public void render(SpriteBatch batch, boolean isMoving) {
         Sprite sprite;
         if (isDead) {
-            sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-dead.png");
+            sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/" + playerName.toString().toLowerCase() + "/" + playerName.toString().toLowerCase() + "-dead.png");
+            sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
             // Pause game
             BindingOfNewton.getInstance().setPaused(true);
         } else if (isMoving){
