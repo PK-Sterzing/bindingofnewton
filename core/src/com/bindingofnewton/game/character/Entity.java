@@ -25,15 +25,13 @@ public abstract class Entity {
     protected int speed = 100;
     protected float health;
 
+    protected long lastSustainedDamage = 0;
+
+    // When the entity is hit, set him invincible for a few milliseconds
+    protected long invincibilityCooldown = 500;
 
     protected boolean isDead = false;
 
-
-    //<editor-fold desc="Constructors">-
-
-
-
-    //</editor-fold>
 
     //<editor-fold desc="Getter and Setter">
 
@@ -157,5 +155,18 @@ public abstract class Entity {
      *                 false - the entity is not moving
      */
     public abstract void render(SpriteBatch batch, boolean isMoving);
+
+
+    public long getInvincibilityCooldown() {
+        return invincibilityCooldown;
+    }
+
+    public long getLastSustainedDamage() {
+        return this.lastSustainedDamage;
+    }
+
+    public void setLastSustainedDamage(long lastSustainedDamage) {
+        this.lastSustainedDamage = lastSustainedDamage;
+    }
 
 }

@@ -107,12 +107,21 @@ public class ContactHandler implements ContactListener {
         return false;
     }
 
-    private void diminishHealth(Body bodyA) {
-        if(bodyA.getUserData().getClass().getSuperclass().equals(Entity.class)) {
-            ((Entity) bodyA.getUserData()).setHealth(-1.0f);
-            if (((Entity) bodyA.getUserData()).getHealth() <= 0.0) {
-                ((Entity) bodyA.getUserData()).setDead(true);
+    private void diminishHealth(Body body) {
+
+        // Check if body extends from Entity
+        if(body.getUserData().getClass().getSuperclass().equals(Entity.class)) {
+
+            Entity entity = (Entity) body.getUserData();
+            // Check if body has cooldown pending
+            if (System.currentTimeMillis() - entity.getLastSustainedDamage() >= entity.getInvincibilityCooldown()) {
+                entity.setHealth(-1.0f);
+                if (entity.getHealth() <= 0.0) {
+                    entity.setDead(true);
+                }
+                entity.setLastSustainedDamage(System.currentTimeMillis());
             }
+
         }
     }
 

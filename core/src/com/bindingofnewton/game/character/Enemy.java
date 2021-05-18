@@ -25,7 +25,11 @@ public class Enemy extends Entity {
 
 
     public Enemy(World world, int startX, int startY, int speed, Sprite sprite) {
+
+        this.invincibilityCooldown = 0;
+        this.health = 1.0f;
         this.speed = speed;
+
         this.orientation = Orientation.UP;
         orientation = Orientation.DOWN;
         this.sprites = new ArrayList<>();
@@ -65,7 +69,6 @@ public class Enemy extends Entity {
         textureAtlas = new TextureAtlas(AssetsHandler.BAT_RUN);
 
         up = new Animation<TextureRegion>(SPEED_ANIMATION, textureAtlas.findRegions("run-front"), Animation.PlayMode.LOOP);
-        health = 1.0f;
 
     }
 

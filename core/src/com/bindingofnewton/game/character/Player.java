@@ -17,11 +17,17 @@ public class Player extends Entity {
     private static final float MAX_HEALTH = 10;
     private final float SPEED_ANIMATION = 0.04f;
 
+
+
     private HashMap<Orientation, Animation<Sprite>> animations = new HashMap<>();
 
     private AssetsHandler.PlayerName playerName;
 
     public Player(World world, AssetsHandler.PlayerName playerName, int startX, int startY) {
+
+        this.health = 5.0f;
+        this.invincibilityCooldown = 600;
+
         orientation = Orientation.DOWN;
         this.playerName = playerName;
         x = startX;
@@ -64,7 +70,8 @@ public class Player extends Entity {
         animations.put(Orientation.DOWN, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.DOWN, SPEED_ANIMATION));
         animations.put(Orientation.RIGHT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.RIGHT, SPEED_ANIMATION));
         animations.put(Orientation.LEFT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.LEFT, SPEED_ANIMATION));
-        health = 5.0f;
+
+
     }
 
     /**
@@ -151,6 +158,8 @@ public class Player extends Entity {
         Sprite sprite;
         if (isDead) {
             sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-dead.png");
+            // Pause game
+            BindingOfNewton.getInstance().setPaused(true);
         } else if (isMoving){
             sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(orientation));
         } else{
@@ -158,4 +167,5 @@ public class Player extends Entity {
         }
         batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
     }
+
 }

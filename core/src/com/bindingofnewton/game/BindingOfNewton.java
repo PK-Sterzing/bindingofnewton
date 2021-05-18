@@ -38,7 +38,8 @@ public class BindingOfNewton implements Screen{
 	private Box2DDebugRenderer renderer;
 	public boolean showDebugInfo = false;
 	private ContactHandler contactHandler;
-	protected boolean isPaused = false;
+
+	private boolean isPaused = false;
 
 	private BindingOfNewton() { }
 
@@ -297,18 +298,6 @@ public class BindingOfNewton implements Screen{
 		this.game = game;
 	}
 
-	/**
-	 * Pauses game, removes player, changes screen
-	 */
-	public void gameOver() {
-		// Pause game
-		BindingOfNewton.getInstance().isPaused = true;
-		// Remove Body and player
-		level.getWorld().destroyBody(level.getCurrentRoom().getPlayer().getBody());
-		level.getCurrentRoom().getPlayer().setDead(true);
-		level.getCurrentRoom().setPlayer(null);
-		// TODO: Change to main menu screen or dedicated game over screen
-	}
 
 	@Override
 	public void resize(int width, int height) {
@@ -335,6 +324,14 @@ public class BindingOfNewton implements Screen{
 		batch.dispose();
 	}
 
+
+	public boolean isPaused() {
+		return isPaused;
+	}
+
+	public void setPaused(boolean paused) {
+		isPaused = paused;
+	}
 
 
 }
