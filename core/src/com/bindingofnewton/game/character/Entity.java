@@ -1,5 +1,6 @@
 package com.bindingofnewton.game.character;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Polygon;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.Orientation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public abstract class Entity {
@@ -17,8 +19,10 @@ public abstract class Entity {
     protected int y;
     protected int characterHeight;
     protected int characterWidth;
+    protected float deltaTime = 0f;
 
     protected ArrayList<Sprite> sprites;
+    protected HashMap<Orientation, Animation<Sprite>> animations = new HashMap<>();
 
     protected Orientation orientation;
 

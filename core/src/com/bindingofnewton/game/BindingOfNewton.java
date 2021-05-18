@@ -220,8 +220,7 @@ public class BindingOfNewton implements Screen{
 			for(int i = 0; i < 5; i++){
 				double startX = Math.floor(Math.random()*(maxX-minX+1)+minX);
 				double startY = Math.floor(Math.random()*(maxY-minY+1)+minY);
-				enemies.add(new Enemy(world, (int)startX, (int)startY, 50, AssetsHandler.getInstance().getSingleSpriteFromFile(
-						"./character/bat_run/run-front1.png")));
+				enemies.add(new Enemy(world, AssetsHandler.EnemyName.BAT, (int)startX, (int)startY, 50));
 			}
 			level.getCurrentRoom().addEnemies(enemies);
 		}

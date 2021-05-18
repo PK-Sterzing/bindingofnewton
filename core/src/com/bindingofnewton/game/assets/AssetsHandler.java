@@ -20,6 +20,10 @@ public class AssetsHandler {
         EDISON
     }
 
+    public enum EnemyName {
+        BAT
+    }
+
     public static final String START_MAP = "mapStart.tmx";
     public static final String END_MAP = "mapEnd.tmx";
     public static final String MAP = "map1.tmx";
@@ -89,31 +93,30 @@ public class AssetsHandler {
         return sprite;
     }
 
-    public Animation<Sprite> getAnimation(String name, float duration) {
+    public Animation<Sprite> getAnimation(String name, float duration, float scaleFactor) {
         Array<Sprite> sprites = new Array<>();
         int counter = 1;
 
         while(true) {
             Sprite sprite = getSingeSpriteFromAtlas(name + "-" + counter);
             if (sprite == null) break;
-            sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
+            sprite.setSize(sprite.getWidth() * scaleFactor, sprite.getHeight() * scaleFactor);
             sprites.add(sprite);
             counter++;
         }
         return new Animation<>(duration, sprites, Animation.PlayMode.LOOP);
     }
 
-    public Animation<Sprite> getPlayerRunAnimation(PlayerName playerName, Orientation orientation, float duration) {
+    public Animation<Sprite> getPlayerRunAnimation(PlayerName playerName, Orientation orientation, float duration, float scaleFactor) {
         switch (orientation) {
-            case DOWN: return getAnimation(playerName.toString().toLowerCase() + "-run-front", duration);
-            case LEFT: return getAnimation(playerName.toString().toLowerCase() + "-run-left", duration);
-            case RIGHT: return getAnimation(playerName.toString().toLowerCase() + "-run-right", duration);
-            default: return getAnimation(playerName.toString().toLowerCase() + "-run-back", duration);
+            case DOWN: return getAnimation(playerName.toString().toLowerCase() + "-run-front", duration, scaleFactor);
+            case LEFT: return getAnimation(playerName.toString().toLowerCase() + "-run-left", duration, scaleFactor);
+            case RIGHT: return getAnimation(playerName.toString().toLowerCase() + "-run-right", duration, scaleFactor);
+            default: return getAnimation(playerName.toString().toLowerCase() + "-run-back", duration, scaleFactor);
         }
     }
 
-    public Sprite getAnimationFrame(Animation<Sprite> animation) {
-        deltaTime += Gdx.graphics.getDeltaTime();
+    public Sprite getAnimationFrame(Animation<Sprite> animation, float deltaTime) {
         return animation.getKeyFrame(deltaTime, true);
     }
 
