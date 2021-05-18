@@ -205,7 +205,6 @@ public class BindingOfNewton implements Screen{
 		}
 
 		level.getCurrentRoom().setPlayer(playerCached);
-		level.getCurrentRoom().getPlayer().setHealth(1f);
 
 		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
 			makeBossEnemy();
