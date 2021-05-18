@@ -1,5 +1,6 @@
 package com.bindingofnewton.game.character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -19,7 +20,6 @@ public class Player extends Entity {
     private final float SPEED_ANIMATION = 0.04f;
 
     private HashMap<Orientation, Animation<Sprite>> animations = new HashMap<>();
-
     private AssetsHandler.PlayerName playerName;
 
     private Item currentItem;
@@ -67,10 +67,10 @@ public class Player extends Entity {
 
         polygonShape.dispose();
 
-        animations.put(Orientation.UP, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.UP, SPEED_ANIMATION));
-        animations.put(Orientation.DOWN, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.DOWN, SPEED_ANIMATION));
-        animations.put(Orientation.RIGHT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.RIGHT, SPEED_ANIMATION));
-        animations.put(Orientation.LEFT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.LEFT, SPEED_ANIMATION));
+        animations.put(Orientation.UP, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.UP, SPEED_ANIMATION, .7f));
+        animations.put(Orientation.DOWN, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.DOWN, SPEED_ANIMATION, .7f));
+        animations.put(Orientation.RIGHT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.RIGHT, SPEED_ANIMATION, .7f));
+        animations.put(Orientation.LEFT, AssetsHandler.getInstance().getPlayerRunAnimation(playerName, Orientation.LEFT, SPEED_ANIMATION, .7f));
 
 
     }
@@ -163,7 +163,8 @@ public class Player extends Entity {
             // Pause game
             BindingOfNewton.getInstance().setPaused(true);
         } else if (isMoving){
-            sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(orientation));
+            deltaTime += Gdx.graphics.getDeltaTime();
+            sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(orientation), deltaTime);
         } else{
             sprite = AssetsHandler.getInstance().getPlayerSprite(playerName, orientation);
         }

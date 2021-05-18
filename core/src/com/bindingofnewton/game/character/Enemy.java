@@ -20,20 +20,18 @@ public class Enemy extends Entity {
     private static long lastPathChange = 0;
 
     private float deltaTime = 0f;
-    private final float SPEED_ANIMATION = 0.04f;
+    private final float SPEED_ANIMATION = 0.05f;
 
+    private AssetsHandler.EnemyName enemyName;
 
-
-    public Enemy(World world, int startX, int startY, int speed, Sprite sprite) {
-
+    public Enemy(World world, AssetsHandler.EnemyName enemyName, int startX, int startY, int speed) {
+        this.enemyName = enemyName;
         this.invincibilityCooldown = 0;
         this.health = 1.0f;
         this.speed = speed;
 
         this.orientation = Orientation.UP;
         orientation = Orientation.DOWN;
-        this.sprites = new ArrayList<>();
-        this.sprites.add(sprite);
         x = startX;
         y = startY;
         BodyDef def = new BodyDef();
@@ -45,6 +43,8 @@ public class Enemy extends Entity {
 
         body = world.createBody(def);
         body.setUserData(this);
+
+        animations.put(Orientation.DOWN, AssetsHandler.getInstance().getAnimation(enemyName.toString().toLowerCase() + "-run-front", SPEED_ANIMATION, 1f));
 
         PolygonShape polygonShape = new PolygonShape();
 
@@ -96,7 +96,7 @@ public class Enemy extends Entity {
         }
 
 
-        this.sprites.get(0).setPosition(body.getPosition().x, body.getPosition().y);
+        //this.sprites.get(0).setPosition(body.getPosition().x, body.getPosition().y);
         polygon.setPosition(body.getPosition().x, body.getPosition().y);
     }
 
@@ -127,7 +127,9 @@ public class Enemy extends Entity {
     @Override
     public void render(SpriteBatch batch, boolean isMoving) {
         move(new Vector2(0, 0));
-        getSprite().draw(batch);
+        deltaTime += Gdx.graphics.getDeltaTime();
+        Sprite sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime);
+        batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
     }
 
     /**
