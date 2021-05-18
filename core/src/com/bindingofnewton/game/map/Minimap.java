@@ -48,14 +48,6 @@ public class Minimap {
      */
     public Minimap(Level level) {
         this.level = level;
-
-        TiledMapTileLayer layer = (TiledMapTileLayer) level.getCurrentRoom().getMap().getLayers().get("ground");
-        width = layer.getTileWidth() * layer.getWidth();
-        height = layer.getTileHeight() * layer.getHeight();
-
-        spriteHeight = (int) RoomState.CURRENT.sprite.getHeight();
-        spriteWidth = (int) RoomState.CURRENT.sprite.getWidth();
-
     }
     //</editor-fold>
 
@@ -67,6 +59,13 @@ public class Minimap {
      */
     public void render(Batch batch){
         currentRoom = level.currentRoom;
+
+        TiledMapTileLayer layer = (TiledMapTileLayer) currentRoom.getMap().getLayers().get("ground");
+        width = layer.getTileWidth() * layer.getWidth();
+        height = layer.getTileHeight() * layer.getHeight();
+
+        spriteHeight = (int) RoomState.CURRENT.sprite.getHeight() *(layer.getHeight() / 9);
+        spriteWidth = (int) RoomState.CURRENT.sprite.getWidth() * (layer.getWidth() / 15);
 
         float posX = width-spriteWidth * 3.5f;
         float posY = height-spriteHeight * 2.5f;
@@ -87,7 +86,7 @@ public class Minimap {
                         }else{
                             state = RoomState.UNCLEARED;
                         }
-                        batch.draw(state.sprite, posX - spriteWidth * (currentRoom.getX() - x), posY - spriteHeight * (currentRoom.getY() - y));
+                        batch.draw(state.sprite, posX - spriteWidth * (currentRoom.getX() - x), posY - spriteHeight * (currentRoom.getY() - y), spriteWidth, spriteHeight);
                         break;
                     }
                 }

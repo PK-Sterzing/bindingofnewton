@@ -22,7 +22,7 @@ public class Player extends Entity {
 
     public Player(World world, AssetsHandler.PlayerName playerName, int startX, int startY) {
 
-        this.health = 5.0f;
+        this.health = 10.0f;
         this.invincibilityCooldown = 600;
 
         orientation = Orientation.DOWN;

@@ -56,6 +56,9 @@ public class BindingOfNewton implements Screen{
 
 		world = new World(new Vector2(0,0), true);
 
+		// Create Camera
+		camera = new OrthographicCamera();
+
 		makeNewLevel();
 		contactHandler = new ContactHandler(level);
 
@@ -66,14 +69,6 @@ public class BindingOfNewton implements Screen{
 
 		// Create debug renderer to make collisions visible
 		renderer = new Box2DDebugRenderer();
-
-		// Create Camera
-		camera = new OrthographicCamera();
-
-		TiledMapTileLayer layer = (TiledMapTileLayer) level.getCurrentRoom().getMap().getLayers().get("ground");
-		float w = layer.getTileWidth() * layer.getWidth();
-		float h = layer.getTileHeight() * layer.getHeight();
-		camera.setToOrtho(false, w, h);
 
 		camera.update();
 	}
@@ -204,6 +199,11 @@ public class BindingOfNewton implements Screen{
 			orientation = Orientation.DOWN;
 		}
 
+		TiledMapTileLayer layer = (TiledMapTileLayer) room.getMap().getLayers().get("ground");
+		float w = layer.getTileWidth() * layer.getWidth();
+		float h = layer.getTileHeight() * layer.getHeight();
+		camera.setToOrtho(false, w, h);
+
 		level.getCurrentRoom().setPlayer(playerCached);
 
 		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
@@ -285,6 +285,8 @@ public class BindingOfNewton implements Screen{
 				y = height/2;
 				break;
 		}
+
+		System.out.println("X: " + x + ",   Y:  " + y);
 
 		BossEnemy enemy = new BossEnemy(world, x, y, 30, AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/boss_run1.png"));
 		ArrayList<Enemy> enemies = new ArrayList<>();
