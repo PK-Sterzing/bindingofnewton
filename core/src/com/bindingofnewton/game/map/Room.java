@@ -18,6 +18,8 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Player;
+import com.bindingofnewton.game.items.HealthBoostItem;
+import com.bindingofnewton.game.items.Item;
 
 import java.util.*;
 
@@ -32,6 +34,8 @@ public class Room {
     protected ArrayList<Bullet> bullets;
 
     protected ArrayList<Enemy> enemies;
+
+    protected ArrayList<Item> droppedItems;
     protected Player player;
 
     private boolean isCleared;
@@ -43,6 +47,7 @@ public class Room {
 
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
+        droppedItems = new ArrayList<>();
         isCleared = false;
     }
 
@@ -154,6 +159,7 @@ public class Room {
         updateBullets();
         removeDeadEnemies();
         moveAllEnemies();
+        removeDroppedItems();
     }
 
     /**
@@ -170,6 +176,30 @@ public class Room {
     }
 
 
+    /**
+     * Create item and add to array
+     * @param posX
+     * @param posY
+     */
+    private void dropItem(float posX, float posY){
+        // Not all enemies drop items
+        double randInt = Math.random();
+        // 15 % droprate
+        if(randInt <= 0.15){
+            HealthBoostItem h = new HealthBoostItem(this.world, posX, posY);
+            droppedItems.add(h);
+        }
+    }
+
+    private void removeDroppedItems(){
+        for(int i = 0; i < droppedItems.size(); i++){
+            if(droppedItems.get(i).isShouldBeRemoved()){
+                world.destroyBody(droppedItems.get(i).getBody());
+                droppedItems.remove(i);
+            }
+        }
+    }
+
 
     /**
      * Goes trough enemies and deletes the dead ones
@@ -177,6 +207,7 @@ public class Room {
     private void removeDeadEnemies() {
         for(int i = 0; i < enemies.size(); i++){
             if(enemies.get(i).isDead()){
+                dropItem(enemies.get(i).getBody().getPosition().x, enemies.get(i).getBody().getPosition().y);
                 world.destroyBody(enemies.get(i).getBody());
                 enemies.remove(i);
             }
@@ -206,4 +237,9 @@ public class Room {
 
         }
     }
+
+    public ArrayList<Item> getDroppedItems() {
+        return droppedItems;
+    }
+
 }

@@ -26,6 +26,7 @@ public abstract class Entity {
 
     protected Orientation orientation;
 
+
     protected int speed = 100;
     protected float health;
 
@@ -111,6 +112,13 @@ public abstract class Entity {
         return speed;
     }
 
+    /**
+     * Sets speed of entity
+     * @param speed
+     */
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
     /**
      * Get Polygon shape of hitbox
      * @return Polygon

@@ -13,6 +13,7 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.BossEnemy;
 import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Player;
+import com.bindingofnewton.game.items.Item;
 import com.bindingofnewton.game.map.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +123,11 @@ public class BindingOfNewton implements Screen{
 		// Render all bullets
 		for(Bullet bullet : level.getCurrentRoom().getBullets()){
 			bullet.render(batch);
+		}
+
+		// Render all dropped items
+		for(Item item : level.getCurrentRoom().getDroppedItems()){
+			item.render(batch);
 		}
 
 

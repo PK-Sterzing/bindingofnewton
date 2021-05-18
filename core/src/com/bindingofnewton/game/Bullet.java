@@ -25,6 +25,7 @@ public class Bullet {
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(startX , startY );
+        def.bullet = true;
         body = world.createBody(def);
         body.setUserData(this);
 
