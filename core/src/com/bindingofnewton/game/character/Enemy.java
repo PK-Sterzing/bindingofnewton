@@ -20,7 +20,8 @@ public class Enemy extends Entity {
     private static long lastPathChange = 0;
 
     private float deltaTime = 0f;
-    private final float SPEED_ANIMATION = 0.05f;
+    private final float SPEED_ANIMATION = 0.08f;
+    private float animation_offset;
 
     private AssetsHandler.EnemyName enemyName;
 
@@ -29,6 +30,7 @@ public class Enemy extends Entity {
         this.invincibilityCooldown = 0;
         this.health = 1.0f;
         this.speed = speed;
+        this.animation_offset = (float) Math.random() * 5f;
 
         this.orientation = Orientation.UP;
         orientation = Orientation.DOWN;
@@ -128,7 +130,7 @@ public class Enemy extends Entity {
     public void render(SpriteBatch batch, boolean isMoving) {
         move(new Vector2(0, 0));
         deltaTime += Gdx.graphics.getDeltaTime();
-        Sprite sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime);
+        Sprite sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime + animation_offset);
         batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
     }
 

@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.assets.SoundHandler;
 
 public class MainMenu implements Screen {
     private SpriteBatch batch;
@@ -70,6 +71,7 @@ public class MainMenu implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                SoundHandler.getInstance().stopMusic(SoundHandler.Music.MAIN_MENU);
                 game.setScreen(BindingOfNewton.getInstance());
                 BindingOfNewton.getInstance().setGame(game);
             }
