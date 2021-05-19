@@ -131,7 +131,7 @@ public class Enemy extends Entity {
         move(new Vector2(0, 0));
         deltaTime += Gdx.graphics.getDeltaTime();
         Sprite sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime + animation_offset);
-        batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
+        batch.draw(sprite, body.getPosition().x-10, body.getPosition().y-10, sprite.getWidth(), sprite.getHeight());
     }
 
     /**

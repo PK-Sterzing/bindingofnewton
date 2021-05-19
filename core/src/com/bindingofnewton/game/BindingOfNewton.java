@@ -131,10 +131,6 @@ public class BindingOfNewton implements Screen{
 		}
 
 
-		// Show debug info when the switch is on (SHIFT)
-		if(showDebugInfo){
-			renderer.render(world, camera.combined);
-		}
 
 		//Renders the hearts of the player
 		List<Sprite> sprites = player.getHealthSprites();
@@ -147,6 +143,10 @@ public class BindingOfNewton implements Screen{
 
 		minimap.render(batch);
 		batch.end();
+		// Show debug info when the switch is on (SHIFT)
+		if(showDebugInfo){
+			renderer.render(world, camera.combined);
+		}
 	}
 
 	/**

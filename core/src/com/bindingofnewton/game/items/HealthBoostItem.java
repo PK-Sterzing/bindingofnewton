@@ -26,7 +26,7 @@ public class HealthBoostItem extends Item{
 
     public void render(SpriteBatch batch) {
         Sprite sprite;
-        sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./bullets/magic_bullet.png");
+        sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/healthitem.png");
         batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
     }
 }

@@ -28,7 +28,7 @@ public class SpeedBoostItem extends Item{
     @Override
     public void render(SpriteBatch batch) {
         Sprite sprite;
-        sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./bullets/magic_bullet.png");
+        sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/speeditem.png");
         batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
     }
 }

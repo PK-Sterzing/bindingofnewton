@@ -48,11 +48,11 @@ public class ContactHandler implements ContactListener {
                     diminishHealth(bodyA);
                 }
             }
-        }
-        // Collision with item
-        if(bodyA.getUserData().getClass().getSuperclass().equals(Item.class) || bodyB.getUserData().getClass().getSuperclass().equals(Item.class)){
-            giveItemEffect(bodyB, bodyA);
-            giveItemEffect(bodyA, bodyB);
+            // Collision with item
+            if(bodyA.getUserData().getClass().getSuperclass().equals(Item.class) || bodyB.getUserData().getClass().getSuperclass().equals(Item.class)){
+                giveItemEffect(bodyB, bodyA);
+                giveItemEffect(bodyA, bodyB);
+            }
         }
         // Remove Bullet if other body is unknown
         if(bodyA.getUserData() instanceof Bullet) {
