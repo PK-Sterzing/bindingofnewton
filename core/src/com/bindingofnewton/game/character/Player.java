@@ -14,6 +14,7 @@ import com.bindingofnewton.game.items.Item;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class Player extends Entity {
     private static final float MAX_HEALTH = 10;
@@ -154,7 +155,8 @@ public class Player extends Entity {
         Sprite sprite;
         if(this.getNextDamageSprite() == 0){
             if (isDead) {
-                sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/" + playerName.toString().toLowerCase() + "/" + playerName.toString().toLowerCase() + "-dead.png");
+                //sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/" + playerName.toString().toLowerCase() + "/" + playerName.toString().toLowerCase() + "-dead.png");
+                sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas(playerName.toString().toLowerCase() + "-dead");
                 sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
                 // Pause game
                 BindingOfNewton.getInstance().setPaused(true);
@@ -166,8 +168,8 @@ public class Player extends Entity {
             }
 
         }else {
-            sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-damage.png");
-            sprite.setScale(2f);
+            sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("newton-damage");
+            sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
             this.setNextDamageSprite(-1);
         }
         batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());

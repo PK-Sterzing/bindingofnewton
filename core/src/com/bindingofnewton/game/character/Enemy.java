@@ -52,6 +52,9 @@ public class Enemy extends Entity {
         //fixtureDef.density = 1f;
 
         body.createFixture(fixtureDef);
+        MassData massData = new MassData();
+        massData.mass = 50;
+        body.setMassData(massData);
 
         polygonShape.dispose();
     }
@@ -104,8 +107,7 @@ public class Enemy extends Entity {
         if(this.getNextDamageSprite() == 0){
             sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime + animation_offset);
         }else{
-            //TODO:
-            sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-damage.png");
+            sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("bat-damage");
             sprite.setScale(0.5f);
             this.setNextDamageSprite(-1);
         }
@@ -123,14 +125,14 @@ public class Enemy extends Entity {
                 player.getBody().getPosition().y -
                         this.getBody().getPosition().y);
 
-        // Change length of vector to the speed of the enemy
-        move = move.scl(this.getSpeed() / move.len());
-
         if (move.x > 0){
             orientation = Orientation.RIGHT;
         }else if (move.x < 0){
             orientation = Orientation.LEFT;
         }
+
+        // Change length of vector to the speed of the enemy
+        move = move.scl(this.getSpeed() / move.len());
 
         this.move(move);
         Enemy.setLastPathChange(System.currentTimeMillis());

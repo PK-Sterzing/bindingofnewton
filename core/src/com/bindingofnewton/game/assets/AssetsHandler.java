@@ -34,11 +34,11 @@ public class AssetsHandler {
             }
         ),
         //TODO: Vertices berechnen/ändern
-        BOSS_RAT(
+        BOSS(
             new float[]{
-                    5.0f, 2.0f,
-                    24.0f, 2.0f,
-                    27.0f, 18.0f,
+                    95.0f, 60.0f,
+                    100.0f, 18.0f,
+                    10.0f, 2.0f,
                     4.0f, 18.0f,
             }
         );
