@@ -8,27 +8,23 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
 
-import java.util.ArrayList;
-
 public class Enemy extends Entity {
-
-    protected Animation<TextureRegion> up;
-    protected TextureAtlas textureAtlas;
 
     // How many times should the enemy update the path to the player
     protected static int pathChangingRate = 500;
     private static long lastPathChange = 0;
 
-    private float deltaTime = 0f;
-    private final float SPEED_ANIMATION = 0.08f;
-    private float animation_offset;
+    protected float deltaTime = 0f;
+    //TODO: SpeedAnimation should be property of enemy (enum in assetshandler)
+    protected final float SPEED_ANIMATION = 0.08f;
+    protected float animation_offset;
 
-    private AssetsHandler.EnemyName enemyName;
+    private AssetsHandler.EnemyProperties enemyName;
 
-    public Enemy(World world, AssetsHandler.EnemyName enemyName, int startX, int startY, int speed) {
+    public Enemy(World world, AssetsHandler.EnemyProperties enemyName, int startX, int startY, int speed) {
         this.enemyName = enemyName;
         this.invincibilityCooldown = 0;
-        this.health = 1.0f;
+        this.health = 2.0f;
         this.speed = speed;
         this.animation_offset = (float) Math.random() * 5f;
 
@@ -48,36 +44,16 @@ public class Enemy extends Entity {
 
         PolygonShape polygonShape = new PolygonShape();
 
-        float[] vertices = new float[] {
-                5.0f, 2.0f,
-                24.0f, 2.0f,
-                27.0f, 18.0f,
-                4.0f, 18.0f,
-        };
+        polygonShape.set(enemyName.getVertices());
+        polygon = new Polygon(enemyName.getVertices());
 
-        polygonShape.set(vertices);
-
-        polygon = new Polygon(vertices);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = polygonShape;
         //fixtureDef.density = 1f;
 
-        Fixture fixture = body.createFixture(fixtureDef);
+        body.createFixture(fixtureDef);
 
         polygonShape.dispose();
-
-        textureAtlas = new TextureAtlas(AssetsHandler.BAT_RUN);
-
-        up = new Animation<TextureRegion>(SPEED_ANIMATION, textureAtlas.findRegions("run-front"), Animation.PlayMode.LOOP);
-
-    }
-
-    public TextureRegion getTextureRegion() {
-        deltaTime += Gdx.graphics.getDeltaTime();
-        switch (orientation) {
-            case UP: return up.getKeyFrame(deltaTime, true);
-            default: return up.getKeyFrame(deltaTime, true);
-        }
     }
 
     /**
@@ -88,11 +64,9 @@ public class Enemy extends Entity {
         float x = vector.x;
         float y =  vector.y;
 
-
         if(!(x == 0.0f && y == 0.0f)){
             body.setLinearVelocity(vector);
         }
-
 
         //this.sprites.get(0).setPosition(body.getPosition().x, body.getPosition().y);
         polygon.setPosition(body.getPosition().x, body.getPosition().y);
@@ -130,6 +104,7 @@ public class Enemy extends Entity {
         if(this.getNextDamageSprite() == 0){
             sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime + animation_offset);
         }else{
+            //TODO:
             sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-damage.png");
             sprite.setScale(0.5f);
             this.setNextDamageSprite(-1);
@@ -138,7 +113,7 @@ public class Enemy extends Entity {
     }
 
     /**
-     * Calcultes vector with fixed length to player and moves enemy to that vector
+     * Calculates vector with fixed length to player and moves enemy to that vector
      * @param player to which the enemy has to move
      */
     public void calculateMoveToPlayer(Player player){
@@ -150,6 +125,12 @@ public class Enemy extends Entity {
 
         // Change length of vector to the speed of the enemy
         move = move.scl(this.getSpeed() / move.len());
+
+        if (move.x > 0){
+            orientation = Orientation.RIGHT;
+        }else if (move.x < 0){
+            orientation = Orientation.LEFT;
+        }
 
         this.move(move);
         Enemy.setLastPathChange(System.currentTimeMillis());

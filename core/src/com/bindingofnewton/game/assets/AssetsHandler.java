@@ -1,13 +1,11 @@
 package com.bindingofnewton.game.assets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.Orientation;
-import com.bindingofnewton.game.character.Player;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -15,14 +13,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AssetsHandler {
+
+    //<editor-fold desc="Enums">
+
     public enum PlayerName {
         NEWTON,
         EDISON
     }
 
-    public enum EnemyName {
-        BAT
+    /**
+     * Enum for the properties of the enemy. Every enemy has his own vertices for the body.
+     */
+    public enum EnemyProperties {
+        BAT(
+             new float[] {
+                    5.0f, 2.0f,
+                    24.0f, 2.0f,
+                    27.0f, 18.0f,
+                    4.0f, 18.0f,
+            }
+        ),
+        //TODO: Vertices berechnen/ändern
+        BOSS_RAT(
+            new float[]{
+                    5.0f, 2.0f,
+                    24.0f, 2.0f,
+                    27.0f, 18.0f,
+                    4.0f, 18.0f,
+            }
+        );
+
+        private float[] vertices;
+
+        EnemyProperties(float vertices[]){
+            this.vertices = vertices;
+        }
+
+        /**
+         * Gets the vertices for the body of the enemy
+         * @return vertices
+         */
+        public float[] getVertices() {
+            return vertices;
+        }
     }
+    //</editor-fold>
 
     public static final String START_MAP = "mapStart.tmx";
     public static final String END_MAP = "mapEnd.tmx";
@@ -91,6 +126,18 @@ public class AssetsHandler {
 
         sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
         return sprite;
+    }
+
+    public ArrayList<Sprite> getEnemySprites(EnemyProperties enemyName, Orientation orientation){
+        ArrayList<Sprite> array = new ArrayList<>();
+
+        Sprite sprite = textureAtlas.createSprite(enemyName.name().toLowerCase() + "_run1");
+        array.add(sprite);
+        Sprite sprite1 = new Sprite(sprite);
+        sprite1.flip(true, false);
+        array.add(sprite1);
+
+        return array;
     }
 
     public Animation<Sprite> getAnimation(String name, float duration, float scaleFactor) {
