@@ -166,7 +166,7 @@ public class BindingOfNewton implements Screen{
 		level = new LevelBuilder()
 				.setWorld(world)
 				.setLevelWidthHeight(8, 8)
-				.setMinRooms(8)
+				.setMinRooms(3)
 				.setAmountRandomRooms(0, 0)
 				.build();
 
@@ -212,12 +212,10 @@ public class BindingOfNewton implements Screen{
 
 		level.getCurrentRoom().setPlayer(playerCached);
 
+		// Create Enemies
 		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
 			makeBossEnemy();
-		}
-
-		// Create Enemies
-		if (!level.getCurrentRoom().isCleared()){
+		}else if (!level.getCurrentRoom().isCleared()){
 			int minX = 40;
 			int maxX = 400;
 			int minY = 40;
@@ -226,7 +224,8 @@ public class BindingOfNewton implements Screen{
 			for(int i = 0; i < 5; i++){
 				double startX = Math.floor(Math.random()*(maxX-minX+1)+minX);
 				double startY = Math.floor(Math.random()*(maxY-minY+1)+minY);
-				enemies.add(new Enemy(world, AssetsHandler.EnemyName.BAT, (int)startX, (int)startY, 50));
+
+				enemies.add(new Enemy(world, AssetsHandler.EnemyProperties.BAT, (int)startX, (int)startY, 50));
 			}
 			level.getCurrentRoom().addEnemies(enemies);
 		}
@@ -265,6 +264,8 @@ public class BindingOfNewton implements Screen{
 	}
 
 	private void makeBossEnemy() {
+		System.out.println("Boss spawned");
+
 		Room room = level.getCurrentRoom();
 		int width = (int) room.getMap().getProperties().get("width");
 		int height = (int) room.getMap().getProperties().get("height");
@@ -294,7 +295,7 @@ public class BindingOfNewton implements Screen{
 
 		System.out.println("X: " + x + ",   Y:  " + y);
 
-		BossEnemy enemy = new BossEnemy(world, x, y, 30, AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/boss_run1.png"));
+		BossEnemy enemy = new BossEnemy(world, x, y, 30);
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		enemies.add(enemy);
 		room.addEnemies(enemies);
