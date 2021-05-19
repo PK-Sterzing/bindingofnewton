@@ -1,7 +1,5 @@
 package com.bindingofnewton.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -12,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
-import com.bindingofnewton.game.items.HealthBoostItem;
 import com.bindingofnewton.game.items.Item;
 import com.bindingofnewton.game.map.Level;
 
@@ -61,6 +58,7 @@ public class ContactHandler implements ContactListener {
         if(bodyB.getUserData() instanceof Bullet) {
             removeBulletFixture((Bullet) bodyB.getUserData());
         }
+
     }
 
     private void giveItemEffect(Body bodyA, Body bodyB) {
@@ -136,6 +134,7 @@ public class ContactHandler implements ContactListener {
                 if (entity.getHealth() <= 0.0) {
                     entity.setDead(true);
                 }
+
                 entity.setLastSustainedDamage(System.currentTimeMillis());
             }
 

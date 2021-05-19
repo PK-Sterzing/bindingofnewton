@@ -9,8 +9,8 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 
 public class Bullet {
     private int speed = 150;
-    public static final int WIDTH = 9;
-    public static final int HEIGHT = 8;
+    public static final int WIDTH = 10;
+    public static final int HEIGHT = 10;
     private final Body body;
     private final PolygonShape polygonShape;
     private final Sprite sprite;
@@ -49,8 +49,7 @@ public class Bullet {
 
         // Load Sprite
         this.sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("apple_bullet");
-        this.sprite.setScale(2f);
-        // this.sprite = AssetsHandler.getInstance().getSingleSprite("bullet.png");
+        this.sprite.setScale(1.7f);
         this.sprite.setSize(WIDTH, HEIGHT);
         this.sprite.setPosition(body.getPosition().x, body.getPosition().y);
 

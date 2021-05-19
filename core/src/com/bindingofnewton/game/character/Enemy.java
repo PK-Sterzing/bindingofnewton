@@ -34,11 +34,9 @@ public class Enemy extends Entity {
 
         this.orientation = Orientation.UP;
         orientation = Orientation.DOWN;
-        x = startX;
-        y = startY;
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(x ,y);
+        def.position.set(startX ,startY);
 
         characterWidth = 22;
         characterHeight = 28;
@@ -91,8 +89,6 @@ public class Enemy extends Entity {
         float y =  vector.y;
 
 
-        this.x += x;
-        this.y += y;
         if(!(x == 0.0f && y == 0.0f)){
             body.setLinearVelocity(vector);
         }
@@ -130,7 +126,14 @@ public class Enemy extends Entity {
     public void render(SpriteBatch batch, boolean isMoving) {
         move(new Vector2(0, 0));
         deltaTime += Gdx.graphics.getDeltaTime();
-        Sprite sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime + animation_offset);
+        Sprite sprite;
+        if(this.getNextDamageSprite() == 0){
+            sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime + animation_offset);
+        }else{
+            sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-damage.png");
+            sprite.setScale(0.5f);
+            this.setNextDamageSprite(-1);
+        }
         batch.draw(sprite, body.getPosition().x-10, body.getPosition().y-10, sprite.getWidth(), sprite.getHeight());
     }
 

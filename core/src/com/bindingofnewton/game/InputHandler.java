@@ -130,15 +130,15 @@ public class InputHandler implements InputProcessor {
                         break;
                     case Input.Keys.DOWN:
                         shootBullet(Orientation.DOWN,
-                                new Vector2((int)( posX + width/2), (int)posY - 8));
+                                new Vector2((int)( posX + width/2), (int)posY - 10));
                         break;
                     case Input.Keys.LEFT:
                         shootBullet(Orientation.LEFT,
-                                new Vector2((int)posX - 8, (int) (posY + height/2)));
+                                new Vector2((int)posX - 10, (int) (posY + height/2)));
                         break;
                     case Input.Keys.RIGHT:
                         shootBullet(Orientation.RIGHT,
-                                new Vector2((int) (posX + width + 8), (int) (posY + height/ 2)));
+                                new Vector2((int) (posX + width + 10), (int) (posY + height/ 2)));
                         break;
                 }
             }

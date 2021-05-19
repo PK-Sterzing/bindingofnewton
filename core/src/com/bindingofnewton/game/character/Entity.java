@@ -15,8 +15,6 @@ public abstract class Entity {
     protected Body body;
     protected Polygon polygon;
 
-    protected int x;
-    protected int y;
     protected int characterHeight;
     protected int characterWidth;
     protected float deltaTime = 0f;
@@ -35,29 +33,20 @@ public abstract class Entity {
     // When the entity is hit, set him invincible for a few milliseconds
     protected long invincibilityCooldown = 500;
 
+
     protected boolean isDead = false;
+
+    // If over 0 set damage sprite for one frame
+    protected int nextDamageSprite = 0;
+    protected long damageSpriteCooldown = 300;
+    protected long lastDamageSprite = 0;
 
 
     //<editor-fold desc="Getter and Setter">
 
-    /**
-     * Gets the x-coordinate of the Entity
-     * @return x-coordinate
-     */
-    public int getX() {
-        return x;
-    }
 
     public Body getBody() {
         return body;
-    }
-
-    /**
-     * Gets the y-coordinate of the Entity
-     * @return y-coordinate
-     */
-    public int getY() {
-        return y;
     }
 
     /**
@@ -101,6 +90,9 @@ public abstract class Entity {
      * @param delta
      */
     public void setHealth(float delta){
+        if(delta < 0){
+            this.setNextDamageSprite(1);
+        }
         health += delta;
     }
 
@@ -179,6 +171,17 @@ public abstract class Entity {
 
     public void setLastSustainedDamage(long lastSustainedDamage) {
         this.lastSustainedDamage = lastSustainedDamage;
+    }
+
+    public int getNextDamageSprite() {
+        return nextDamageSprite;
+    }
+
+    public void setNextDamageSprite(int delta) {
+        if(delta > 0){
+            delta =+ 15;
+        }
+        this.nextDamageSprite = this.nextDamageSprite + delta;
     }
 
 }
