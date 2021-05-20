@@ -74,6 +74,7 @@ public class MainMenuScreen implements Screen {
                 SoundHandler.getInstance().stopMusic(SoundHandler.Music.MAIN_MENU);
                 game.setScreen(BindingOfNewton.getInstance());
                 BindingOfNewton.getInstance().setGame(game);
+                SoundHandler.getInstance().playMusic(SoundHandler.Music.MAIN_MENU, true, 0.2f);
             }
         });
         exitButton.addListener(new ClickListener(){

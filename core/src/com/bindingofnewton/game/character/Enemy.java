@@ -106,12 +106,13 @@ public class Enemy extends Entity {
         Sprite sprite;
         if(this.getNextDamageSprite() == 0){
             sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime + animation_offset);
+            batch.draw(sprite, body.getPosition().x-10, body.getPosition().y-10, sprite.getWidth(), sprite.getHeight());
         }else{
             sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("bat-damage");
             sprite.setScale(0.5f);
             this.setNextDamageSprite(-1);
+            batch.draw(sprite, body.getPosition().x - 2, body.getPosition().y - 10, sprite.getWidth(), sprite.getHeight());
         }
-        batch.draw(sprite, body.getPosition().x-10, body.getPosition().y-10, sprite.getWidth(), sprite.getHeight());
     }
 
     /**

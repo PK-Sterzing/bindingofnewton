@@ -34,8 +34,9 @@ public class SoundHandler {
         return instance;
     }
 
-    public void playMusic(Music music, Boolean loop) {
+    public void playMusic(Music music, Boolean loop, float volume) {
         musics.get(music).setLooping(loop);
+        musics.get(music).setVolume(volume);
         musics.get(music).play();
     }
 
