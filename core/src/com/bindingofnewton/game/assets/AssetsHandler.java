@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.Orientation;
+import com.bindingofnewton.game.character.Enemy;
 
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +22,6 @@ public class AssetsHandler {
         EDISON
     }
 
-    /**
-     * Enum for the properties of the enemy. Every enemy has his own vertices for the body.
-     */
-    public enum EnemyProperties {
-
-    }
     //</editor-fold>
 
     public static final String ASSETS_ABSOLUTE = "./core/assets/";
@@ -98,7 +94,7 @@ public class AssetsHandler {
         return sprite;
     }
 
-    public ArrayList<Sprite> getEnemySprites(EnemyProperties enemyName, Orientation orientation){
+    public ArrayList<Sprite> getEnemySprites(Enemy.Properties enemyName, Orientation orientation){
         ArrayList<Sprite> array = new ArrayList<>();
 
         Sprite sprite = textureAtlas.createSprite(enemyName.name().toLowerCase() + "_run1");

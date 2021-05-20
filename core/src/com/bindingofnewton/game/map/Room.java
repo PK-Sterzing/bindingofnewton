@@ -169,12 +169,13 @@ public class Room {
      */
     private void moveAllEnemies() {
         // Move Enemy after cooldown
-        if (System.currentTimeMillis() - Enemy.getLastPathChange() >= Enemy.getPathChangingRate()) {
-            for(int i = 0; i < enemies.size(); i++){
+        for(int i = 0; i < enemies.size(); i++){
+            if (System.currentTimeMillis() - enemies.get(i).getLastPathChange() >= enemies.get(i).getPathChangingRate()){
                 // Get vector from enemy to player
                 enemies.get(i).calculateMoveToPlayer(player);
             }
         }
+
     }
 
 

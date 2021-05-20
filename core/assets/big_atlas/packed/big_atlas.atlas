@@ -928,28 +928,28 @@ magic_bullet
   orig: 16, 16
   offset: 0, 0
   index: -1
-mouse-run-1
+mouse-run-front-1
   rotate: false
   xy: 981, 134
   size: 32, 16
   orig: 32, 16
   offset: 0, 0
   index: -1
-mouse-run-2
+mouse-run-front-2
   rotate: false
   xy: 480, 4
   size: 32, 16
   orig: 32, 16
   offset: 0, 0
   index: -1
-mouse-run-3
+mouse-run-front-3
   rotate: false
   xy: 446, 4
   size: 32, 16
   orig: 32, 16
   offset: 0, 0
   index: -1
-mouse-run-4
+mouse-run-front-4
   rotate: false
   xy: 658, 67
   size: 32, 16
