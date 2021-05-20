@@ -10,36 +10,42 @@ import com.bindingofnewton.game.Orientation;
  * A door of the map
  */
 public class Door {
+
+    enum Id{
+        NORMAL(17, 18),
+        BOSS(27, 28),
+        PORTAL(3, 31);
+
+        private final int closed;
+        private final int open;
+
+        Id(int closed, int open){
+            this.open = open;
+            this.closed = closed;
+        }
+
+    }
+
     private World world;
     private Orientation orientation;
     private TiledMap map;
     private Body body;
 
+    private Id id;
     private boolean isOpen;
-    private boolean isLastDoor;
 
     /**
      * Creates a new Door
      * @param world the world of the door
      * @param map the map where the door should be
      * @param orientation the orientation where the door should be
+     * @param id the tiled id of the door
      */
-    public Door(World world, TiledMap map, Orientation orientation){
-        this(world, map, orientation, false);
-    }
-
-    /**
-     * Creates a new Door
-     * @param world the world of the door
-     * @param map the map where the door should be
-     * @param orientation the orientation where the door should be
-     * @param isLastDoor true - the door is the door to the next level
-     */
-    public Door(World world, TiledMap map, Orientation orientation, boolean isLastDoor){
+    public Door(World world, TiledMap map, Orientation orientation, Id id){
         this.world = world;
         this.orientation = orientation;
         this.map = map;
-        this.isLastDoor = isLastDoor;
+        this.id = id;
         close();
     }
 
@@ -57,22 +63,26 @@ public class Door {
         int width = layer.getWidth();
         int height = layer.getHeight();
 
-        switch (orientation){
-            case DOWN:
-                cell.setFlipVertically(true);
-                layer.setCell(width/2, 0, cell);
-                break;
-            case UP:
-                layer.setCell(width/2, height-1, cell);
-                break;
-            case LEFT:
-                cell.setRotation(TiledMapTileLayer.Cell.ROTATE_90);
-                layer.setCell(0, height/2, cell);
-                break;
-            case RIGHT:
-                cell.setRotation(TiledMapTileLayer.Cell.ROTATE_270);
-                layer.setCell(width-1, height/2, cell);
+        if (id == Id.PORTAL.open || id == Id.PORTAL.closed){
+            layer.setCell(width/2, height/2, cell);
+        }else{
+            switch (orientation){
+                case DOWN:
+                    cell.setFlipVertically(true);
+                    layer.setCell(width/2, 0, cell);
+                    break;
+                case UP:
+                    layer.setCell(width/2, height-1, cell);
+                    break;
+                case LEFT:
+                    cell.setRotation(TiledMapTileLayer.Cell.ROTATE_90);
+                    layer.setCell(0, height/2, cell);
+                    break;
+                case RIGHT:
+                    cell.setRotation(TiledMapTileLayer.Cell.ROTATE_270);
+                    layer.setCell(width-1, height/2, cell);
 
+            }
         }
     }
 
@@ -98,8 +108,8 @@ public class Door {
     public void open() {
         isOpen = true;
         if (body != null)
-            body.setActive(false);
-        setDoorOnMap(isLastDoor ? 0 : 18);
+            body.setActive(id == Id.PORTAL);
+        setDoorOnMap(id.open);
     }
 
     /**
@@ -108,8 +118,8 @@ public class Door {
     public void close(){
         isOpen = false;
         if (body != null)
-            body.setActive(true);
-        setDoorOnMap(isLastDoor ? 0 : 17);
+            body.setActive(id != Id.PORTAL);
+        setDoorOnMap(id.closed);
     }
 
     /**
@@ -128,11 +138,4 @@ public class Door {
         return body;
     }
 
-    /**
-     * Gets if the door is the last door
-     * @return last door
-     */
-    public boolean isLastDoor() {
-        return isLastDoor;
-    }
 }

@@ -48,7 +48,7 @@ public class Bullet {
         polygonShape.dispose();
 
         // Load Sprite
-        this.sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("apple_bullet");
+        this.sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas("apple_bullet");
         this.sprite.setScale(1.7f);
         this.sprite.setSize(WIDTH, HEIGHT);
         this.sprite.setPosition(body.getPosition().x, body.getPosition().y);

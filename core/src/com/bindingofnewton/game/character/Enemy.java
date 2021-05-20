@@ -10,6 +10,50 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 
 public class Enemy extends Entity {
 
+    public enum Properties{
+        BAT(
+                new float[] {
+                        5.0f, 2.0f,
+                        24.0f, 2.0f,
+                        27.0f, 18.0f,
+                        4.0f, 18.0f,
+                },
+                2
+        ),
+        //TODO: Vertices berechnen/ändern
+        BOSS(
+                new float[]{
+                        95.0f, 60.0f,
+                        102.0f, 40.0f,
+                        95.0f, 18.0f,
+                        20.0f, 18.0f,
+                        13.0f, 40.0f,
+                        20.0f, 60.0f,
+                },
+                30
+        );
+
+        private float[] vertices;
+        private final float START_HEALTH;
+
+        Properties(float vertices[], float health){
+            this.vertices = vertices;
+            this.START_HEALTH = health;
+        }
+
+        /**
+         * Gets the vertices for the body of the enemy
+         * @return vertices
+         */
+        public float[] getVertices() {
+            return vertices;
+        }
+
+        public float getHealth() {
+            return START_HEALTH;
+        }
+    }
+
     // How many times should the enemy update the path to the player
     protected static int pathChangingRate = 500;
     private static long lastPathChange = 0;
@@ -19,12 +63,12 @@ public class Enemy extends Entity {
     protected final float SPEED_ANIMATION = 0.08f;
     protected float animation_offset;
 
-    private AssetsHandler.EnemyProperties enemyName;
+    private Properties enemyName;
 
-    public Enemy(World world, AssetsHandler.EnemyProperties enemyName, int startX, int startY, int speed) {
+    public Enemy(World world, Properties enemyName, int startX, int startY, int speed) {
         this.enemyName = enemyName;
         this.invincibilityCooldown = 0;
-        this.health = 2.0f;
+        this.health = enemyName.getHealth();
         this.speed = speed;
         this.animation_offset = (float) Math.random() * 5f;
 
@@ -71,7 +115,6 @@ public class Enemy extends Entity {
             body.setLinearVelocity(vector);
         }
 
-        //this.sprites.get(0).setPosition(body.getPosition().x, body.getPosition().y);
         polygon.setPosition(body.getPosition().x, body.getPosition().y);
     }
 
@@ -108,7 +151,7 @@ public class Enemy extends Entity {
             sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime + animation_offset);
             batch.draw(sprite, body.getPosition().x-10, body.getPosition().y-10, sprite.getWidth(), sprite.getHeight());
         }else{
-            sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("bat-damage");
+            sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas("bat-damage");
             sprite.setScale(0.5f);
             this.setNextDamageSprite(-1);
             batch.draw(sprite, body.getPosition().x - 2, body.getPosition().y - 10, sprite.getWidth(), sprite.getHeight());

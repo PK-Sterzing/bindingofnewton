@@ -97,8 +97,12 @@ public class BindingOfNewton implements Screen{
 		level.getCurrentRoom().update();
 
 		Orientation orientation = contactHandler.isDoorCollision();
-		if (orientation != null )
-			makeNewRoom(orientation);
+		if (orientation != null ){
+			if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
+				System.out.println("HIER EBENE WECHSELN");
+			}else
+				makeNewRoom(orientation);
+		}
 
 		contactHandler.contactWithFire();
 
@@ -169,7 +173,7 @@ public class BindingOfNewton implements Screen{
 		level = new LevelBuilder()
 				.setWorld(world)
 				.setLevelWidthHeight(8, 8)
-				.setMinRooms(8)
+				.setMinRooms(3)
 				.setAmountRandomRooms(0, 0)
 				.build();
 
@@ -229,7 +233,7 @@ public class BindingOfNewton implements Screen{
 				double startX = Math.floor(Math.random()*(maxX-minX+1)+minX);
 				double startY = Math.floor(Math.random()*(maxY-minY+1)+minY);
 
-				enemies.add(new Enemy(world, AssetsHandler.EnemyProperties.BAT, (int)startX, (int)startY, 50));
+				enemies.add(new Enemy(world, Enemy.Properties.BAT, (int)startX, (int)startY, 50));
 			}
 			level.getCurrentRoom().addEnemies(enemies);
 		}
@@ -273,7 +277,7 @@ public class BindingOfNewton implements Screen{
 
 		int x=0, y=0;
 
-		Sprite sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("boss-run-1");
+		Sprite sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas("boss-run-1");
 
 		Orientation orientation = room.getDoors().get(0).getOrientation();
 
@@ -295,8 +299,8 @@ public class BindingOfNewton implements Screen{
 				y = height/2;
 				break;
 		}
+		BossEnemy enemy = new BossEnemy(world, x, y, 70);
 
-		BossEnemy enemy = new BossEnemy(world, x, y, 30);
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		enemies.add(enemy);
 		room.addEnemies(enemies);

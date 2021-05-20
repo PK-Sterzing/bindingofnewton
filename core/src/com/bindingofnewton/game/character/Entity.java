@@ -94,6 +94,7 @@ public abstract class Entity {
             this.setNextDamageSprite(1);
         }
         health += delta;
+        if (health > 10) health = 10;
     }
 
     /**

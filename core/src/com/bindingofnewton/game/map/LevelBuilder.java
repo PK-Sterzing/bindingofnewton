@@ -1,15 +1,12 @@
 package com.bindingofnewton.game.map;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
-import com.bindingofnewton.game.character.Enemy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class LevelBuilder {
     private Level level;
@@ -85,8 +82,8 @@ public class LevelBuilder {
                 Vector2 pos = orientation.moveCoord(new Vector2(room.x, room.y), 1);
                 for (Room nextRoom : level.rooms){
                     if (nextRoom.x == pos.x && nextRoom.y == pos.y && nextRoom != level.rooms.get(level.rooms.size()-1)){
-                        nextRoom.addDoor(new Door(level.world, nextRoom.map, orientation.getOpposite()));
-                        room.addDoor(new Door(level.world, room.map, orientation));
+                        nextRoom.addDoor(new Door(level.world, nextRoom.map, orientation.getOpposite(), Door.Id.NORMAL));
+                        room.addDoor(new Door(level.world, room.map, orientation, Door.Id.NORMAL));
                     }
                 }
             }
@@ -116,7 +113,11 @@ public class LevelBuilder {
             orientationNextRoom = room.getPossibleDoors().get((int)(Math.random() * room.getPossibleDoors().size()));
 
             //gets a random map
-            map = AssetsHandler.getInstance().getMaps().get((int)(Math.random() * AssetsHandler.getInstance().getMaps().size()));
+            List<String> list = AssetsHandler.getInstance().getMaps();
+            list.remove(0);
+            list.remove(list.size()-1);
+
+            map = list.get((int)(Math.random() * list.size()));
             pos = orientationNextRoom.moveCoord(new Vector2(room.x, room.y), 1);
 
             counter++;
@@ -130,8 +131,8 @@ public class LevelBuilder {
                 .build();
 
         //Adds the door in the old and in the new room
-        room.addDoor(new Door(level.world, room.getMap(), orientationNextRoom));
-        newRoom.addDoor(new Door(level.world, newRoom.getMap(), orientationNextRoom.getOpposite()));
+        room.addDoor(new Door(level.world, room.getMap(), orientationNextRoom, Door.Id.NORMAL));
+        newRoom.addDoor(new Door(level.world, newRoom.getMap(), orientationNextRoom.getOpposite(), Door.Id.NORMAL));
 
         //Adding the new room to the level
         level.rooms.add(newRoom);
@@ -203,9 +204,9 @@ public class LevelBuilder {
         builder.setPosition((int)pos.x, (int)pos.y);
         Room bossRoom = builder.build();
 
-        maxRoom.addDoor(new Door(level.world, maxRoom.getMap(), orientation));
-        bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), orientation.getOpposite()));
-        bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), orientation.getOpposite(), true));
+        maxRoom.addDoor(new Door(level.world, maxRoom.getMap(), orientation, Door.Id.BOSS));
+        bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), Orientation.UP, Door.Id.PORTAL));
+        bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), orientation.getOpposite(), Door.Id.BOSS));
 
         level.rooms.add(bossRoom);
     }
