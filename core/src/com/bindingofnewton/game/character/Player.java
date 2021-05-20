@@ -14,7 +14,6 @@ import com.bindingofnewton.game.items.Item;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class Player extends Entity {
     private static final float MAX_HEALTH = 10;
@@ -34,6 +33,7 @@ public class Player extends Entity {
         this.playerName = playerName;
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
+        def.linearDamping = 10f;
         def.position.set(startX, startY);
         orientation = Orientation.DOWN;
 
@@ -120,7 +120,7 @@ public class Player extends Entity {
         }
 
 
-        body.setLinearVelocity(vector);
+        body.applyLinearImpulse(vector, new Vector2(body.getPosition().x, body.getPosition().y), true);
 
         polygon.setPosition(body.getPosition().x, body.getPosition().y);
     }
