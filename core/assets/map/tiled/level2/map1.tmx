@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="65">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="73">
  <tileset firstgid="1" source="../room.tsx"/>
  <layer id="1" name="ground" width="15" height="9">
   <data encoding="csv">
@@ -30,13 +30,13 @@
  <layer id="3" name="obstacles" width="15" height="9">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1610612762,24,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1610612762,24,0,0,0,
+0,0,0,0,0,0,0,0,0,0,1610612762,24,24,24,0,
+0,0,0,0,0,0,0,0,0,0,1610612762,24,24,24,0,
 0,0,0,0,0,0,0,0,0,0,1610612762,24,24,24,0,
 0,0,0,0,0,0,0,0,0,0,3221225497,3221225498,3221225498,3221225498,0,
 0,26,26,26,25,0,0,0,0,0,0,0,0,0,0,
 0,24,24,24,2684354586,0,0,0,0,0,0,0,0,0,0,
-0,0,0,24,2684354586,0,0,0,0,0,0,0,0,0,0,
+0,24,24,24,2684354586,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
@@ -49,6 +49,8 @@
   <object id="27" x="256" y="256" width="224" height="32"/>
   <object id="28" x="0" y="0" width="32" height="128"/>
   <object id="29" x="0" y="160" width="32" height="128"/>
+  <object id="71" x="32" y="164.909" width="122.727" height="90.9091"/>
+  <object id="72" x="324.364" y="31.6364" width="123.818" height="123.273"/>
  </objectgroup>
  <objectgroup id="9" name="fire"/>
 </map>
