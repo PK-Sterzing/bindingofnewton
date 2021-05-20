@@ -173,7 +173,7 @@ public class BindingOfNewton implements Screen{
 		level = new LevelBuilder()
 				.setWorld(world)
 				.setLevelWidthHeight(8, 8)
-				.setMinRooms(3)
+				.setMinRooms(8)
 				.setAmountRandomRooms(0, 0)
 				.build();
 
