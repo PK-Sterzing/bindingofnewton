@@ -1,0 +1,118 @@
+
+boss_1.png
+size: 512, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+boss_run1
+  rotate: false
+  xy: 132, 2
+  size: 128, 80
+  orig: 128, 80
+  offset: 0, 0
+  index: -1
+boss_run2
+  rotate: false
+  xy: 2, 2
+  size: 128, 80
+  orig: 128, 80
+  offset: 0, 0
+  index: -1
+boss_run3
+  rotate: false
+  xy: 326, 180
+  size: 128, 80
+  orig: 128, 80
+  offset: 0, 0
+  index: -1
+boss_run4
+  rotate: false
+  xy: 326, 262
+  size: 128, 80
+  orig: 128, 80
+  offset: 0, 0
+  index: -1
+boss_standup1
+  rotate: false
+  xy: 2, 214
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup12
+  rotate: false
+  xy: 2, 214
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup10
+  rotate: false
+  xy: 2, 84
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup3
+  rotate: false
+  xy: 2, 84
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup2
+  rotate: false
+  xy: 326, 344
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup11
+  rotate: false
+  xy: 326, 344
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup6
+  rotate: false
+  xy: 164, 344
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup7
+  rotate: false
+  xy: 164, 84
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup8
+  rotate: false
+  xy: 164, 214
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup5
+  rotate: false
+  xy: 164, 214
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup9
+  rotate: false
+  xy: 2, 344
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1
+boss_standup4
+  rotate: false
+  xy: 2, 344
+  size: 160, 128
+  orig: 160, 128
+  offset: 0, 0
+  index: -1

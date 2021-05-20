@@ -191,8 +191,6 @@ public class BindingOfNewton implements Screen{
 	 */
 	private void makeNewRoom(Orientation orientation){
 
-		System.out.println("Make new Room");
-
 		Player playerCached = level.getCurrentRoom().getPlayer();
 		// Remove all bodies in current Room
 		Array<Body> bodies = new Array<>();
@@ -298,9 +296,6 @@ public class BindingOfNewton implements Screen{
 				break;
 		}
 
-		System.out.println(orientation.getOpposite());
-		System.out.println("Width: " + width + ",   x: " + x);
-		System.out.println("Height: " + height + ",   y: " + y);
 		BossEnemy enemy = new BossEnemy(world, x, y, 30);
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		enemies.add(enemy);

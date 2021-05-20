@@ -1,0 +1,27 @@
+
+hearts.png
+size: 128, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+empty_heart
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+full_heart
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+half_heart
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

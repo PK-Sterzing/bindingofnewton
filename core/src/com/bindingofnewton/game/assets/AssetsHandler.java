@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.Orientation;
 
 import java.io.File;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,18 +60,18 @@ public class AssetsHandler {
     }
     //</editor-fold>
 
+    public static final String ASSETS_ABSOLUTE = "./core/assets/";
     public static final String START_MAP = "mapStart.tmx";
     public static final String END_MAP = "mapEnd.tmx";
     public static final String MAP = "map1.tmx";
 
-    public static final String BIG_ATLAS = "./big_atlas/packed/big_atlas.atlas";
+    public static final String BIG_ATLAS = ASSETS_ABSOLUTE + "./big_atlas/packed/big_atlas.atlas";
 
     public static final String NEWTON_RUN = "./character/newton_run/packed/newton-run.atlas";
     public static final String BAT_RUN = "./character/bat_run/packed/enemy1.atlas";
     public static final String EDISON = "./character/edison/packed/edison.atlas";
     public static final String EDISON_RUN = "./character/edison_run/packed/edison_run.atlas";
-    public static final String MAP_TILED_ABSOLUTE = Paths.get("").toAbsolutePath().toString() + "\\core\\assets\\" + "map\\tiled\\";
-    public static final String MAP_TILED = "./map/tiled/";
+    public static final String MAP_TILED = ASSETS_ABSOLUTE + "map/tiled/";
     public static final String HEARTS = "./hearts";
 
     private static AssetsHandler instance;
@@ -171,11 +170,11 @@ public class AssetsHandler {
 
     public List<String> getMaps() {
         ArrayList<String> list = new ArrayList<>();
-        File file = new File(MAP_TILED_ABSOLUTE + START_MAP);
+        File file = new File(MAP_TILED + START_MAP);
 
         if (file.exists()) list.add(MAP_TILED + file.getName());
 
-        file = new File(MAP_TILED_ABSOLUTE + MAP);
+        file = new File(MAP_TILED + MAP);
         while (file.exists()) {
             list.add(MAP_TILED + file.getName());
             String name = file.getName();
@@ -185,17 +184,17 @@ public class AssetsHandler {
             number++;
             name = name.replace(String.valueOf(number - 1), String.valueOf(number));
 
-            file = new File(MAP_TILED_ABSOLUTE + name);
+            file = new File(MAP_TILED + name);
         }
 
-        file = new File(MAP_TILED_ABSOLUTE + END_MAP);
+        file = new File(MAP_TILED + END_MAP);
         if (file.exists()) list.add(MAP_TILED + file.getName());
 
         return list;
     }
 
     public Sprite getSingleSpriteFromFile(String name) {
-        Texture texture = new Texture(name);
+        Texture texture = new Texture(ASSETS_ABSOLUTE + name);
         return new Sprite(texture);
     }
 

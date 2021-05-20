@@ -26,7 +26,6 @@ public class ContactHandler implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        System.out.println("Feuer");
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
         if(!(bodyA.getUserData() == null || bodyB.getUserData() == null)) {
