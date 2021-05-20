@@ -7,7 +7,7 @@ import com.bindingofnewton.game.mainmenu.MainMenuScreen;
 public class BindingOfNewtonGame extends Game {
     @Override
     public void create() {
-        SoundHandler.getInstance().playMusic(SoundHandler.Music.MAIN_MENU, true);
+        SoundHandler.getInstance().playMusic(SoundHandler.Music.MAIN_MENU, true, 0.5f);
         setScreen(new MainMenuScreen(this));
     }
 }

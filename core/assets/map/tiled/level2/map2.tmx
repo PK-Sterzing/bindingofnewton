@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="65">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="77">
  <tileset firstgid="1" source="../room.tsx"/>
  <layer id="1" name="ground" width="15" height="9">
   <data encoding="csv">
@@ -49,6 +49,18 @@
   <object id="27" x="256" y="256" width="224" height="32"/>
   <object id="28" x="0" y="0" width="32" height="128"/>
   <object id="29" x="0" y="160" width="32" height="128"/>
+  <object id="65" x="100.182" y="68" width="24.3636" height="24.3636"/>
+  <object id="66" x="164.443" y="68.1932" width="24.3636" height="24.3636"/>
+  <object id="67" x="228.443" y="68.4432" width="24.3636" height="24.3636"/>
+  <object id="68" x="292.818" y="68.1932" width="24.3636" height="24.3636"/>
+  <object id="69" x="356.443" y="68.5682" width="24.3636" height="24.3636"/>
+  <object id="70" x="355.943" y="132.443" width="24.3636" height="24.3636"/>
+  <object id="71" x="356.193" y="196.068" width="24.3636" height="24.3636"/>
+  <object id="72" x="292.193" y="195.568" width="24.3636" height="24.3636"/>
+  <object id="73" x="228.318" y="196.193" width="24.3636" height="24.3636"/>
+  <object id="74" x="164.318" y="196.193" width="24.3636" height="24.3636"/>
+  <object id="75" x="100.068" y="131.693" width="24.3636" height="24.3636"/>
+  <object id="76" x="100.341" y="196.091" width="24.3636" height="24.3636"/>
  </objectgroup>
  <objectgroup id="9" name="fire"/>
 </map>
