@@ -72,6 +72,7 @@ public class BindingOfNewton implements Screen{
 		renderer = new Box2DDebugRenderer();
 
 		camera.update();
+		isPaused = false;
 	}
 
 	@Override
@@ -166,7 +167,7 @@ public class BindingOfNewton implements Screen{
 		level = new LevelBuilder()
 				.setWorld(world)
 				.setLevelWidthHeight(8, 8)
-				.setMinRooms(3)
+				.setMinRooms(8)
 				.setAmountRandomRooms(0, 0)
 				.build();
 
@@ -338,6 +339,10 @@ public class BindingOfNewton implements Screen{
 
 	public void setPaused(boolean paused) {
 		isPaused = paused;
+	}
+
+	public Game getGame() {
+		return game;
 	}
 
 

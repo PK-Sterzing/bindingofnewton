@@ -1,4 +1,4 @@
-package com.bindingofnewton.game;
+package com.bindingofnewton.game.mainmenu;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -15,10 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.bindingofnewton.game.BindingOfNewton;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.assets.SoundHandler;
 
-public class MainMenu implements Screen {
+public class MainMenuScreen implements Screen {
     private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
@@ -28,7 +29,7 @@ public class MainMenu implements Screen {
     protected Game game;
     private Sprite backgroundSprite;
 
-    public MainMenu(Game game) {
+    public MainMenuScreen(Game game) {
         this.game = game;
 
         atlas = new TextureAtlas("uiskin.atlas");
@@ -50,7 +51,6 @@ public class MainMenu implements Screen {
 
     @Override
     public void show() {
-        //https://stackoverflow.com/questions/32451921/how-to-create-libgdx-main-menu-screen
         //Stage should control input:
         Gdx.input.setInputProcessor(stage);
 

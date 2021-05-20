@@ -8,8 +8,8 @@ import com.bindingofnewton.game.character.Player;
 public abstract class Item {
     protected Body body;
     protected PolygonShape polygonShape;
-    protected int HEIGHT = 10;
-    protected int WIDTH = 10;
+    protected int HEIGHT = 2;
+    protected int WIDTH = 2;
 
 
     protected boolean shouldBeRemoved = false;

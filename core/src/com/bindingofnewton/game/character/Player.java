@@ -6,7 +6,10 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Timer;
 import com.bindingofnewton.game.BindingOfNewton;
+import com.bindingofnewton.game.gameover.GameOverScreen;
+import com.bindingofnewton.game.mainmenu.MainMenuScreen;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.items.Item;
@@ -160,6 +163,14 @@ public class Player extends Entity {
                 sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
                 // Pause game
                 BindingOfNewton.getInstance().setPaused(true);
+                // Wait and return to main menu
+                Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        BindingOfNewton.getInstance().getGame().setScreen(new GameOverScreen(BindingOfNewton.getInstance().getGame()));
+                    }
+                }, 3);
+
             } else if (isMoving){
                 deltaTime += Gdx.graphics.getDeltaTime();
                 sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(orientation), deltaTime);
