@@ -27,7 +27,6 @@ public class BossEnemy extends Enemy{
             }
             else if (orientation == Orientation.RIGHT && sprite.isFlipX())
                 sprite.flip(true, false);
-            System.out.println(sprite + ",   " + sprite.isFlipX());
         }else{
             sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-damage.png");
             sprite.setScale(0.5f);
@@ -35,6 +34,11 @@ public class BossEnemy extends Enemy{
             this.setNextDamageSprite(-1);
         }
 
-        batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
+        if (sprite.isFlipX()){
+            batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
+        }else{
+            batch.draw(sprite, body.getPosition().x-10, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
+        }
+
     }
 }

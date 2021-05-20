@@ -96,8 +96,11 @@ public class BindingOfNewton implements Screen{
 
 		level.getCurrentRoom().update();
 
-		if (contactHandler.isDoorCollision())
-			makeNewRoom(level.getCurrentRoom().getPlayer().getOrientation());
+		Orientation orientation = contactHandler.isDoorCollision();
+		if (orientation != null )
+			makeNewRoom(orientation);
+
+		contactHandler.contactWithFire();
 
 		batch.begin();
 
@@ -154,7 +157,6 @@ public class BindingOfNewton implements Screen{
 	 * Creates new Level, removes all bodies, creates new Player, loads starting Room
 	 */
 	private void makeNewLevel(){
-		System.out.println("Making new Level");
 		Array<Body> bodies = new Array<>();
 		world.getBodies(bodies);
 
@@ -188,6 +190,9 @@ public class BindingOfNewton implements Screen{
 	 * @param orientation
 	 */
 	private void makeNewRoom(Orientation orientation){
+
+		System.out.println("Make new Room");
+
 		Player playerCached = level.getCurrentRoom().getPlayer();
 		// Remove all bodies in current Room
 		Array<Body> bodies = new Array<>();
@@ -234,28 +239,25 @@ public class BindingOfNewton implements Screen{
 		room.setDoorBodies();
 		TiledMap map = room.getMap();
 
-		int width = (int) map.getProperties().get("width")*32;
-		int height = (int) map.getProperties().get("height")*32;
-
 		int playerX=0, playerY=0;
 		ArrayList<Sprite> playerSprite = AssetsHandler.getInstance().getPlayerSprites(level.getCurrentRoom().getPlayer().getPlayerName());
 
 		switch (orientation.getOpposite()){
 			case UP:
-				playerY = (int) (height-playerSprite.get(0).getHeight()-32);
-				playerX = (int) (width/2 - playerSprite.get(0).getWidth()/2);
+				playerY = (int) (h-playerSprite.get(0).getHeight()-layer.getTileHeight());
+				playerX = (int) (w/2 - playerSprite.get(0).getWidth()/2);
 				break;
 			case DOWN:
 				playerY = (int) (playerSprite.get(0).getHeight()/2);
-				playerX = (int) (width/2 - playerSprite.get(0).getWidth()/2);
+				playerX = (int) (w/2 - playerSprite.get(0).getWidth()/2);
 				break;
 			case LEFT:
-				playerY = (int) (height/2 - playerSprite.get(0).getHeight()/2);
-				playerX = (int) (32 + playerSprite.get(0).getWidth()/2);
+				playerY = (int) (h/2 - playerSprite.get(0).getHeight()/2);
+				playerX = (int) (layer.getTileWidth() + playerSprite.get(0).getWidth()/2);
 				break;
 			case RIGHT:
-				playerY = (int) (height/2 - playerSprite.get(0).getHeight()/2);
-				playerX = (int) (width-32-playerSprite.get(0).getWidth());
+				playerY = (int) (h/2 - playerSprite.get(0).getHeight()/2);
+				playerX = (int) (w-layer.getTileWidth()-playerSprite.get(0).getWidth());
 				break;
 		}
 		level.getCurrentRoom().getPlayer().transform(new Vector2(playerX, playerY));
@@ -265,37 +267,40 @@ public class BindingOfNewton implements Screen{
 	}
 
 	private void makeBossEnemy() {
-		System.out.println("Boss spawned");
-
 		Room room = level.getCurrentRoom();
-		int width = (int) room.getMap().getProperties().get("width");
-		int height = (int) room.getMap().getProperties().get("height");
+
+		TiledMapTileLayer layer = (TiledMapTileLayer) level.getCurrentRoom().getMap().getLayers().get("ground");
+		int width = layer.getTileWidth() * layer.getWidth();
+		int height = layer.getTileHeight() * layer.getHeight();
 
 		int x=0, y=0;
+
+		Sprite sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("boss-run-1");
 
 		Orientation orientation = room.getDoors().get(0).getOrientation();
 
 		switch(orientation.getOpposite()){
 			case UP:
 				x = width/2;
-				y = height-200;
+				y = (int) (height-layer.getTileHeight()-sprite.getHeight());
 				break;
 			case DOWN:
 				x = width/2;
-				y = 200;
+				y = layer.getTileHeight()+10;
 				break;
 			case LEFT:
-				x = 200;
+				x = layer.getTileWidth()+10;
 				y = height/2;
 				break;
 			case RIGHT:
-				x = width-200;
+				x = (int) (width-layer.getTileWidth()-sprite.getWidth());
 				y = height/2;
 				break;
 		}
 
-		System.out.println("X: " + x + ",   Y:  " + y);
-
+		System.out.println(orientation.getOpposite());
+		System.out.println("Width: " + width + ",   x: " + x);
+		System.out.println("Height: " + height + ",   y: " + y);
 		BossEnemy enemy = new BossEnemy(world, x, y, 30);
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		enemies.add(enemy);

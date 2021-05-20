@@ -16,6 +16,7 @@ import com.bindingofnewton.game.map.Level;
 public class ContactHandler implements ContactListener {
 
     private long fireLastContact = 0;
+    private boolean isContactFire = false;
 
     private Level level;
 
@@ -25,6 +26,7 @@ public class ContactHandler implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        System.out.println("Feuer");
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
         if(!(bodyA.getUserData() == null || bodyB.getUserData() == null)) {
@@ -61,6 +63,25 @@ public class ContactHandler implements ContactListener {
             removeBulletFixture((Bullet) bodyB.getUserData());
         }
 
+        //TODO: player kriegt zur zeit jede sekunde schaden, aber nur wenn er wieder am feuer angeht. Ändern!
+        if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")){
+            isContactFire = true;
+            contactWithFire(bodyA);
+
+        }else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() != null && bodyA.getUserData().equals("fire")){
+            isContactFire = true;
+            contactWithFire(bodyB);
+        }
+    }
+
+    private void contactWithFire(Body body){
+        if (System.currentTimeMillis() - fireLastContact > 1000){
+            ((Player) body.getUserData()).setHealth(-0.5f);
+            if (((Entity) body.getUserData()).getHealth() <= 0.0) {
+                ((Entity) body.getUserData()).setDead(true);
+            }
+            fireLastContact = System.currentTimeMillis();
+        }
     }
 
     private void giveItemEffect(Body bodyA, Body bodyB) {
@@ -77,7 +98,7 @@ public class ContactHandler implements ContactListener {
      * @return  true - collision with door
      *          false - no collision with door
      */
-    public boolean isDoorCollision(){
+    public Orientation isDoorCollision(){
         String layerName = "doors-";
 
         Player player = level.getCurrentRoom().getPlayer();
@@ -88,7 +109,7 @@ public class ContactHandler implements ContactListener {
 
         for (Orientation orientation : Orientation.values()){
             MapLayer layer = level.getCurrentRoom().getMap().getLayers().get(layerName + orientation.name());
-            if (layer == null) return false;
+            if (layer == null) return null;
 
             MapObjects objects = layer.getObjects();
 
@@ -116,13 +137,13 @@ public class ContactHandler implements ContactListener {
 
                     if (playerRectangle.overlaps(rectangle1)){
                         //The Player enters a door
-                        return true;
+                        return orientation;
                     }
                 }
             }
 
         }
-        return false;
+        return null;
     }
 
     private void diminishHealth(Body body) {
@@ -151,44 +172,30 @@ public class ContactHandler implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
 
-        if (fixtureA.getUserData() instanceof Player && fixtureB.getUserData() != null && fixtureB.getUserData().equals("fire")){
-            fixtureB.getBody().setActive(true);
-        }else if (fixtureB.getUserData() instanceof Player && fixtureA.getUserData() != null && fixtureA.getUserData().equals("fire")){
-            fixtureA.getBody().setActive(true);
+        if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")){
+            isContactFire = false;
+        }else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() != null && bodyA.getUserData().equals("fire")){
+            isContactFire = false;
         }
+
+
     }
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-        Body bodyA = contact.getFixtureA().getBody();
-        Body bodyB = contact.getFixtureB().getBody();
 
-        //TODO: player kriegt zur zeit jede sekunde schaden, aber nur wenn er wieder am feuer angeht. Ändern!
-        if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")){
-
-            if (System.currentTimeMillis() - fireLastContact > 1000){
-                ((Player) bodyA.getUserData()).setHealth(-0.5f);
-                if (((Entity) bodyA.getUserData()).getHealth() <= 0.0) {
-                    ((Entity) bodyA.getUserData()).setDead(true);
-                }
-            }
-            fireLastContact = System.currentTimeMillis();
-
-        }else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() != null && bodyA.getUserData().equals("fire")){
-            if (System.currentTimeMillis() - fireLastContact > 1000){
-                ((Player) bodyB.getUserData()).setHealth(-0.5f);
-                if (((Entity) bodyA.getUserData()).getHealth() <= 0.0) {
-                    ((Entity) bodyA.getUserData()).setDead(true);
-                }
-            }
-            fireLastContact = System.currentTimeMillis();
-        }
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
+    }
+
+    public void contactWithFire() {
+        if (isContactFire){
+            contactWithFire(level.getCurrentRoom().getPlayer().getBody());
+        }
     }
 }

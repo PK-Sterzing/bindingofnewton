@@ -37,9 +37,11 @@ public class AssetsHandler {
         BOSS(
             new float[]{
                     95.0f, 60.0f,
-                    100.0f, 18.0f,
-                    10.0f, 2.0f,
-                    4.0f, 18.0f,
+                    102.0f, 40.0f,
+                    95.0f, 18.0f,
+                    20.0f, 18.0f,
+                    13.0f, 40.0f,
+                    20.0f, 60.0f,
             }
         );
 

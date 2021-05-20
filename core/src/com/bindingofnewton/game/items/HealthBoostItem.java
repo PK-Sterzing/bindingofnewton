@@ -7,7 +7,7 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Player;
 
 public class HealthBoostItem extends Item{
-    private float healthBoost = 3f;
+    private float healthBoost = 2f;
 
     public HealthBoostItem(World world, float posX, float posY){
         super(world, posX, posY);
