@@ -15,12 +15,10 @@ public class Bullet {
     private final PolygonShape polygonShape;
     private final Sprite sprite;
     private Vector2 movement;
-    // The lower, the faster the character is shooting
-    public static int fireRate = 500;
 
     private boolean remove = false;
 
-    public Bullet(World world, int startX, int startY){
+    public Bullet(World world, AssetsHandler.PlayerName playerName, int startX, int startY){
         // Create Box2d body
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
@@ -48,13 +46,14 @@ public class Bullet {
         polygonShape.dispose();
 
         // Load Sprite
-        this.sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas("apple_bullet");
+        this.sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("bullets/" + playerName.name().toLowerCase() + "_bullet.png");
         this.sprite.setScale(1.7f);
         this.sprite.setSize(WIDTH, HEIGHT);
         this.sprite.setPosition(body.getPosition().x, body.getPosition().y);
 
         // Set default movement
         movement = new Vector2(0, 0);
+        System.out.println("Bullet created");
     }
 
     /**
@@ -99,6 +98,7 @@ public class Bullet {
 
     public void setRemove(boolean remove) {
         this.remove = remove;
+        System.out.println("Bullet removed");
     }
 
     /**

@@ -7,6 +7,8 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Player;
 
 public class ReloadSpeedItem extends Item {
+    // Remove later
+    private static int amountUsed = 0;
     private int reloadSpeedBuff = 300;
 
     public ReloadSpeedItem(World world, float posX, float posY){
@@ -16,7 +18,10 @@ public class ReloadSpeedItem extends Item {
 
     @Override
     public void use(Player player) {
-        player.setFireRate(player.getFireRate() - this.reloadSpeedBuff);
+        if(amountUsed == 0){
+            player.setFireRate(player.getFireRate() - this.reloadSpeedBuff);
+            amountUsed = 1;
+        }
     }
 
     @Override

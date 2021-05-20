@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
 import com.bindingofnewton.game.BindingOfNewton;
 import com.bindingofnewton.game.gameover.GameOverScreen;
-import com.bindingofnewton.game.mainmenu.MainMenuScreen;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.items.Item;
@@ -180,7 +179,7 @@ public class Player extends Entity {
             }
 
         }else {
-            sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas("newton-damage");
+            sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas(playerName.name().toLowerCase() + "-damage");
             sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
             this.setNextDamageSprite(-1);
         }

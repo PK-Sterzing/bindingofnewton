@@ -31,6 +31,7 @@ public class BindingOfNewton implements Screen{
 
 	protected Game game;
 
+	protected int levelNumber = 0;
 	protected Level level;
 	private Minimap minimap;
 
@@ -100,6 +101,8 @@ public class BindingOfNewton implements Screen{
 		if (orientation != null ){
 			if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
 				System.out.println("HIER EBENE WECHSELN");
+				levelNumber++;
+				makeNewLevel();
 			}else
 				makeNewRoom(orientation);
 		}
@@ -151,6 +154,7 @@ public class BindingOfNewton implements Screen{
 
 		minimap.render(batch);
 		batch.end();
+		System.out.println(level.getCurrentRoom().getBullets().size());
 		// Show debug info when the switch is on (SHIFT)
 		if(showDebugInfo){
 			renderer.render(world, camera.combined);
@@ -173,18 +177,23 @@ public class BindingOfNewton implements Screen{
 		level = new LevelBuilder()
 				.setWorld(world)
 				.setLevelWidthHeight(8, 8)
-				.setMinRooms(8)
+				.setMinRooms(4)
 				.setAmountRandomRooms(0, 0)
 				.build();
 
 
 		// TODO: Set player spawn in the middle
-		Player player = new Player(world, AssetsHandler.PlayerName.NEWTON, 100, 100);
+        AssetsHandler.PlayerName[] players = AssetsHandler.PlayerName.values();
+		Player player = new Player(world, players[levelNumber], 100, 100);
 
 		level.getCurrentRoom().setPlayer(player);
 
 		//Creating a new minimap
 		minimap = new Minimap(level);
+		// Create new inputHandler to supply new level
+		// otherwise the old level is going to get used
+		inputHandler = new InputHandler(level);
+		Gdx.input.setInputProcessor(inputHandler);
 
 		makeNewRoom(null);
 	}
