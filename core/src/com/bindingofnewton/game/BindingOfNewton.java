@@ -124,11 +124,7 @@ public class BindingOfNewton implements Screen{
 
 		// Render enemies
 		for(Enemy enemy : level.getCurrentRoom().getEnemies()){
-			if (enemy instanceof BossEnemy){
-				((BossEnemy)enemy).render(batch, true);
-			}else{
-				enemy.render(batch, true);
-			}
+			enemy.render(batch, true);
 		}
 
 		// Render all bullets
@@ -242,6 +238,8 @@ public class BindingOfNewton implements Screen{
 				double startX = Math.floor(Math.random()*(maxX-minX+1)+minX);
 				double startY = Math.floor(Math.random()*(maxY-minY+1)+minY);
 
+				if (i%2 == 0)
+					enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) startX, (int) startY, 80));
 				enemies.add(new Enemy(world, Enemy.Properties.BAT, (int)startX, (int)startY, 50));
 			}
 			level.getCurrentRoom().addEnemies(enemies);
@@ -308,7 +306,7 @@ public class BindingOfNewton implements Screen{
 				y = height/2;
 				break;
 		}
-		BossEnemy enemy = new BossEnemy(world, x, y, 70);
+		BossEnemy enemy = new BossEnemy(world, x, y, 40);
 
 		ArrayList<Enemy> enemies = new ArrayList<>();
 		enemies.add(enemy);

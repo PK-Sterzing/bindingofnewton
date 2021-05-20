@@ -13,7 +13,7 @@ public class Bullet {
     public static final int HEIGHT = 10;
     private final Body body;
     private final PolygonShape polygonShape;
-    private final Sprite sprite;
+    private Sprite sprite;
     private Vector2 movement;
 
     private boolean remove = false;
@@ -83,6 +83,8 @@ public class Bullet {
     public Sprite getSprite(){
         return this.sprite;
     }
+
+    public void setSprite(Sprite sprite) {this.sprite = sprite;}
 
     public int getSpeed() {
         return speed;

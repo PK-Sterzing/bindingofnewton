@@ -6,18 +6,23 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bindingofnewton.game.BindingOfNewton;
+import com.bindingofnewton.game.Bullet;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
 
+import java.util.List;
+
 public class BossEnemy extends Enemy{
 
-    private float timeLastShot = 0;
     private boolean isShooting  = false;
+    private boolean shootsBullet  = false;
+    private Bullet bullet;
 
     public BossEnemy(World world, int startX, int startY, int speed) {
         super(world, Properties.BOSS, startX, startY, speed);
         animations.put(Orientation.DOWN, AssetsHandler.getInstance().getAnimation(Properties.BOSS.toString().toLowerCase() + "-run", SPEED_ANIMATION, 1f));
-        animations.put(Orientation.LEFT, AssetsHandler.getInstance().getAnimation(Properties.BOSS.toString().toLowerCase() + "-standup", SPEED_ANIMATION*2, 1f));
+        animations.put(Orientation.LEFT, AssetsHandler.getInstance().getAnimation(Properties.BOSS.toString().toLowerCase() + "-standup", SPEED_ANIMATION, 1f));
         animations.get(Orientation.LEFT).setPlayMode(Animation.PlayMode.NORMAL);
     }
 
@@ -26,20 +31,16 @@ public class BossEnemy extends Enemy{
         move(new Vector2(0, 0));
         deltaTime += Gdx.graphics.getDeltaTime();
 
-        if (deltaTime - timeLastShot > 4){
-            System.out.println("Sollte schießen");
-            timeLastShot = deltaTime;
-            isShooting = true;
-        }
+        System.out.println(deltaTime);
 
-        if (isShooting){
+        if (deltaTime > 4){
+            System.out.println("Sollte schießen");
             shoot(batch);
+            isShooting = true;
         }else{
             go(batch);
+            isShooting = false;
         }
-
-
-
     }
 
     private void go(SpriteBatch batch) {
@@ -67,17 +68,40 @@ public class BossEnemy extends Enemy{
     }
 
     private void shoot(SpriteBatch batch) {
-        if (animations.get(Orientation.LEFT).isAnimationFinished(deltaTime-timeLastShot)){
+        if (animations.get(Orientation.LEFT).isAnimationFinished(deltaTime-3.9f)){
             isShooting = false;
-            timeLastShot = deltaTime;
+            deltaTime = 0;
         }else{
             Sprite sprite;
-            sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.LEFT), deltaTime);
+            Animation<Sprite> animation = animations.get(Orientation.LEFT);
+            sprite = AssetsHandler.getInstance().getAnimationFrame(animation, deltaTime);
+            if (animation.getKeyFrameIndex(deltaTime-4) == 5 && !shootsBullet){
+                List<Bullet> bullets = BindingOfNewton.getInstance().level.getCurrentRoom().getBullets();
+                bullets.remove(bullet);
+
+                if (orientation == Orientation.LEFT && !sprite.isFlipX()) {
+                    bullet = new Bullet(body.getWorld(), (int) (body.getPosition().x), (int) (body.getPosition().y + sprite.getHeight() / 2));
+                    bullet.setSprite(AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/rat_rocket.png"));
+                } else if (orientation == Orientation.RIGHT && sprite.isFlipX()) {
+                    bullet = new Bullet(body.getWorld(), (int) (body.getPosition().x + 100), (int) (body.getPosition().y + sprite.getHeight() / 2));
+                    bullet.setSprite(AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/rat_rocket.png"));
+                }
+                bullets.add(bullet);
+
+                shootsBullet = true;
+            }else if (animation.getKeyFrameIndex(deltaTime-4) == 6){
+                shootsBullet = false;
+            }
+
+            if (bullet != null) {
+                Vector2 vector = calculateVectorToPlayer(BindingOfNewton.getInstance().level.getCurrentRoom().getPlayer());
+                sprite.setRotation(vector.angleDeg());
+                bullet.setMovement(vector);
+            }
 
             if (orientation == Orientation.LEFT && !sprite.isFlipX()) {
                 sprite.flip(true, false);
-            }
-            else if (orientation == Orientation.RIGHT && sprite.isFlipX()) {
+            }else if (orientation == Orientation.RIGHT && sprite.isFlipX()) {
                 sprite.flip(true, false);
             }
 
@@ -88,7 +112,7 @@ public class BossEnemy extends Enemy{
     @Override
     public void calculateMoveToPlayer(Player player) {
         if (isShooting){
-            System.out.println("MOved nicht");
+            System.out.println("Moved nicht");
             move(new Vector2(0.0001f,0.0001f));
         }else{
             super.calculateMoveToPlayer(player);
