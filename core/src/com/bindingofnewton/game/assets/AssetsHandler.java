@@ -24,39 +24,7 @@ public class AssetsHandler {
      * Enum for the properties of the enemy. Every enemy has his own vertices for the body.
      */
     public enum EnemyProperties {
-        BAT(
-             new float[] {
-                    5.0f, 2.0f,
-                    24.0f, 2.0f,
-                    27.0f, 18.0f,
-                    4.0f, 18.0f,
-            }
-        ),
-        //TODO: Vertices berechnen/ändern
-        BOSS(
-            new float[]{
-                    95.0f, 60.0f,
-                    102.0f, 40.0f,
-                    95.0f, 18.0f,
-                    20.0f, 18.0f,
-                    13.0f, 40.0f,
-                    20.0f, 60.0f,
-            }
-        );
 
-        private float[] vertices;
-
-        EnemyProperties(float vertices[]){
-            this.vertices = vertices;
-        }
-
-        /**
-         * Gets the vertices for the body of the enemy
-         * @return vertices
-         */
-        public float[] getVertices() {
-            return vertices;
-        }
     }
     //</editor-fold>
 
@@ -72,6 +40,7 @@ public class AssetsHandler {
     public static final String EDISON = "./character/edison/packed/edison.atlas";
     public static final String EDISON_RUN = "./character/edison_run/packed/edison_run.atlas";
     public static final String MAP_TILED = ASSETS_ABSOLUTE + "map/tiled/";
+
     public static final String HEARTS = "./hearts";
 
     private static AssetsHandler instance;
@@ -146,7 +115,7 @@ public class AssetsHandler {
         int counter = 1;
 
         while(true) {
-            Sprite sprite = getSingeSpriteFromAtlas(name + "-" + counter);
+            Sprite sprite = getSingleSpriteFromAtlas(name + "-" + counter);
             if (sprite == null) break;
             sprite.setSize(sprite.getWidth() * scaleFactor, sprite.getHeight() * scaleFactor);
             sprites.add(sprite);
@@ -170,11 +139,13 @@ public class AssetsHandler {
 
     public List<String> getMaps() {
         ArrayList<String> list = new ArrayList<>();
+
         File file = new File(MAP_TILED + START_MAP);
 
         if (file.exists()) list.add(MAP_TILED + file.getName());
 
         file = new File(MAP_TILED + MAP);
+
         while (file.exists()) {
             list.add(MAP_TILED + file.getName());
             String name = file.getName();
@@ -198,7 +169,7 @@ public class AssetsHandler {
         return new Sprite(texture);
     }
 
-    public Sprite getSingeSpriteFromAtlas(String name) {
+    public Sprite getSingleSpriteFromAtlas(String name) {
         return textureAtlas.createSprite(name);
     }
 }

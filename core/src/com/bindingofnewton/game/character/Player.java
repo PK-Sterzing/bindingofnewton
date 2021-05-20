@@ -160,7 +160,7 @@ public class Player extends Entity {
         if(this.getNextDamageSprite() == 0){
             if (isDead) {
                 //sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/" + playerName.toString().toLowerCase() + "/" + playerName.toString().toLowerCase() + "-dead.png");
-                sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas(playerName.toString().toLowerCase() + "-dead");
+                sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas(playerName.toString().toLowerCase() + "-dead");
                 sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
                 // Pause game
                 BindingOfNewton.getInstance().setPaused(true);
@@ -180,7 +180,7 @@ public class Player extends Entity {
             }
 
         }else {
-            sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("newton-damage");
+            sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas("newton-damage");
             sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
             this.setNextDamageSprite(-1);
         }
