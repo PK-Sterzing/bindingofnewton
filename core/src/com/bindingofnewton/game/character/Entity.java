@@ -33,13 +33,13 @@ public abstract class Entity {
     // When the entity is hit, set him invincible for a few milliseconds
     protected long invincibilityCooldown = 500;
 
+    protected int fireRate = 500;
+
 
     protected boolean isDead = false;
 
     // If over 0 set damage sprite for one frame
     protected int nextDamageSprite = 0;
-    protected long damageSpriteCooldown = 300;
-    protected long lastDamageSprite = 0;
 
 
     //<editor-fold desc="Getter and Setter">
@@ -183,5 +183,14 @@ public abstract class Entity {
         }
         this.nextDamageSprite = this.nextDamageSprite + delta;
     }
+
+    public int getFireRate() {
+        return fireRate;
+    }
+
+    public void setFireRate(int fireRate) {
+        this.fireRate = fireRate;
+    }
+
 
 }

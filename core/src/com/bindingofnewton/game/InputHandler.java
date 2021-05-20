@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.assets.SoundHandler;
+import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.map.Level;
 
@@ -154,7 +155,7 @@ public class InputHandler implements InputProcessor {
     private void shootBullet(Orientation orientation, Vector2 pos){
         Player player = level.getCurrentRoom().getPlayer();
         player.setOrientation(orientation);
-        if (System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
+        if (System.currentTimeMillis() - lastShot >= player.getFireRate()) {
             Bullet bullet = new Bullet(level.getWorld(),
                     (int) pos.x,
                     (int) pos.y);

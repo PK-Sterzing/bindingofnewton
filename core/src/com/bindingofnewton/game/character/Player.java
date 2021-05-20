@@ -24,6 +24,7 @@ public class Player extends Entity {
 
     private HashMap<Orientation, Animation<Sprite>> animations = new HashMap<>();
     private AssetsHandler.PlayerName playerName;
+    public static int fireRate = 500;
 
     private Item currentItem;
 
