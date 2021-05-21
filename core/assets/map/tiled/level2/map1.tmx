@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="73">
- <tileset firstgid="1" source="../room.tsx"/>
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="73">
+ <tileset firstgid="1" source="room2.tsx"/>
  <layer id="1" name="ground" width="15" height="9">
   <data encoding="csv">
 23,22,22,22,22,22,22,22,22,22,22,22,22,22,2684354583,

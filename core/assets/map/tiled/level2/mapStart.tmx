@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="103">
- <tileset firstgid="1" source="../room.tsx"/>
- <tileset firstgid="27" source="../Instructions.tsx"/>
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="103">
+ <tileset firstgid="1" source="room2.tsx"/>
  <layer id="1" name="ground" width="15" height="9">
   <data encoding="csv">
 23,22,22,22,22,22,22,22,22,22,22,22,22,22,2684354583,
@@ -33,7 +32,7 @@
 0,12,6,0,0,12,12,0,12,12,0,0,6,0,0,
 0,6,0,0,0,0,0,0,0,0,0,0,0,7,0,
 0,12,0,0,0,0,0,0,0,0,0,0,0,12,0,
-0,0,0,0,20,15,0,0,0,16,20,0,0,0,0,
+0,0,0,0,20,34,0,0,0,35,20,0,0,0,0,
 0,12,0,0,0,20,0,0,0,20,0,0,0,12,0,
 0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,12,6,0,0,12,12,0,12,12,0,0,4,0,0,

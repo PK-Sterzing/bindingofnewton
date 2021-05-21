@@ -257,7 +257,6 @@ public class BindingOfNewton implements Screen{
 					enemies.add(bat);
 				}
 			}
-
 		     */
 			ArrayList<Enemy> enemies = new ArrayList<>();
 			for(int i = 0; i < 5; i++){
@@ -382,5 +381,9 @@ public class BindingOfNewton implements Screen{
 		return game;
 	}
 
+
+	public int getLevelNumber() {
+		return levelNumber;
+	}
 
 }

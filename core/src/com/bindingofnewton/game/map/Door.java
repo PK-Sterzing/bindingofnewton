@@ -14,7 +14,15 @@ public class Door {
     enum Id{
         NORMAL(17, 18),
         BOSS(27, 28),
-        PORTAL(3, 31);
+        PORTAL(3, 31),
+
+        NORMAL2(32, 33),
+        BOSS2(29, 30),
+        PORTAL2(19, 31),
+
+        NORMAL3(17, 18),
+        BOSS3(27, 28),
+        PORTAL3(3, 31);
 
         private final int closed;
         private final int open;

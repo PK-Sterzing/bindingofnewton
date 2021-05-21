@@ -2,6 +2,7 @@ package com.bindingofnewton.game.map;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bindingofnewton.game.BindingOfNewton;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
 
@@ -82,8 +83,16 @@ public class LevelBuilder {
                 Vector2 pos = orientation.moveCoord(new Vector2(room.x, room.y), 1);
                 for (Room nextRoom : level.rooms){
                     if (nextRoom.x == pos.x && nextRoom.y == pos.y && nextRoom != level.rooms.get(level.rooms.size()-1)){
-                        nextRoom.addDoor(new Door(level.world, nextRoom.map, orientation.getOpposite(), Door.Id.NORMAL));
-                        room.addDoor(new Door(level.world, room.map, orientation, Door.Id.NORMAL));
+                        if(BindingOfNewton.getInstance().getLevelNumber() == 0){
+                            nextRoom.addDoor(new Door(level.world, nextRoom.map, orientation.getOpposite(), Door.Id.NORMAL));
+                            room.addDoor(new Door(level.world, room.map, orientation, Door.Id.NORMAL));
+                        }else if(BindingOfNewton.getInstance().getLevelNumber() == 1){
+                            nextRoom.addDoor(new Door(level.world, nextRoom.map, orientation.getOpposite(), Door.Id.NORMAL2));
+                            room.addDoor(new Door(level.world, room.map, orientation, Door.Id.NORMAL2));
+                        }else if(BindingOfNewton.getInstance().getLevelNumber() == 2){
+                            nextRoom.addDoor(new Door(level.world, nextRoom.map, orientation.getOpposite(), Door.Id.NORMAL3));
+                            room.addDoor(new Door(level.world, room.map, orientation, Door.Id.NORMAL3));
+                        }
                     }
                 }
             }
@@ -131,8 +140,16 @@ public class LevelBuilder {
                 .build();
 
         //Adds the door in the old and in the new room
-        room.addDoor(new Door(level.world, room.getMap(), orientationNextRoom, Door.Id.NORMAL));
-        newRoom.addDoor(new Door(level.world, newRoom.getMap(), orientationNextRoom.getOpposite(), Door.Id.NORMAL));
+        if(BindingOfNewton.getInstance().getLevelNumber() == 0){
+            room.addDoor(new Door(level.world, room.getMap(), orientationNextRoom, Door.Id.NORMAL));
+            newRoom.addDoor(new Door(level.world, newRoom.getMap(), orientationNextRoom.getOpposite(), Door.Id.NORMAL));
+        }else if(BindingOfNewton.getInstance().getLevelNumber() == 1){
+            room.addDoor(new Door(level.world, room.getMap(), orientationNextRoom, Door.Id.NORMAL2));
+            newRoom.addDoor(new Door(level.world, newRoom.getMap(), orientationNextRoom.getOpposite(), Door.Id.NORMAL2));
+        }else if(BindingOfNewton.getInstance().getLevelNumber() == 2){
+            room.addDoor(new Door(level.world, room.getMap(), orientationNextRoom, Door.Id.NORMAL3));
+            newRoom.addDoor(new Door(level.world, newRoom.getMap(), orientationNextRoom.getOpposite(), Door.Id.NORMAL3));
+        }
 
         //Adding the new room to the level
         level.rooms.add(newRoom);
@@ -204,9 +221,19 @@ public class LevelBuilder {
         builder.setPosition((int)pos.x, (int)pos.y);
         Room bossRoom = builder.build();
 
-        maxRoom.addDoor(new Door(level.world, maxRoom.getMap(), orientation, Door.Id.BOSS));
-        bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), Orientation.UP, Door.Id.PORTAL));
-        bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), orientation.getOpposite(), Door.Id.BOSS));
+        if(BindingOfNewton.getInstance().getLevelNumber() == 0){
+            maxRoom.addDoor(new Door(level.world, maxRoom.getMap(), orientation, Door.Id.BOSS));
+            bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), Orientation.UP, Door.Id.PORTAL));
+            bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), orientation.getOpposite(), Door.Id.BOSS));
+        }else if(BindingOfNewton.getInstance().getLevelNumber() == 1){
+            maxRoom.addDoor(new Door(level.world, maxRoom.getMap(), orientation, Door.Id.BOSS2));
+            bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), Orientation.UP, Door.Id.PORTAL2));
+            bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), orientation.getOpposite(), Door.Id.BOSS2));
+        }else if(BindingOfNewton.getInstance().getLevelNumber() == 2){
+            maxRoom.addDoor(new Door(level.world, maxRoom.getMap(), orientation, Door.Id.BOSS3));
+            bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), Orientation.UP, Door.Id.PORTAL3));
+            bossRoom.addDoor(new Door(level.world, bossRoom.getMap(), orientation.getOpposite(), Door.Id.BOSS3));
+        }
 
         level.rooms.add(bossRoom);
     }
