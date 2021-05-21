@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
 import com.bindingofnewton.game.BindingOfNewton;
 import com.bindingofnewton.game.gameover.GameOverScreen;
-import com.bindingofnewton.game.mainmenu.MainMenuScreen;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.items.Item;
@@ -24,6 +23,7 @@ public class Player extends Entity {
 
     private HashMap<Orientation, Animation<Sprite>> animations = new HashMap<>();
     private AssetsHandler.PlayerName playerName;
+    public static int fireRate = 500;
 
     private Item currentItem;
 
@@ -156,32 +156,33 @@ public class Player extends Entity {
     @Override
     public void render(SpriteBatch batch, boolean isMoving) {
         Sprite sprite;
-        if(this.getNextDamageSprite() == 0){
-            if (isDead) {
-                //sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/" + playerName.toString().toLowerCase() + "/" + playerName.toString().toLowerCase() + "-dead.png");
-                sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas(playerName.toString().toLowerCase() + "-dead");
-                sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
-                // Pause game
-                BindingOfNewton.getInstance().setPaused(true);
-                // Wait and return to main menu
-                Timer.schedule(new Timer.Task(){
-                    @Override
-                    public void run() {
-                        BindingOfNewton.getInstance().getGame().setScreen(new GameOverScreen(BindingOfNewton.getInstance().getGame()));
-                    }
-                }, 3);
-
-            } else if (isMoving){
-                deltaTime += Gdx.graphics.getDeltaTime();
-                sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(orientation), deltaTime);
-            } else{
-                sprite = AssetsHandler.getInstance().getPlayerSprite(playerName, orientation);
-            }
-
-        }else {
-            sprite = AssetsHandler.getInstance().getSingeSpriteFromAtlas("newton-damage");
+        if (isDead) {
+            //sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/" + playerName.toString().toLowerCase() + "/" + playerName.toString().toLowerCase() + "-dead.png");
+            sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas(playerName.toString().toLowerCase() + "-dead");
             sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
-            this.setNextDamageSprite(-1);
+            // Pause game
+            BindingOfNewton.getInstance().setPaused(true);
+            // Wait and return to main menu
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    BindingOfNewton.getInstance().getGame().setScreen(new GameOverScreen(BindingOfNewton.getInstance().getGame()));
+                }
+            }, 3);
+        } else {
+            if (this.getNextDamageSprite() == 0) {
+                if (isMoving) {
+                    deltaTime += Gdx.graphics.getDeltaTime();
+                    sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(orientation), deltaTime);
+                } else {
+                    sprite = AssetsHandler.getInstance().getPlayerSprite(playerName, orientation);
+                }
+
+            } else {
+                sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas(playerName.name().toLowerCase() + "-damage");
+                sprite.setSize(sprite.getWidth() * .7f, sprite.getHeight() * .7f);
+                this.setNextDamageSprite(-1);
+            }
         }
         batch.draw(sprite, body.getPosition().x, body.getPosition().y, sprite.getWidth(), sprite.getHeight());
     }

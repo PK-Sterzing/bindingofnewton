@@ -20,6 +20,7 @@ import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.items.HealthBoostItem;
 import com.bindingofnewton.game.items.Item;
+import com.bindingofnewton.game.items.ReloadSpeedItem;
 import com.bindingofnewton.game.items.SpeedBoostItem;
 
 import java.util.*;
@@ -168,12 +169,13 @@ public class Room {
      */
     private void moveAllEnemies() {
         // Move Enemy after cooldown
-        if (System.currentTimeMillis() - Enemy.getLastPathChange() >= Enemy.getPathChangingRate()) {
-            for(int i = 0; i < enemies.size(); i++){
+        for(int i = 0; i < enemies.size(); i++){
+            if (System.currentTimeMillis() - enemies.get(i).getLastPathChange() >= enemies.get(i).getPathChangingRate()){
                 // Get vector from enemy to player
                 enemies.get(i).calculateMoveToPlayer(player);
             }
         }
+
     }
 
 
@@ -187,15 +189,18 @@ public class Room {
         double randInt = Math.random();
         // 15 % droprate
         if(randInt <= 0.15){
-            if(randInt >= 0.075){
+            if(randInt < 0.049){
                 HealthBoostItem h = new HealthBoostItem(this.world, posX, posY);
                 droppedItems.add(h);
-            }else if(randInt < 0.075){
+            }else if(randInt >= 0.049 && randInt <= 0.099){
                 SpeedBoostItem h = new SpeedBoostItem(this.world, posX, posY);
                 droppedItems.add(h);
+            }else if(randInt > 0.099){
+                ReloadSpeedItem h = new ReloadSpeedItem(this.world, posX, posY);
+                droppedItems.add(h);
             }
-        }
     }
+}
 
     private void removeDroppedItems(){
         for(int i = 0; i < droppedItems.size(); i++){

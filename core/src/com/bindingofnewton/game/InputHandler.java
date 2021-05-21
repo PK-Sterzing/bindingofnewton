@@ -8,7 +8,9 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.assets.SoundHandler;
+import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
+import com.bindingofnewton.game.mainmenu.MainMenuScreen;
 import com.bindingofnewton.game.map.Level;
 
 import java.util.HashMap;
@@ -52,6 +54,9 @@ public class InputHandler implements InputProcessor {
 
         if (keycode == Input.Keys.SHIFT_LEFT){
             BindingOfNewton.getInstance().showDebugInfo = !BindingOfNewton.getInstance().showDebugInfo;
+        }
+        if (keycode == Input.Keys.ESCAPE){
+            BindingOfNewton.getInstance().getGame().setScreen(new MainMenuScreen(BindingOfNewton.getInstance().getGame()));
         }
 
         if (movingKeys.containsKey(keycode)){
@@ -154,8 +159,9 @@ public class InputHandler implements InputProcessor {
     private void shootBullet(Orientation orientation, Vector2 pos){
         Player player = level.getCurrentRoom().getPlayer();
         player.setOrientation(orientation);
-        if (System.currentTimeMillis() - lastShot >= Bullet.fireRate) {
+        if (System.currentTimeMillis() - lastShot >= player.getFireRate()) {
             Bullet bullet = new Bullet(level.getWorld(),
+                    player.getPlayerName(),
                     (int) pos.x,
                     (int) pos.y);
             //SoundHandler.getInstance().playSound(SoundHandler.Sound.SHOOT);

@@ -147,7 +147,7 @@ public class ContactHandler implements ContactListener {
 
     private void diminishHealth(Body body) {
         // Check if body extends from Entity
-        if(body.getUserData().getClass().getSuperclass().equals(Entity.class)) {
+        if(body.getUserData() instanceof Entity) {
 
             Entity entity = (Entity) body.getUserData();
             // Check if body has cooldown pending
@@ -156,7 +156,6 @@ public class ContactHandler implements ContactListener {
                 if (entity.getHealth() <= 0.0) {
                     entity.setDead(true);
                 }
-
                 entity.setLastSustainedDamage(System.currentTimeMillis());
             }
 

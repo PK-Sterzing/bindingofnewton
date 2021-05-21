@@ -16,11 +16,11 @@ public class Minimap {
      * Enum for the State of a room
      */
     private enum RoomState{
-        BOSS(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/boss.png")),
+        BOSS(AssetsHandler.getInstance().getSingleSpriteFromAtlas("boss")),
         CLEARED(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/cleared.png")),
-        CURRENT(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/current.png")),
-        UNCLEARED(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/uncleared.png"));
-
+        CURRENT(AssetsHandler.getInstance().getSingleSpriteFromAtlas("current")),
+        UNCLEARED(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/uncleared.png")),
+        CURRENT_BOSS(AssetsHandler.getInstance().getSingleSpriteFromFile("./minimap/boss-current.png"));
         private Sprite sprite;
 
         RoomState(Sprite sprite) {
@@ -71,7 +71,12 @@ public class Minimap {
         float posY = height-spriteHeight * 2.5f;
 
         //Current room gets drawn
-        batch.draw(RoomState.CURRENT.sprite, posX, posY);
+        if (currentRoom == level.getRooms().get(level.getRooms().size()-1)){
+            batch.draw(RoomState.CURRENT_BOSS.sprite, posX, posY);
+        }else{
+            batch.draw(RoomState.CURRENT.sprite, posX, posY);
+        }
+
 
         //Check if rooms in near of current room
         for (int x = currentRoom.getX() - 1; x < currentRoom.getX()+2; x++){
