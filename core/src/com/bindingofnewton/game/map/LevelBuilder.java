@@ -65,7 +65,7 @@ public class LevelBuilder {
         level.rooms.add(
                 new RoomBuilder()
                     .setWorld(level.world)
-                    .setMap(AssetsHandler.MAP_TILED + AssetsHandler.START_MAP)
+                    .setMap(AssetsHandler.MAP_TILED + AssetsHandler.MAP_CURRENT_LEVEL + AssetsHandler.START_MAP)
                     .setPosition(x, y)
                     .build()
         );
@@ -193,7 +193,7 @@ public class LevelBuilder {
 
         builder
                 .setWorld(level.world)
-                .setMap(AssetsHandler.MAP_TILED + AssetsHandler.END_MAP);
+                .setMap(AssetsHandler.MAP_TILED + AssetsHandler.MAP_CURRENT_LEVEL + AssetsHandler.END_MAP);
 
         Vector2 pos;
         if (orientation.isHorizontal()){

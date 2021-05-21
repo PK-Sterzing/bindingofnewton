@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="132">
- <tileset firstgid="1" source="room.tsx"/>
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="15" height="9" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="164">
+ <tileset firstgid="1" source="../room.tsx"/>
  <layer id="1" name="ground" width="15" height="9">
   <data encoding="csv">
 1610612738,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
@@ -30,11 +30,11 @@
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,
-0,0,0,12,0,0,0,0,0,0,0,12,0,0,0,
-0,0,0,12,0,0,0,0,0,0,0,12,0,0,0,
-0,0,0,12,0,0,0,0,0,0,0,12,0,0,0,
-0,0,0,4,0,0,0,0,0,0,0,4,0,0,0,
+0,0,0,0,12,0,0,4,0,0,12,0,0,0,0,
+0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,
+0,0,12,0,0,4,4,4,4,4,0,0,12,0,0,
+0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,
+0,0,0,0,12,0,0,4,0,0,12,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
@@ -48,36 +48,51 @@
   <object id="27" x="256" y="256" width="224" height="32"/>
   <object id="28" x="0" y="0" width="32" height="128"/>
   <object id="29" x="0" y="160" width="32" height="128"/>
-  <object id="116" x="358.401" y="71.8157">
+  <object id="149" x="230" y="71">
    <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
   </object>
-  <object id="117" x="359" y="199.5">
+  <object id="150" x="231" y="103">
    <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
   </object>
-  <object id="118" x="101" y="199">
+  <object id="151" x="228.5" y="135">
    <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
   </object>
-  <object id="119" x="101.5" y="70.5">
+  <object id="152" x="197" y="133.5">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="153" x="166" y="135.5">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="154" x="262" y="135">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="155" x="295" y="134.5">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="156" x="229" y="165.5">
+   <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
+  </object>
+  <object id="157" x="230" y="199">
    <polygon points="0,0 13,-2 23.75,3 23.25,19.5 17.75,24.25 -2.25,22 -5,8.25"/>
   </object>
  </objectgroup>
  <objectgroup id="9" name="fire">
-  <object id="126" x="102.432" y="122.863">
+  <object id="158" x="134.5" y="93">
    <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
   </object>
-  <object id="127" x="102.182" y="157.113">
+  <object id="159" x="69.5" y="155.5">
    <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
   </object>
-  <object id="128" x="101.182" y="188.363">
+  <object id="160" x="134" y="220">
    <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
   </object>
-  <object id="129" x="359.25" y="188.045">
+  <object id="161" x="326.5" y="219.5">
    <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
   </object>
-  <object id="130" x="358.341" y="156.408">
+  <object id="162" x="390.5" y="156.5">
    <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
   </object>
-  <object id="131" x="358.523" y="123.863">
+  <object id="163" x="326.5" y="92.5">
    <polygon points="0,0 20.375,1.625 17.125,-7.25 19.75,-15 9.625,-20.25 0,-11.625"/>
   </object>
  </objectgroup>

@@ -46,14 +46,15 @@ public class Bullet {
         polygonShape.dispose();
 
         // Load Sprite
-        this.sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("bullets/" + playerName.name().toLowerCase() + "_bullet.png");
-        this.sprite.setScale(1.7f);
-        this.sprite.setSize(WIDTH, HEIGHT);
-        this.sprite.setPosition(body.getPosition().x, body.getPosition().y);
+        if(playerName != null){
+            this.sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("bullets/" + playerName.name().toLowerCase() + "_bullet.png");
+            this.sprite.setScale(1.7f);
+            this.sprite.setSize(WIDTH, HEIGHT);
+            this.sprite.setPosition(body.getPosition().x, body.getPosition().y);
+        }
 
         // Set default movement
         movement = new Vector2(0, 0);
-        System.out.println("Bullet created");
     }
 
     /**
@@ -100,7 +101,6 @@ public class Bullet {
 
     public void setRemove(boolean remove) {
         this.remove = remove;
-        System.out.println("Bullet removed");
     }
 
     /**

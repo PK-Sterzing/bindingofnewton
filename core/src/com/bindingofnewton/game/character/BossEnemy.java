@@ -80,10 +80,17 @@ public class BossEnemy extends Enemy{
                 bullets.remove(bullet);
 
                 if (orientation == Orientation.LEFT && !sprite.isFlipX()) {
-                    bullet = new Bullet(body.getWorld(), (int) (body.getPosition().x), (int) (body.getPosition().y + sprite.getHeight() / 2));
+                    bullet = new Bullet(
+                            body.getWorld(),
+                            null,
+                            (int) (body.getPosition().x),
+                            (int) (body.getPosition().y + sprite.getHeight() / 2));
                     bullet.setSprite(AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/rat_rocket.png"));
                 } else if (orientation == Orientation.RIGHT && sprite.isFlipX()) {
-                    bullet = new Bullet(body.getWorld(), (int) (body.getPosition().x + 100), (int) (body.getPosition().y + sprite.getHeight() / 2));
+                    bullet = new Bullet(body.getWorld(),
+                            null,
+                            (int) (body.getPosition().x + 100),
+                            (int) (body.getPosition().y + sprite.getHeight() / 2));
                     bullet.setSprite(AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/rat_rocket.png"));
                 }
                 bullets.add(bullet);

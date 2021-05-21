@@ -36,6 +36,7 @@ public class AssetsHandler {
     public static final String EDISON = "./character/edison/packed/edison.atlas";
     public static final String EDISON_RUN = "./character/edison_run/packed/edison_run.atlas";
     public static final String MAP_TILED = ASSETS_ABSOLUTE + "map/tiled/";
+    public static String MAP_CURRENT_LEVEL = "level1/";
 
     public static final String HEARTS = "./hearts";
 
@@ -136,14 +137,15 @@ public class AssetsHandler {
     public List<String> getMaps() {
         ArrayList<String> list = new ArrayList<>();
 
-        File file = new File(MAP_TILED + START_MAP);
+        System.out.println(MAP_TILED + MAP_CURRENT_LEVEL + START_MAP);
+        File file = new File(MAP_TILED + MAP_CURRENT_LEVEL + START_MAP);
 
-        if (file.exists()) list.add(MAP_TILED + file.getName());
+        if (file.exists()) list.add(MAP_TILED + MAP_CURRENT_LEVEL + file.getName());
 
-        file = new File(MAP_TILED + MAP);
+        file = new File(MAP_TILED + MAP_CURRENT_LEVEL + MAP);
 
         while (file.exists()) {
-            list.add(MAP_TILED + file.getName());
+            list.add(MAP_TILED + MAP_CURRENT_LEVEL + file.getName());
             String name = file.getName();
 
             //TODO: catch exceptions
@@ -151,11 +153,11 @@ public class AssetsHandler {
             number++;
             name = name.replace(String.valueOf(number - 1), String.valueOf(number));
 
-            file = new File(MAP_TILED + name);
+            file = new File(MAP_TILED + MAP_CURRENT_LEVEL + name);
         }
 
-        file = new File(MAP_TILED + END_MAP);
-        if (file.exists()) list.add(MAP_TILED + file.getName());
+        file = new File(MAP_TILED + MAP_CURRENT_LEVEL + END_MAP);
+        if (file.exists()) list.add(MAP_TILED + MAP_CURRENT_LEVEL + file.getName());
 
         return list;
     }
