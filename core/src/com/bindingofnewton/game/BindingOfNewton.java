@@ -240,6 +240,7 @@ public class BindingOfNewton implements Screen{
 		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
 			makeBossEnemy();
 		}else if (!level.getCurrentRoom().isCleared()){
+		    /*
 			int minX = 40;
 			int maxX = 400;
 			int minY = 40;
@@ -253,6 +254,17 @@ public class BindingOfNewton implements Screen{
 					enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) startX, (int) startY, 80));
 				}else{
 					Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)startX, (int)startY, 50);
+					enemies.add(bat);
+				}
+			}
+
+		     */
+			ArrayList<Enemy> enemies = new ArrayList<>();
+			for(int i = 0; i < 5; i++){
+				if (i%2 == 0){
+					enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) 100, (int) 100, 80));
+				}else{
+					Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)100, (int)100, 50);
 					enemies.add(bat);
 				}
 			}
