@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="19" height="11" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="117">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="19" height="11" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="125">
  <tileset firstgid="1" source="../tileset.tsx"/>
  <tileset firstgid="257" source="../room.tsx"/>
  <layer id="1" name="ground" width="19" height="11">
@@ -46,14 +46,6 @@
  </layer>
  <objectgroup id="9" name="fire"/>
  <objectgroup id="4" name="border">
-  <object id="3" x="0" y="0" width="286.924" height="32"/>
-  <object id="28" x="0" y="0.757502" width="32" height="159.404"/>
-  <object id="69" x="320.776" y="0.779697" width="286.225" height="32"/>
-  <object id="70" x="607.767" y="1.47885" width="158.131" height="32.255" rotation="90"/>
-  <object id="71" x="608.129" y="191.636" width="158.991" height="32" rotation="90"/>
-  <object id="72" x="0.841437" y="319.243" width="286.924" height="32"/>
-  <object id="73" x="320.163" y="318.496" width="286.225" height="32"/>
-  <object id="74" x="31.6763" y="192.348" width="157.58" height="32" rotation="90"/>
   <object id="79" x="46.6364" y="42.2121">
    <polygon points="0,0 -5.07508,6.75568 0.588415,12.6875 6.98742,6.59091"/>
   </object>
@@ -162,5 +154,13 @@
   <object id="116" x="559.091" y="75.2727">
    <polygon points="0,0 -5.07508,6.75568 0.588415,12.6875 6.98742,6.59091"/>
   </object>
+  <object id="117" x="0" y="0" width="288" height="32"/>
+  <object id="118" x="0" y="0" width="32" height="160"/>
+  <object id="119" x="0" y="192" width="32" height="160"/>
+  <object id="120" x="0" y="320" width="288" height="32"/>
+  <object id="121" x="320" y="320" width="288" height="32"/>
+  <object id="122" x="576" y="192" width="32" height="160"/>
+  <object id="123" x="576" y="0" width="32" height="160"/>
+  <object id="124" x="320" y="0" width="288" height="32"/>
  </objectgroup>
 </map>
