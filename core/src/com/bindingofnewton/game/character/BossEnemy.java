@@ -57,6 +57,12 @@ public class BossEnemy extends Enemy{
         }else{
             sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/packed/damage.png");
             sprite.setScale(0.5f);
+            if (orientation == Orientation.LEFT && !sprite.isFlipX()) {
+                sprite.flip(true, false);
+            }
+            else if (orientation == Orientation.RIGHT && sprite.isFlipX()) {
+                sprite.flip(true, false);
+            }
 
             this.setNextDamageSprite(-1);
         }

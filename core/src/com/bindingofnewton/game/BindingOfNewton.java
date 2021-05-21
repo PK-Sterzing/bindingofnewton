@@ -60,6 +60,7 @@ public class BindingOfNewton implements Screen{
 
 		// Create Camera
 		camera = new OrthographicCamera();
+		levelNumber = 0;
 
 		makeNewLevel();
 
@@ -173,7 +174,6 @@ public class BindingOfNewton implements Screen{
 		// Set current level so to the right folder, so that the asset handler is loading the right rooms
 		// Level number counts from 0
 		AssetsHandler.MAP_CURRENT_LEVEL	= "level" + (levelNumber+1) + "/";
-		System.out.println(AssetsHandler.MAP_CURRENT_LEVEL);
 
 		// Make new level
 		level = new LevelBuilder()

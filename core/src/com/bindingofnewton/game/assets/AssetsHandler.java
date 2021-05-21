@@ -136,7 +136,6 @@ public class AssetsHandler {
     public List<String> getMaps() {
         ArrayList<String> list = new ArrayList<>();
 
-        System.out.println(MAP_TILED + MAP_CURRENT_LEVEL + START_MAP);
         File file = new File(MAP_TILED + MAP_CURRENT_LEVEL + START_MAP);
 
         if (file.exists()) list.add(MAP_TILED + MAP_CURRENT_LEVEL + file.getName());

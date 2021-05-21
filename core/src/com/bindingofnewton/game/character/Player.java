@@ -163,12 +163,15 @@ public class Player extends Entity {
             // Pause game
             BindingOfNewton.getInstance().setPaused(true);
             // Wait and return to main menu
+            System.out.println("Starting timer ");
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
+                    System.out.println("Displaying screen");
                     BindingOfNewton.getInstance().getGame().setScreen(new GameOverScreen(BindingOfNewton.getInstance().getGame()));
                 }
             }, 3);
+            System.out.println("Finished");
         } else {
             if (this.getNextDamageSprite() == 0) {
                 if (isMoving) {
