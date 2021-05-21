@@ -27,6 +27,7 @@ public class BindingOfNewton implements Screen{
 	private MapBodyBuilder mapBuilder;
 
 	private InputHandler inputHandler;
+	private ContactHandler contactHandler;
 	private World world;
 
 	protected Game game;
@@ -39,7 +40,6 @@ public class BindingOfNewton implements Screen{
 
 	private Box2DDebugRenderer renderer;
 	public boolean showDebugInfo = false;
-	private ContactHandler contactHandler;
 
 	private boolean isPaused = false;
 
@@ -62,8 +62,8 @@ public class BindingOfNewton implements Screen{
 		camera = new OrthographicCamera();
 
 		makeNewLevel();
-		contactHandler = new ContactHandler(level);
 
+		contactHandler = new ContactHandler(level);
 		world.setContactListener(contactHandler);
 
 		inputHandler = new InputHandler(level);
@@ -129,7 +129,9 @@ public class BindingOfNewton implements Screen{
 
 		// Render all bullets
 		for(Bullet bullet : level.getCurrentRoom().getBullets()){
-			bullet.render(batch);
+			if(bullet != null){
+				bullet.render(batch);
+			}
 		}
 
 		// Render all dropped items
@@ -196,6 +198,9 @@ public class BindingOfNewton implements Screen{
 		inputHandler = new InputHandler(level);
 		Gdx.input.setInputProcessor(inputHandler);
 
+		// Create new Contact handler so that the level is up to date
+		contactHandler = new ContactHandler(level);
+		world.setContactListener(contactHandler);
 
 		makeNewRoom(Orientation.DOWN);
 	}
