@@ -39,10 +39,10 @@ public class Enemy extends Entity {
         ),
         MOUSE(
                 new float[]{
-                        5.0f, 2.0f,
-                        24.0f, 2.0f,
-                        27.0f, 18.0f,
-                        4.0f, 18.0f,
+                        -3.0f, -10.0f,
+                        14.0f, -10.0f,
+                        14.0f, 0.0f,
+                        -3.0f, 0.0f,
                 },
                 1,
                 300
@@ -96,8 +96,6 @@ public class Enemy extends Entity {
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(startX ,startY);
 
-        characterWidth = 22;
-        characterHeight = 28;
 
         body = world.createBody(def);
         body.setUserData(this);

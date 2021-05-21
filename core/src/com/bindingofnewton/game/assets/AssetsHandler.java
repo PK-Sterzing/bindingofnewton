@@ -9,7 +9,6 @@ import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.character.Enemy;
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
