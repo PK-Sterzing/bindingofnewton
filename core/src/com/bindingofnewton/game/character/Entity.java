@@ -25,7 +25,7 @@ public abstract class Entity {
     protected Orientation orientation;
 
 
-    protected int speed = 100;
+    protected int speed = 50;
     protected float health;
 
     protected long lastSustainedDamage = 0;

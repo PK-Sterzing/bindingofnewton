@@ -55,7 +55,7 @@ public class BossEnemy extends Enemy{
                 sprite.flip(true, false);
             }
         }else{
-            sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/newton/newton-damage.png");
+            sprite = AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/packed/damage.png");
             sprite.setScale(0.5f);
 
             this.setNextDamageSprite(-1);

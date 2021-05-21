@@ -7,7 +7,6 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Player;
 
 public class ReloadSpeedItem extends Item {
-    // Remove later
     private static int amountUsed = 0;
     private int reloadSpeedBuff = 300;
 

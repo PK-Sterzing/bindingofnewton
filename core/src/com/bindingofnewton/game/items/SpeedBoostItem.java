@@ -7,7 +7,8 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Player;
 
 public class SpeedBoostItem extends Item{
-    private int speedBoost = 50;
+    private static int amountUsed = 0;
+    private int speedBoost = 100;
 
     public SpeedBoostItem(World world, float posX, float posY){
         super(world, posX, posY);
@@ -17,7 +18,10 @@ public class SpeedBoostItem extends Item{
 
     @Override
     public void use(Player player) {
-        player.setSpeed(player.getSpeed() + this.speedBoost);
+        if(amountUsed == 0) {
+            player.setSpeed(player.getSpeed() + this.speedBoost);
+            amountUsed = 1;
+        }
     }
 
     @Override
