@@ -1,6 +1,16 @@
 sourceCompatibility = 1.8
+
 sourceSets.main.java.srcDirs = [ "src/main/java" ]
+sourceSets.test.java.srcDirs = [ "src/test/java" ]
 sourceSets.main.resources.srcDirs = ["../core/assets"]
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+}
+
+test {
+    useJUnitPlatform()
+}
 
 project.ext.mainClassName = "main.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../core/assets")

@@ -8,10 +8,6 @@ public class GameTest {
 
     @Test
     public void testGameStart(){
-        final HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
-        config.renderInterval = 1f/60; // Likely want 1f/60 for 60 fps
-        new HeadlessApplication(new BindingOfNewtonGame(), config);
-
     }
 
 }
