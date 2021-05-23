@@ -7,6 +7,9 @@ import com.bindingofnewton.game.Orientation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to get current rooms
+ */
 public class Level {
 
     //<editor-fold desc="Members">

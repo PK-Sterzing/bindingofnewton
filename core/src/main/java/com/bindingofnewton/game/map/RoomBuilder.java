@@ -5,6 +5,9 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
 
+/**
+ * Class that manages rooms
+ */
 public class RoomBuilder {
     private Room room;
 

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 /**
- * The class for the minimap on the top left corner of the game.
+ * The class for the minimap on the top right corner of the game.
  */
 public class Minimap {
 

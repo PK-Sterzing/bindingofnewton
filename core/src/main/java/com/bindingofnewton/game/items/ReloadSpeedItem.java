@@ -6,6 +6,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Player;
 
+/**
+ * Class for reloadspeed Item; Makes the player shoot more often
+ */
 public class ReloadSpeedItem extends Item {
     private static int amountUsed = 0;
     private int reloadSpeedBuff = 300;

@@ -6,7 +6,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Player;
 
-public class SpeedBoostItem extends Item {
+/**
+ * Class for speed-boost item; Makes the player faster
+ */
+public class SpeedBoostItem extends Item{
     private static int amountUsed = 0;
     private int speedBoost = 100;
 

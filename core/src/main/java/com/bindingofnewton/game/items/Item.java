@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.character.Player;
 
+/**
+ * Abstract class for all items
+ */
 public abstract class Item {
     protected Body body;
     protected PolygonShape polygonShape;
