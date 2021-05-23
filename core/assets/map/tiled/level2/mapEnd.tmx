@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="19" height="11" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="125">
  <tileset firstgid="1" source="room2.tsx"/>
-
-
  <layer id="1" name="ground" width="19" height="11">
   <data encoding="csv">
 23,22,22,22,22,22,22,22,22,0,22,22,22,22,22,22,22,22,2684354583,
@@ -46,8 +43,7 @@
 0,0,0,0,0,0,0,0,0,3221225494,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="9" name="fire"/>
- <objectgroup id="4" name="border">
+ <objectgroup id="9" name="fire">
   <object id="79" x="46.6364" y="42.2121">
    <polygon points="0,0 -5.07508,6.75568 0.588415,12.6875 6.98742,6.59091"/>
   </object>
@@ -156,6 +152,8 @@
   <object id="116" x="559.091" y="75.2727">
    <polygon points="0,0 -5.07508,6.75568 0.588415,12.6875 6.98742,6.59091"/>
   </object>
+ </objectgroup>
+ <objectgroup id="4" name="border">
   <object id="117" x="0" y="0" width="288" height="32"/>
   <object id="118" x="0" y="0" width="32" height="160"/>
   <object id="119" x="0" y="192" width="32" height="160"/>

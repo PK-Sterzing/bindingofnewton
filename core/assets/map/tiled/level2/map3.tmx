@@ -14,7 +14,6 @@
 1610612759,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225495
 </data>
  </layer>
- <objectgroup id="9" name="fire"/>
  <objectgroup id="5" name="doors-UP">
   <object id="36" x="224" y="0" width="32" height="32"/>
  </objectgroup>
@@ -50,6 +49,11 @@
   <object id="28" x="0" y="0" width="32" height="128"/>
   <object id="29" x="0" y="160" width="32" height="128"/>
   <object id="65" x="132.091" y="131.727" width="24.8182" height="25.2727"/>
+  <object id="84" x="228.341" y="196.614" width="24.8182" height="25.2727"/>
+  <object id="85" x="228.091" y="67.6137" width="24.8182" height="25.2727"/>
+  <object id="86" x="324.091" y="131.864" width="24.8182" height="25.2727"/>
+ </objectgroup>
+ <objectgroup id="9" name="fire">
   <object id="69" x="175.138" y="106.25">
    <polygon points="0,0 -5.07508,6.75568 0.588415,12.6875 6.98742,6.59091"/>
   </object>
@@ -95,9 +99,5 @@
   <object id="83" x="303.25" y="169.5">
    <polygon points="0,0 -5.07508,6.75568 0.588415,12.6875 6.98742,6.59091"/>
   </object>
-  <object id="84" x="228.341" y="196.614" width="24.8182" height="25.2727"/>
-  <object id="85" x="228.091" y="67.6137" width="24.8182" height="25.2727"/>
-  <object id="86" x="324.091" y="131.864" width="24.8182" height="25.2727"/>
  </objectgroup>
- <objectgroup id="9" name="fire"/>
 </map>

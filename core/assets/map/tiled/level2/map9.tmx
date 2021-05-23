@@ -14,7 +14,6 @@
 1610612759,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225494,3221225495
 </data>
  </layer>
- <objectgroup id="9" name="fire"/>
  <objectgroup id="5" name="doors-UP">
   <object id="36" x="224" y="0" width="32" height="32"/>
  </objectgroup>
@@ -49,6 +48,8 @@
   <object id="27" x="256" y="256" width="224" height="32"/>
   <object id="28" x="0" y="0" width="32" height="128"/>
   <object id="29" x="0" y="160" width="32" height="128"/>
+ </objectgroup>
+ <objectgroup id="9" name="fire">
   <object id="65" x="47" y="42">
    <polygon points="0,0 -5.07508,6.75568 0.588415,12.6875 6.98742,6.59091"/>
   </object>
@@ -104,5 +105,4 @@
    <polygon points="0,0 -5.07508,6.75568 0.588415,12.6875 6.98742,6.59091"/>
   </object>
  </objectgroup>
- <objectgroup id="9" name="fire"/>
 </map>
