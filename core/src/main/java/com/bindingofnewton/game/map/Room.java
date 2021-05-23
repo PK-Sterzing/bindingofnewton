@@ -45,9 +45,9 @@ public class Room {
 
     private boolean isCleared;
 
-    public Room(){
+    public Room() {
         ArrayList<String> mapList = (ArrayList<String>) AssetsHandler.getInstance().getMaps();
-        int index = (int) (Math.random() * (mapList.size()-2) + 1);
+        int index = (int) (Math.random() * (mapList.size() - 2) + 1);
         map = new TmxMapLoader().load(mapList.get(index));
 
         bullets = new ArrayList<>();
@@ -63,23 +63,25 @@ public class Room {
         List<Orientation> orientations = new ArrayList<>();
         List<Orientation> possibleOrientations = new ArrayList<>();
 
-        for (Door door : doors){
+        for (Door door : doors) {
             orientations.add(door.getOrientation());
         }
 
-        for (Orientation orientation : Orientation.values()){
+        for (Orientation orientation : Orientation.values()) {
             if (!orientations.contains(orientation)) possibleOrientations.add(orientation);
         }
         return possibleOrientations;
     }
 
-    public void setPlayer(Player player){
+    public void setPlayer(Player player) {
         this.player = player;
     }
-    public void addEnemies(ArrayList<Enemy> enemies){
+
+    public void addEnemies(ArrayList<Enemy> enemies) {
         this.enemies = enemies;
     }
-    public void addBullet(Bullet bullet){
+
+    public void addBullet(Bullet bullet) {
         this.bullets.add(bullet);
     }
 
@@ -102,7 +104,7 @@ public class Room {
         for (Orientation orientation : Orientation.values()){
             String layerName = "doors-" + orientation.name();
             MapLayer layer = map.getLayers().get(layerName);
-            if (layer == null){
+            if (layer == null) {
                 break;
             }
 
@@ -112,11 +114,11 @@ public class Room {
                 if (object instanceof RectangleMapObject) {
                     Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
                     PolygonShape shape = new PolygonShape();
-                    Vector2 position = new Vector2((rectangle.x + rectangle.width * 0.5f ),
-                            (rectangle.y + rectangle.height * 0.5f ));
+                    Vector2 position = new Vector2((rectangle.x + rectangle.width * 0.5f),
+                            (rectangle.y + rectangle.height * 0.5f));
 
-                    shape.setAsBox(rectangle.width * 0.5f ,
-                            rectangle.height * 0.5f ,
+                    shape.setAsBox(rectangle.width * 0.5f,
+                            rectangle.height * 0.5f,
                             position,
                             0.0f);
 
@@ -128,10 +130,28 @@ public class Room {
                     body.createFixture(shape, 1);
                     body.setActive(true);
 
-                    for (Door door : doors){
-                        if (door.getOrientation() == orientation){
-                            door.setBody(body);
-                            body.setUserData(door);
+                    for (Door door : doors) {
+                        if (orientation == Orientation.LEFT) {
+                            if (door.getOrientation() == orientation
+                                    && (door.getId() == Door.Id.PORTAL ||
+                                    door.getId() == Door.Id.PORTAL2 ||
+                                    door.getId() == Door.Id.PORTAL3)
+                            ) {
+                                if (rectangle.x != 0) {
+                                    door.setBody(body);
+                                    body.setUserData(door);
+                                }
+                            } else {
+                                if (door.getOrientation() == orientation && rectangle.x == 0) {
+                                    door.setBody(body);
+                                    body.setUserData(door);
+                                }
+                            }
+                        } else {
+                            if (door.getOrientation() == orientation) {
+                                door.setBody(body);
+                                body.setUserData(door);
+                            }
                         }
                     }
                     shape.dispose();
@@ -141,7 +161,7 @@ public class Room {
 
     }
 
-    public void addDoor(Door door){
+    public void addDoor(Door door) {
         doors.add(door);
     }
 
@@ -178,8 +198,8 @@ public class Room {
      */
     private void moveAllEnemies() {
         // Move Enemy after cooldown
-        for(int i = 0; i < enemies.size(); i++){
-            if (System.currentTimeMillis() - enemies.get(i).getLastPathChange() >= enemies.get(i).getPathChangingRate()){
+        for (int i = 0; i < enemies.size(); i++) {
+            if (System.currentTimeMillis() - enemies.get(i).getLastPathChange() >= enemies.get(i).getPathChangingRate()) {
                 // Get vector from enemy to player
                 enemies.get(i).calculateMoveToPlayer(player);
             }
@@ -190,30 +210,31 @@ public class Room {
 
     /**
      * Create item and add to array
+     *
      * @param posX
      * @param posY
      */
-    private void dropItem(float posX, float posY){
+    private void dropItem(float posX, float posY) {
         // Not all enemies drop items
         double randInt = Math.random();
         // 15 % droprate
-        if(randInt <= 0.15){
-            if(randInt < 0.049){
+        if (randInt <= 0.15) {
+            if (randInt < 0.049) {
                 HealthBoostItem h = new HealthBoostItem(this.world, posX, posY);
                 droppedItems.add(h);
-            }else if(randInt >= 0.049 && randInt <= 0.099){
+            } else if (randInt >= 0.049 && randInt <= 0.099) {
                 SpeedBoostItem h = new SpeedBoostItem(this.world, posX, posY);
                 droppedItems.add(h);
-            }else if(randInt > 0.099){
+            } else if (randInt > 0.099) {
                 ReloadSpeedItem h = new ReloadSpeedItem(this.world, posX, posY);
                 droppedItems.add(h);
             }
+        }
     }
-}
 
-    private void removeDroppedItems(){
-        for(int i = 0; i < droppedItems.size(); i++){
-            if(droppedItems.get(i).isShouldBeRemoved()){
+    private void removeDroppedItems() {
+        for (int i = 0; i < droppedItems.size(); i++) {
+            if (droppedItems.get(i).isShouldBeRemoved()) {
                 world.destroyBody(droppedItems.get(i).getBody());
                 droppedItems.remove(i);
             }
@@ -225,8 +246,8 @@ public class Room {
      * Goes trough enemies and deletes the dead ones
      */
     private void removeDeadEnemies() {
-        for(int i = 0; i < enemies.size(); i++){
-            if(enemies.get(i).isDead()){
+        for (int i = 0; i < enemies.size(); i++) {
+            if (enemies.get(i).isDead()) {
                 dropItem(enemies.get(i).getBody().getPosition().x, enemies.get(i).getBody().getPosition().y);
                 world.destroyBody(enemies.get(i).getBody());
                 enemies.remove(i);
@@ -235,7 +256,7 @@ public class Room {
 
         if (enemies.isEmpty()) {
             isCleared = true;
-            for (Door door : doors){
+            for (Door door : doors) {
                 door.open();
             }
         }
@@ -245,13 +266,13 @@ public class Room {
     /**
      * Removes all bullets that have to be removed
      */
-    private void updateBullets(){
-        for(int i = 0; i < bullets.size(); i++){
-            if(bullets.get(i).isRemove()){
+    private void updateBullets() {
+        for (int i = 0; i < bullets.size(); i++) {
+            if (bullets.get(i).isRemove()) {
                 // Destroy body, remove bullet
                 world.destroyBody(bullets.get(i).getBody());
                 bullets.remove(i);
-            }else{
+            } else {
                 bullets.get(i).update();
             }
 

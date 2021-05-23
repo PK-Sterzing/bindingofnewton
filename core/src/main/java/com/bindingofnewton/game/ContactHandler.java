@@ -10,6 +10,7 @@ import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.items.Item;
+import com.bindingofnewton.game.map.Door;
 import com.bindingofnewton.game.map.Level;
 
 public class ContactHandler implements ContactListener {
@@ -19,7 +20,7 @@ public class ContactHandler implements ContactListener {
 
     private Level level;
 
-    public ContactHandler(Level level){
+    public ContactHandler(Level level) {
         this.level = level;
     }
 
@@ -27,7 +28,7 @@ public class ContactHandler implements ContactListener {
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
-        if(!(bodyA.getUserData() == null || bodyB.getUserData() == null)) {
+        if (!(bodyA.getUserData() == null || bodyB.getUserData() == null)) {
             if (bodyA.getUserData() instanceof Bullet) {
                 // If bodyB extends from Entity
                 diminishHealth(bodyB);
@@ -47,33 +48,47 @@ public class ContactHandler implements ContactListener {
             }
 
             // Collision with item
-            if(bodyA.getUserData().getClass().getSuperclass().equals(Item.class) || bodyB.getUserData().getClass().getSuperclass().equals(Item.class)){
+            if (bodyA.getUserData().getClass().getSuperclass().equals(Item.class) || bodyB.getUserData().getClass().getSuperclass().equals(Item.class)) {
                 giveItemEffect(bodyB, bodyA);
                 giveItemEffect(bodyA, bodyB);
             }
         }
 
         // Remove Bullet if other body is unknown
-        if(bodyA.getUserData() instanceof Bullet) {
+        if (bodyA.getUserData() instanceof Bullet) {
             removeBulletFixture((Bullet) bodyA.getUserData());
         }
-        if(bodyB.getUserData() instanceof Bullet) {
+        if (bodyB.getUserData() instanceof Bullet) {
             removeBulletFixture((Bullet) bodyB.getUserData());
         }
 
         //TODO: player kriegt zur zeit jede sekunde schaden, aber nur wenn er wieder am feuer angeht. Ändern!
-        if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")){
+        if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")) {
             isContactFire = true;
             contactWithFire(bodyA);
 
-        }else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() != null && bodyA.getUserData().equals("fire")){
+        } else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() != null && bodyA.getUserData().equals("fire")) {
             isContactFire = true;
             contactWithFire(bodyB);
         }
+
+        if (bodyA.getUserData() instanceof Player && bodyB.getUserData() instanceof Door){
+            contactWithPortal(bodyB);
+        }else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() instanceof Door){
+
+        }
     }
 
-    private void contactWithFire(Body body){
-        if (System.currentTimeMillis() - fireLastContact > 1000){
+    private void contactWithPortal(Body body){
+        Door door = (Door) body.getUserData();
+        if (door.getId() == Door.Id.PORTAL || door.getId() == Door.Id.PORTAL2 || door.getId() == Door.Id.PORTAL3){
+            BindingOfNewton.getInstance().levelNumber++;
+            BindingOfNewton.getInstance().makeNewLevel();
+        }
+    }
+
+    private void contactWithFire(Body body) {
+        if (System.currentTimeMillis() - fireLastContact > 1000) {
             ((Player) body.getUserData()).setHealth(-0.5f);
             if (((Entity) body.getUserData()).getHealth() <= 0.0) {
                 ((Entity) body.getUserData()).setDead(true);
@@ -83,45 +98,49 @@ public class ContactHandler implements ContactListener {
     }
 
     private void giveItemEffect(Body bodyA, Body bodyB) {
-        if(bodyB.getUserData() instanceof Player && bodyA.getUserData().getClass().getSuperclass().equals(Item.class)){
+        if (bodyB.getUserData() instanceof Player && bodyA.getUserData().getClass().getSuperclass().equals(Item.class)) {
             // Give buff
-            ((Item)bodyA.getUserData()).use((Player) bodyB.getUserData());
+            ((Item) bodyA.getUserData()).use((Player) bodyB.getUserData());
             // Remove item
-            ((Item)bodyA.getUserData()).setShouldBeRemoved(true);
+            ((Item) bodyA.getUserData()).setShouldBeRemoved(true);
         }
     }
 
     /**
      * Checks if a collision with a door happened
-     * @return  true - collision with door
-     *          false - no collision with door
+     *
+     * @return true - collision with door
+     * false - no collision with door
      */
-    public Orientation isDoorCollision(){
+    public Orientation isDoorCollision() {
         String layerName = "doors-";
 
         Player player = level.getCurrentRoom().getPlayer();
         Polygon polygon = player.getPolygon();
         Rectangle playerRectangle = polygon.getBoundingRectangle();
 
-        //Rectangle playerRectangle = level.getCurrentRoom().getPlayer().getPolygon().getBoundingRectangle();
-
-        for (Orientation orientation : Orientation.values()){
+        for (Orientation orientation : Orientation.values()) {
             MapLayer layer = level.getCurrentRoom().getMap().getLayers().get(layerName + orientation.name());
             if (layer == null) return null;
 
             MapObjects objects = layer.getObjects();
 
-            for(int i = 0; i < objects.getCount(); i++){
-                if (objects.get(i) instanceof RectangleMapObject){
+            for (int i = 0; i < objects.getCount(); i++) {
+                if (objects.get(i) instanceof RectangleMapObject) {
                     Rectangle rectangle = ((RectangleMapObject) objects.get(i)).getRectangle();
 
+                    if (orientation == Orientation.LEFT && rectangle.x != 0) {
+                        System.out.println("links");
+                        continue;
+                    }
+
                     Vector2 position, size;
-                    if (orientation == Orientation.DOWN || orientation == Orientation.UP){
-                        position = orientation.moveCoord(new Vector2(0,0), 16);
+                    if (orientation == Orientation.DOWN || orientation == Orientation.UP) {
+                        position = orientation.moveCoord(new Vector2(0, 0), 16);
 
                         size = new Vector2(-16, 0);
-                    }else{
-                        position = new Vector2(0,0);
+                    } else {
+                        position = new Vector2(0, 0);
 
                         size = new Vector2(0, -16);
                     }
@@ -132,8 +151,7 @@ public class ContactHandler implements ContactListener {
                             rectangle.width + size.x,
                             rectangle.height + size.y);
 
-
-                    if (playerRectangle.overlaps(rectangle1)){
+                    if (playerRectangle.overlaps(rectangle1)) {
                         //The Player enters a door
                         return orientation;
                     }
@@ -146,7 +164,7 @@ public class ContactHandler implements ContactListener {
 
     private void diminishHealth(Body body) {
         // Check if body extends from Entity
-        if(body.getUserData() instanceof Entity) {
+        if (body.getUserData() instanceof Entity) {
 
             Entity entity = (Entity) body.getUserData();
             // Check if body has cooldown pending
@@ -162,7 +180,7 @@ public class ContactHandler implements ContactListener {
     }
 
     private void removeBulletFixture(Bullet bullet) {
-        if (BindingOfNewton.getInstance().level.getCurrentRoom().getBullets().contains(bullet)){
+        if (BindingOfNewton.getInstance().level.getCurrentRoom().getBullets().contains(bullet)) {
             bullet.setRemove(true);
         }
     }
@@ -172,9 +190,9 @@ public class ContactHandler implements ContactListener {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
-        if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")){
+        if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")) {
             isContactFire = false;
-        }else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() != null && bodyA.getUserData().equals("fire")){
+        } else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() != null && bodyA.getUserData().equals("fire")) {
             isContactFire = false;
         }
 
@@ -191,7 +209,7 @@ public class ContactHandler implements ContactListener {
     }
 
     public void contactWithFire() {
-        if (isContactFire){
+        if (isContactFire) {
             contactWithFire(level.getCurrentRoom().getPlayer().getBody());
         }
     }
