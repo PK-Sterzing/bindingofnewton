@@ -11,7 +11,7 @@ import com.bindingofnewton.game.Orientation;
  */
 public class Door {
 
-    enum Id{
+    public enum Id{
         NORMAL(17, 18),
         BOSS(27, 28),
         PORTAL(3, 31),
@@ -71,7 +71,7 @@ public class Door {
         int width = layer.getWidth();
         int height = layer.getHeight();
 
-        if (id == Id.PORTAL.open || id == Id.PORTAL.closed){
+        if (id == Id.PORTAL.open || id == Id.PORTAL.closed || id == Id.PORTAL2.open || id == Id.PORTAL2.closed || id == Id.PORTAL3.open || id == Id.PORTAL3.closed ){
             layer.setCell(width/2, height/2, cell);
         }else{
             switch (orientation){
@@ -100,6 +100,9 @@ public class Door {
      */
     public void setBody(Body body){
         this.body = body;
+        if (id == Id.PORTAL || id == Id.PORTAL2 || id == Id.PORTAL3){
+            body.setActive(false);
+        }
     }
 
     /**
@@ -115,8 +118,14 @@ public class Door {
      */
     public void open() {
         isOpen = true;
-        if (body != null)
-            body.setActive(id == Id.PORTAL);
+        if (body != null){
+            if (id == Id.PORTAL || id == Id.PORTAL2 || id == Id.PORTAL3){
+                body.setActive(true);
+            }else{
+                body.setActive(false);
+            }
+        }
+
         setDoorOnMap(id.open);
     }
 
@@ -125,8 +134,14 @@ public class Door {
      */
     public void close(){
         isOpen = false;
-        if (body != null)
-            body.setActive(id != Id.PORTAL);
+        if (body != null){
+            if (id == Id.PORTAL || id == Id.PORTAL2 || id == Id.PORTAL3){
+                body.setActive(false);
+            }else{
+                body.setActive(true);
+            }
+        }
+
         setDoorOnMap(id.closed);
     }
 
@@ -146,4 +161,11 @@ public class Door {
         return body;
     }
 
+    /**
+     * Gets the doors id
+     * @return the ID
+     */
+    public Id getId() {
+        return id;
+    }
 }

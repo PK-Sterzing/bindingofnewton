@@ -105,14 +105,8 @@ public class BindingOfNewton implements Screen{
 
 		Orientation orientation = contactHandler.isDoorCollision();
 		if (orientation != null ){
-			if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
-				System.out.println("HIER EBENE WECHSELN");
-				levelNumber++;
-				makeNewLevel();
-			}else
-				makeNewRoom(orientation);
+			makeNewRoom(orientation);
 		}
-
 		contactHandler.contactWithFire();
 
 		batch.begin();
@@ -167,7 +161,7 @@ public class BindingOfNewton implements Screen{
 	/**
 	 * Creates new Level, removes all bodies, creates new Player, loads starting Room
 	 */
-	private void makeNewLevel(){
+	public void makeNewLevel(){
 		Array<Body> bodies = new Array<>();
 		world.getBodies(bodies);
 

@@ -31,10 +31,8 @@ public class BossEnemy extends Enemy {
         move(new Vector2(0, 0));
         deltaTime += Gdx.graphics.getDeltaTime();
 
-        System.out.println(deltaTime);
-
         if (deltaTime > 4){
-            System.out.println("Sollte schießen");
+            //System.out.println("Sollte schießen");
             shoot(batch);
             isShooting = true;
         }else{
@@ -125,7 +123,7 @@ public class BossEnemy extends Enemy {
     @Override
     public void calculateMoveToPlayer(Player player) {
         if (isShooting){
-            System.out.println("Moved nicht");
+            //System.out.println("Moved nicht");
             move(new Vector2(0.0001f,0.0001f));
         }else{
             super.calculateMoveToPlayer(player);
