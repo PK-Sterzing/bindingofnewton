@@ -6,18 +6,24 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Player;
 
+/**
+ * Class for Health boost item; Heals the player
+ */
 public class HealthBoostItem extends Item{
     private float healthBoost = 2f;
+
 
     public HealthBoostItem(World world, float posX, float posY){
         super(world, posX, posY);
         body.setUserData(this);
     }
 
+
     @Override
     public void use(Player player) {
         player.setHealth(this.healthBoost);
     }
+
 
     @Override
     public void remove(Player player) {

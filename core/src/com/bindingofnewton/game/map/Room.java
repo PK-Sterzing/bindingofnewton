@@ -25,6 +25,9 @@ import com.bindingofnewton.game.items.SpeedBoostItem;
 
 import java.util.*;
 
+/**
+ * Class for all rooms in a level
+ */
 public class Room {
     protected int x;
     protected int y;
@@ -53,6 +56,9 @@ public class Room {
         isCleared = false;
     }
 
+    /**
+     * Gets all possible positons for doors in a room
+     */
     public List<Orientation> getPossibleDoors(){
         List<Orientation> orientations = new ArrayList<>();
         List<Orientation> possibleOrientations = new ArrayList<>();
@@ -89,6 +95,9 @@ public class Room {
         return map;
     }
 
+    /**
+     * Sets door sprites
+     */
     public void setDoorBodies(){
         for (Orientation orientation : Orientation.values()){
             String layerName = "doors-" + orientation.name();

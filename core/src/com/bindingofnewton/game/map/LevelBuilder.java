@@ -9,6 +9,9 @@ import com.bindingofnewton.game.assets.AssetsHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that manages the level generation
+ */
 public class LevelBuilder {
     private Level level;
 
@@ -156,7 +159,7 @@ public class LevelBuilder {
     }
 
     /**
-     * Generates the boss room
+     * Generates the boss room, can only be placed at the edge of the map
      */
     private void generateBossRoom(){
         Orientation orientation = Orientation.getRandom();

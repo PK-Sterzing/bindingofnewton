@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.bindingofnewton.game.assets.AssetsHandler;
 
 /**
- * The class for the minimap on the top left corner of the game.
+ * The class for the minimap on the top right corner of the game.
  */
 public class Minimap {
 

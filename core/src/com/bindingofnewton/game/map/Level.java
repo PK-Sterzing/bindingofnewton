@@ -9,6 +9,9 @@ import com.bindingofnewton.game.character.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to get current rooms
+ */
 public class Level {
 
     //<editor-fold desc="Members">
