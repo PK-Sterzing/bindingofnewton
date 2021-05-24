@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.bullets.Bullet;
+import com.bindingofnewton.game.assets.SoundHandler;
 import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
@@ -171,6 +172,9 @@ public class ContactHandler implements ContactListener {
             // Check if body has cooldown pending
             if (System.currentTimeMillis() - entity.getLastSustainedDamage() >= entity.getInvincibilityCooldown()) {
                 entity.setHealth(-1.0f);
+                if (body.getUserData() instanceof Player) {
+                    SoundHandler.getInstance().playSound(SoundHandler.Sound.HIT);
+                }
                 if (entity.getHealth() <= 0.0) {
                     entity.setDead(true);
                 }

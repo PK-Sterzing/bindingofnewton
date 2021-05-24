@@ -1,16 +1,21 @@
 package com.bindingofnewton.game.assets;
 
 import com.badlogic.gdx.Gdx;
-
 import java.util.HashMap;
 
+/**
+ * Handles all sounds and music in the game. Like {@link AssetsHandler} also a Singleton-Pattern. Instance gets created at start of the game, because loading sounds and music needs a lot of time.
+ */
 public class SoundHandler {
     private static SoundHandler instance;
     private HashMap<Sound, com.badlogic.gdx.audio.Sound> sounds;
     private HashMap<Music, com.badlogic.gdx.audio.Music> musics;
 
     public enum Sound {
-        SHOOT
+        SHOOT,
+        ELECTRIC,
+        HIT,
+        PAPER_THROW
     }
 
     public enum Music {
@@ -21,7 +26,12 @@ public class SoundHandler {
         //Load all required Sound
         sounds = new HashMap<>();
         musics = new HashMap<>();
-        sounds.put(Sound.SHOOT, Gdx.audio.newSound(Gdx.files.internal("sounds/shiasn.mp3")));
+
+        sounds.put(Sound.SHOOT, Gdx.audio.newSound(Gdx.files.internal("sounds/newton-shot.mp3")));
+        sounds.put(Sound.HIT, Gdx.audio.newSound(Gdx.files.internal("sounds/aua.wav")));
+        sounds.put(Sound.ELECTRIC, Gdx.audio.newSound(Gdx.files.internal("sounds/electric.mp3")));
+        sounds.put(Sound.PAPER_THROW, Gdx.audio.newSound(Gdx.files.internal("sounds/paper-throw.wav")));
+
         musics.put(Music.MAIN_MENU, Gdx.audio.newMusic(Gdx.files.internal("sounds/main_menu.wav")));
     }
 
@@ -39,7 +49,7 @@ public class SoundHandler {
     }
 
     public void playSound(Sound sound) {
-        sounds.get(sound).play();
+        sounds.get(sound).play(0.1f);
     }
 
     public void stopMusic(Music music) {

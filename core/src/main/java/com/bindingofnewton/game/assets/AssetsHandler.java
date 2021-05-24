@@ -12,13 +12,27 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles all Sprites and Animations. Is a Singleton to reduce loading speed for the big_atlas file where all Sprites are.
+ */
 public class AssetsHandler {
 
     //<editor-fold desc="Enums">
 
     public enum PlayerName {
-        NEWTON,
-        EDISON
+        NEWTON(SoundHandler.Sound.SHOOT),
+        EDISON(SoundHandler.Sound.ELECTRIC),
+        EINSTEIN(SoundHandler.Sound.PAPER_THROW);
+
+        private SoundHandler.Sound shot;
+
+        PlayerName(SoundHandler.Sound sound) {
+            this.shot = sound;
+        }
+
+        public SoundHandler.Sound getShot() {
+            return shot;
+        }
     }
 
     //</editor-fold>
@@ -30,25 +44,22 @@ public class AssetsHandler {
 
     public static final String BIG_ATLAS = ASSETS_ABSOLUTE + "./big_atlas/packed/big_atlas.atlas";
 
-    public static final String NEWTON_RUN = "./character/newton_run/packed/newton-run.atlas";
-    public static final String BAT_RUN = "./character/bat_run/packed/enemy1.atlas";
-    public static final String EDISON = "./character/edison/packed/edison.atlas";
-    public static final String EDISON_RUN = "./character/edison_run/packed/edison_run.atlas";
     public static final String MAP_TILED = ASSETS_ABSOLUTE + "map/tiled/";
     public static String MAP_CURRENT_LEVEL = "level1/";
-
-    public static final String HEARTS = "./hearts";
 
     private static AssetsHandler instance;
 
     private final TextureAtlas textureAtlas;
 
-    private static float deltaTime = 0f;
-
     private AssetsHandler() {
         textureAtlas = new TextureAtlas(BIG_ATLAS);
     }
 
+    /**
+     * Handles Instance (Singleton)
+     *
+     * @return the instance
+     */
     public static AssetsHandler getInstance() {
         if (instance == null) {
             instance = new AssetsHandler();
@@ -56,13 +67,19 @@ public class AssetsHandler {
         return instance;
     }
 
-    public ArrayList<Sprite> getPlayerSprites(PlayerName player) {
+    /**
+     * Gets all sprites for a player
+     *
+     * @param playerName Name of the player with the sprites
+     * @return ArrayList of all player sprites
+     */
+    public ArrayList<Sprite> getPlayerSprites(PlayerName playerName) {
         ArrayList<Sprite> array = new ArrayList<>();
 
-        array.add(0, textureAtlas.createSprite(player.name().toLowerCase() + "-back"));
-        array.add(1, textureAtlas.createSprite(player.name().toLowerCase() + "-front"));
-        array.add(2, textureAtlas.createSprite(player.name().toLowerCase() + "-left"));
-        array.add(3, textureAtlas.createSprite(player.name().toLowerCase() + "-right"));
+        array.add(0, textureAtlas.createSprite(playerName.name().toLowerCase() + "-back"));
+        array.add(1, textureAtlas.createSprite(playerName.name().toLowerCase() + "-front"));
+        array.add(2, textureAtlas.createSprite(playerName.name().toLowerCase() + "-left"));
+        array.add(3, textureAtlas.createSprite(playerName.name().toLowerCase() + "-right"));
 
         for (Sprite sprite : array) {
             //sprite.setSize(sprite.getWidth() * 0.5f, sprite.getHeight() * 0.5f);
@@ -72,6 +89,13 @@ public class AssetsHandler {
         return array;
     }
 
+    /**
+     * Gets a Sprite by it's orientation and the playername
+     *
+     * @param playerName  playerName of the player object
+     * @param orientation orientation always of the player
+     * @return a single Sprite
+     */
     public Sprite getPlayerSprite(PlayerName playerName, Orientation orientation) {
         Sprite sprite;
 
@@ -94,23 +118,19 @@ public class AssetsHandler {
         return sprite;
     }
 
-    public ArrayList<Sprite> getEnemySprites(Enemy.Properties enemyName, Orientation orientation){
-        ArrayList<Sprite> array = new ArrayList<>();
-
-        Sprite sprite = textureAtlas.createSprite(enemyName.name().toLowerCase() + "_run1");
-        array.add(sprite);
-        Sprite sprite1 = new Sprite(sprite);
-        sprite1.flip(true, false);
-        array.add(sprite1);
-
-        return array;
-    }
-
+    /**
+     * Gets an animation with Sprites. Sprites in assets folder need to be named like name-x.jpg, where x starts with 1
+     *
+     * @param name        the name of the sprite. If it's in a subfolder it's the path
+     * @param duration    how long each sprite should be shown
+     * @param scaleFactor if scaling is need it can be done here
+     * @return Sprite Animation
+     */
     public Animation<Sprite> getAnimation(String name, float duration, float scaleFactor) {
         Array<Sprite> sprites = new Array<>();
         int counter = 1;
 
-        while(true) {
+        while (true) {
             Sprite sprite = getSingleSpriteFromAtlas(name + "-" + counter);
             if (sprite == null) break;
             sprite.setSize(sprite.getWidth() * scaleFactor, sprite.getHeight() * scaleFactor);
@@ -120,19 +140,44 @@ public class AssetsHandler {
         return new Animation<>(duration, sprites, Animation.PlayMode.LOOP);
     }
 
+    /**
+     * Calls the {@link #getAnimation(String, float, float) getAnimation}-method. Is specially designed for a player.
+     *
+     * @param playerName  the playerName of the player
+     * @param orientation the orientation of the player, because every player has an animation in each direction
+     * @param duration    the duration of each sprite
+     * @param scaleFactor if scaling is need it can be done here
+     * @return Sprite Animation for player
+     */
     public Animation<Sprite> getPlayerRunAnimation(PlayerName playerName, Orientation orientation, float duration, float scaleFactor) {
         switch (orientation) {
-            case DOWN: return getAnimation(playerName.toString().toLowerCase() + "-run-front", duration, scaleFactor);
-            case LEFT: return getAnimation(playerName.toString().toLowerCase() + "-run-left", duration, scaleFactor);
-            case RIGHT: return getAnimation(playerName.toString().toLowerCase() + "-run-right", duration, scaleFactor);
-            default: return getAnimation(playerName.toString().toLowerCase() + "-run-back", duration, scaleFactor);
+            case DOWN:
+                return getAnimation(playerName.toString().toLowerCase() + "-run-front", duration, scaleFactor);
+            case LEFT:
+                return getAnimation(playerName.toString().toLowerCase() + "-run-left", duration, scaleFactor);
+            case RIGHT:
+                return getAnimation(playerName.toString().toLowerCase() + "-run-right", duration, scaleFactor);
+            default:
+                return getAnimation(playerName.toString().toLowerCase() + "-run-back", duration, scaleFactor);
         }
     }
 
+    /**
+     * Gets the sprite of an animation with the deltaTime.
+     *
+     * @param animation an animation with Sprites given by {@link #getAnimation(String, float, float) getAnimation}-method
+     * @param deltaTime every enemy has a deltaTime attribute. Needs to be given by a parameter
+     * @return single Sprite
+     */
     public Sprite getAnimationFrame(Animation<Sprite> animation, float deltaTime) {
         return animation.getKeyFrame(deltaTime, true);
     }
 
+    /**
+     * Gets all Maps
+     *
+     * @return List of Strings with all maps
+     */
     public List<String> getMaps() {
         ArrayList<String> list = new ArrayList<>();
 
@@ -160,11 +205,23 @@ public class AssetsHandler {
         return list;
     }
 
+    /**
+     * Get's a Sprite by it's file name. Shouldn't be used to often (Performance)
+     *
+     * @param name of the Sprite (with extension e.x. .jpg, .png)
+     * @return single Sprite
+     */
     public Sprite getSingleSpriteFromFile(String name) {
         Texture texture = new Texture(ASSETS_ABSOLUTE + name);
         return new Sprite(texture);
     }
 
+    /**
+     * Get's a Sprite by big_atlas. Should always be used if Sprite is already in the atlas
+     *
+     * @param name of the Sprite (IMPORTANT: without extension e.x. .jpg, .png)
+     * @return single Sprite
+     */
     public Sprite getSingleSpriteFromAtlas(String name) {
         return textureAtlas.createSprite(name);
     }
