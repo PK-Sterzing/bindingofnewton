@@ -1,5 +1,4 @@
 package com.bindingofnewton.game;
-import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.bullets.Bullet;
 import com.bindingofnewton.game.character.BossEnemy;
@@ -269,6 +268,12 @@ public class BindingOfNewton implements Screen{
 		     */
 			ArrayList<Enemy> enemies = new ArrayList<>();
 			for(int i = 0; i < 5; i++){
+				level.getCurrentRoom().getMap().getProperties().get("file");
+				String roomName = level.getCurrentRoom().getMap().getProperties().get("file").toString();
+				roomName = roomName.split("/")[roomName.split("/").length - 1];
+				System.out.println(roomName);
+
+
 				if (i%2 == 0){
 					enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) 100, (int) 100, 80));
 				}else{

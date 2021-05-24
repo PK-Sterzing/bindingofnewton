@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bindingofnewton.game.assets.SoundHandler;
 import com.bindingofnewton.game.bullets.Bullet;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
@@ -42,6 +43,8 @@ public class Room {
 
     protected ArrayList<Item> droppedItems;
     protected Player player;
+
+    private boolean soundPlayed = false;
 
     private boolean isCleared;
 
@@ -256,6 +259,10 @@ public class Room {
 
         if (enemies.isEmpty()) {
             isCleared = true;
+            if (!soundPlayed) {
+                soundPlayed = true;
+                SoundHandler.getInstance().playSound(SoundHandler.Sound.DOOR_OPEN);
+            }
             for (Door door : doors) {
                 door.open();
             }

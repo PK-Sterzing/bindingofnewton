@@ -9,6 +9,7 @@ import com.bindingofnewton.game.bullets.Bullet;
 import com.bindingofnewton.game.assets.SoundHandler;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.mainmenu.MainMenuScreen;
+import com.bindingofnewton.game.mainmenu.PauseScreen;
 import com.bindingofnewton.game.map.Level;
 
 import java.util.HashMap;
@@ -53,8 +54,10 @@ public class InputHandler implements InputProcessor {
         if (keycode == Input.Keys.SHIFT_LEFT){
             BindingOfNewton.getInstance().showDebugInfo = !BindingOfNewton.getInstance().showDebugInfo;
         }
+
         if (keycode == Input.Keys.ESCAPE){
-            BindingOfNewton.getInstance().getGame().setScreen(new MainMenuScreen(BindingOfNewton.getInstance().getGame()));
+            //BindingOfNewton.getInstance().getGame().setScreen(new MainMenuScreen(BindingOfNewton.getInstance().getGame()));
+            BindingOfNewton.getInstance().getGame().setScreen(new PauseScreen(BindingOfNewton.getInstance().getGame()));
         }
 
         if (movingKeys.containsKey(keycode)){

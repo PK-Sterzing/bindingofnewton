@@ -4,12 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.character.Enemy;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -50,9 +52,35 @@ public class AssetsHandler {
     private static AssetsHandler instance;
 
     private final TextureAtlas textureAtlas;
+    private final HashMap<String, Vector2[]> spawnPoints;
 
     private AssetsHandler() {
         textureAtlas = new TextureAtlas(BIG_ATLAS);
+
+        spawnPoints = new HashMap<>();
+        spawnPoints.put("level1/map1.tmx", new Vector2[]{new Vector2(4,3), new Vector2(10, 2)});
+        spawnPoints.put("level1/map2.tmx", new Vector2[]{new Vector2(4,2), new Vector2(10, 7)});
+        spawnPoints.put("level1/map3.tmx", new Vector2[]{new Vector2(4,3), new Vector2(11, 6)});
+        spawnPoints.put("level1/map4.tmx", new Vector2[]{new Vector2(5,3), new Vector2(10, 5)});
+        spawnPoints.put("level1/map5.tmx", new Vector2[]{new Vector2(4,3), new Vector2(10, 5)});
+        spawnPoints.put("level1/map6.tmx", new Vector2[]{new Vector2(5,4), new Vector2(8, 4)});
+        spawnPoints.put("level1/map7.tmx", new Vector2[]{new Vector2(4,4), new Vector2(10, 4)});
+        spawnPoints.put("level1/map8.tmx", new Vector2[]{new Vector2(4,5), new Vector2(10, 3)});
+        spawnPoints.put("level1/map9.tmx", new Vector2[]{new Vector2(3,7), new Vector2(11, 1)});
+
+        spawnPoints.put("level2/map1.tmx", new Vector2[]{new Vector2(1,7), new Vector2(13, 1)});
+        spawnPoints.put("level2/map2.tmx", new Vector2[]{new Vector2(7,4), new Vector2(4, 4)});
+        spawnPoints.put("level2/map3.tmx", new Vector2[]{new Vector2(4,2), new Vector2(10, 5)});
+        spawnPoints.put("level2/map4.tmx", new Vector2[]{new Vector2(5,2), new Vector2(11, 6)});
+        spawnPoints.put("level2/map5.tmx", new Vector2[]{new Vector2(4,4), new Vector2(10, 4)});
+        spawnPoints.put("level2/map6.tmx", new Vector2[]{new Vector2(4,3), new Vector2(10, 5)});
+        spawnPoints.put("level2/map7.tmx", new Vector2[]{new Vector2(3,1), new Vector2(11, 7)});
+        spawnPoints.put("level2/map8.tmx", new Vector2[]{new Vector2(7,4), new Vector2(6, 4)});
+        spawnPoints.put("level2/map9.tmx", new Vector2[]{new Vector2(4,4), new Vector2(10, 4)});
+
+        for (int i = 0; i <= 9; i++) {
+            spawnPoints.put("level3/map" + i + ".tmx", new Vector2[]{new Vector2(5, 4), new Vector2(9, 4)});
+        }
     }
 
     /**

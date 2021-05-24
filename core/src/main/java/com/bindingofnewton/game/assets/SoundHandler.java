@@ -15,7 +15,8 @@ public class SoundHandler {
         SHOOT,
         ELECTRIC,
         HIT,
-        PAPER_THROW
+        PAPER_THROW,
+        DOOR_OPEN
     }
 
     public enum Music {
@@ -31,6 +32,7 @@ public class SoundHandler {
         sounds.put(Sound.HIT, Gdx.audio.newSound(Gdx.files.internal("sounds/aua.wav")));
         sounds.put(Sound.ELECTRIC, Gdx.audio.newSound(Gdx.files.internal("sounds/electric.mp3")));
         sounds.put(Sound.PAPER_THROW, Gdx.audio.newSound(Gdx.files.internal("sounds/paper-throw.wav")));
+        sounds.put(Sound.DOOR_OPEN, Gdx.audio.newSound(Gdx.files.internal("sounds/door-open.mp3")));
 
         musics.put(Music.MAIN_MENU, Gdx.audio.newMusic(Gdx.files.internal("sounds/main_menu.wav")));
     }
