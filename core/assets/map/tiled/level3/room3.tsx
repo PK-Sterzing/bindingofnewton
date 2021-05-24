@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.6.0" name="room" tilewidth="32" tileheight="48" tilecount="10" columns="0">
+<tileset version="1.5" tiledversion="1.6.0" name="room" tilewidth="32" tileheight="48" tilecount="11" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="32" height="32" source="../../img/lava-corner.png"/>
@@ -35,5 +35,8 @@
  </tile>
  <tile id="11">
   <image width="32" height="32" source="../../img/3floor-bossdoor-closed.png"/>
+ </tile>
+ <tile id="13">
+  <image width="32" height="16" source="../../img/endportal.png"/>
  </tile>
 </tileset>
