@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.5.0" name="room" tilewidth="48" tileheight="48" tilecount="20" columns="0">
+<tileset version="1.5" tiledversion="1.6.0" name="room" tilewidth="48" tileheight="48" tilecount="21" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="3">
   <properties>
@@ -92,5 +92,8 @@
  </tile>
  <tile id="34">
   <image width="48" height="48" source="../../../instruction_walk.png"/>
+ </tile>
+ <tile id="35">
+  <image width="32" height="32" source="../../img/portalto3rdfloor.png"/>
  </tile>
 </tileset>
