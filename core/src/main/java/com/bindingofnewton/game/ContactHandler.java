@@ -83,7 +83,8 @@ public class ContactHandler implements ContactListener {
         Door door = (Door) body.getUserData();
         if (door.getId() == Door.Id.PORTAL || door.getId() == Door.Id.PORTAL2 || door.getId() == Door.Id.PORTAL3){
             BindingOfNewton.getInstance().levelNumber++;
-            BindingOfNewton.getInstance().makeNewLevel();
+            // Moves to new level
+            BindingOfNewton.getInstance().setShouldMoveToNewLevel(true);
         }
     }
 

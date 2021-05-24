@@ -48,6 +48,8 @@ public class BindingOfNewton implements Screen{
 
 	private boolean isPaused = false;
 
+	protected boolean shouldMoveToNewLevel = false;
+
 	private BindingOfNewton() { }
 
 	public static BindingOfNewton getInstance(){
@@ -107,6 +109,13 @@ public class BindingOfNewton implements Screen{
 		if (orientation != null ){
 			makeNewRoom(orientation);
 		}
+
+		// Check if we have to move to next level
+		if(shouldMoveToNewLevel == true){
+			makeNewLevel();
+			shouldMoveToNewLevel = false;
+		}
+
 		contactHandler.contactWithFire();
 
 		batch.begin();
@@ -140,7 +149,6 @@ public class BindingOfNewton implements Screen{
 		}
 
 
-
 		//Renders the hearts of the player
 		List<Sprite> sprites = player.getHealthSprites();
 		for (int i=0; i< sprites.size(); i++){
@@ -167,7 +175,9 @@ public class BindingOfNewton implements Screen{
 
 		//Destroying all bodies of the map and of the player
 		for (Body body : bodies){
-			world.destroyBody(body);
+		    if(body != null){
+				world.destroyBody(body);
+			}
 		}
 
 		// Set current level so to the right folder, so that the asset handler is loading the right rooms
@@ -178,7 +188,7 @@ public class BindingOfNewton implements Screen{
 		level = new LevelBuilder()
 				.setWorld(world)
 				.setLevelWidthHeight(8, 8)
-				.setMinRooms(8)
+				.setMinRooms(3)
 				.setAmountRandomRooms(0, 0)
 				.build();
 
@@ -383,6 +393,14 @@ public class BindingOfNewton implements Screen{
 
 	public int getLevelNumber() {
 		return levelNumber;
+	}
+
+	public boolean isShouldMoveToNewLevel() {
+		return shouldMoveToNewLevel;
+	}
+
+	public void setShouldMoveToNewLevel(boolean shouldMoveToNewLevel) {
+		this.shouldMoveToNewLevel = shouldMoveToNewLevel;
 	}
 
 }
