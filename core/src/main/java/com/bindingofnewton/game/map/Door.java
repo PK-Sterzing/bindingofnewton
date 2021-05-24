@@ -20,8 +20,8 @@ public class Door {
         BOSS2(29, 30),
         PORTAL2(19, 31),
 
-        NORMAL3(17, 18),
-        BOSS3(27, 28),
+        NORMAL3(10, 11),
+        BOSS3(12, 9),
         PORTAL3(3, 31);
 
         private final int closed;
@@ -31,7 +31,6 @@ public class Door {
             this.open = open;
             this.closed = closed;
         }
-
     }
 
     private World world;

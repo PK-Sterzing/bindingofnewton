@@ -68,14 +68,6 @@ public abstract class Entity {
     }
 
     /**
-     * Sets same sprite for player in all directions
-     * @param sprite
-     */
-    public void setSingleSprites(Sprite sprite){
-        // TODO: Implement this
-    }
-
-    /**
      * Returns the health of the current entity
      * @return health
      */

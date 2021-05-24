@@ -14,10 +14,13 @@ public class Bullet {
     protected PolygonShape polygonShape;
     protected Sprite sprite;
     protected Vector2 movement;
+    private boolean isEnemyBullet;
 
     private boolean remove = false;
 
-    public Bullet(World world, AssetsHandler.PlayerName playerName, int startX, int startY){
+    public Bullet(World world, AssetsHandler.PlayerName playerName, int startX, int startY, boolean isEnemyBullet){
+        this.isEnemyBullet = isEnemyBullet;
+
         // Create Box2d body
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
@@ -54,6 +57,10 @@ public class Bullet {
 
         // Set default movement
         movement = new Vector2(0, 0);
+    }
+
+    public Bullet(World world, AssetsHandler.PlayerName playerName, int startX, int startY){
+        this(world, playerName, startX, startY, false);
     }
 
     /**
@@ -115,6 +122,19 @@ public class Bullet {
      * @param batch the batch to be rendered with
      */
     public void render(SpriteBatch batch) {
+        if (isEnemyBullet){
+            System.out.println("Position:  " + sprite.getX() + ",  " + sprite.getY());
+            System.out.println("Movement; " + movement.toString());
+        }
+
         sprite.draw(batch);
+    }
+
+    /**
+     * @return true - if the bullet is a bullet of an enemy
+     *          false - if not
+     */
+    public boolean isEnemyBullet() {
+        return isEnemyBullet;
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.assets.SoundHandler;
 import com.bindingofnewton.game.bullets.Bullet;
 import com.bindingofnewton.game.assets.SoundHandler;
 import com.bindingofnewton.game.character.Player;

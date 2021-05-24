@@ -33,19 +33,27 @@ public class ContactHandler implements ContactListener {
         if (!(bodyA.getUserData() == null || bodyB.getUserData() == null)) {
             if (bodyA.getUserData() instanceof Bullet) {
                 // If bodyB extends from Entity
-                diminishHealth(bodyB);
+
+                if (!((Bullet) bodyA.getUserData()).isEnemyBullet()){
+                    diminishHealth(bodyB, 1.0f);
+                }
+
+
                 removeBulletFixture((Bullet) bodyA.getUserData());
             } else if (bodyB.getUserData() instanceof Bullet) {
+                if (!((Bullet) bodyB.getUserData()).isEnemyBullet()){
+                    diminishHealth(bodyA, 1.0f);
+                }
+
                 // If bodyA extends from Entity
-                diminishHealth(bodyA);
                 removeBulletFixture((Bullet) bodyB.getUserData());
             } else if (bodyA.getUserData() instanceof Enemy) {
                 if (bodyB.getUserData() instanceof Player) {
-                    diminishHealth(bodyB);
+                    diminishHealth(bodyB, ((Enemy) bodyA.getUserData()).getDamage());
                 }
             } else if (bodyB.getUserData() instanceof Enemy) {
                 if (bodyA.getUserData() instanceof Player) {
-                    diminishHealth(bodyA);
+                    diminishHealth(bodyA, ((Enemy) bodyB.getUserData()).getDamage());
                 }
             }
 
@@ -64,7 +72,6 @@ public class ContactHandler implements ContactListener {
             removeBulletFixture((Bullet) bodyB.getUserData());
         }
 
-        //TODO: player kriegt zur zeit jede sekunde schaden, aber nur wenn er wieder am feuer angeht. Ändern!
         if (bodyA.getUserData() instanceof Player && bodyB.getUserData() != null && bodyB.getUserData().equals("fire")) {
             isContactFire = true;
             contactWithFire(bodyA);
@@ -77,7 +84,7 @@ public class ContactHandler implements ContactListener {
         if (bodyA.getUserData() instanceof Player && bodyB.getUserData() instanceof Door){
             contactWithPortal(bodyB);
         }else if (bodyB.getUserData() instanceof Player && bodyA.getUserData() instanceof Door){
-
+            contactWithPortal(bodyA);
         }
     }
 
@@ -164,14 +171,14 @@ public class ContactHandler implements ContactListener {
         return null;
     }
 
-    private void diminishHealth(Body body) {
+    private void diminishHealth(Body body, float damage) {
         // Check if body extends from Entity
         if (body.getUserData() instanceof Entity) {
 
             Entity entity = (Entity) body.getUserData();
             // Check if body has cooldown pending
             if (System.currentTimeMillis() - entity.getLastSustainedDamage() >= entity.getInvincibilityCooldown()) {
-                entity.setHealth(-1.0f);
+                entity.setHealth(-damage);
                 if (body.getUserData() instanceof Player) {
                     SoundHandler.getInstance().playSound(SoundHandler.Sound.HIT);
                 }

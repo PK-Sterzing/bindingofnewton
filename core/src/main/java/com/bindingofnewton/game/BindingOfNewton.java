@@ -194,8 +194,6 @@ public class BindingOfNewton implements Screen{
 				.setAmountRandomRooms(0, 0)
 				.build();
 
-
-		// TODO: Set player spawn in the middle
         AssetsHandler.PlayerName[] players = AssetsHandler.PlayerName.values();
 		Player player = new Player(world, players[levelNumber], 100, 100);
 
@@ -275,8 +273,11 @@ public class BindingOfNewton implements Screen{
 					enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) 100, (int) 100, 80));
 				}else{
 					if (levelNumber == 0) {
+
 						Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)100, (int)100, 50);
+						Enemy bat1 = new Enemy(world, Enemy.Properties.FIREBAT, (int)100, (int)100, 50);
 						enemies.add(bat);
+						enemies.add(bat1);
 					} else {
 						Enemy bat = new Enemy(world, Enemy.Properties.FIREBAT, (int)100, (int)100, 50);
 						enemies.add(bat);

@@ -33,7 +33,7 @@ public class RoomBuilder {
 
     public RoomBuilder setMap(String tmxFilename){
         room.map = new TmxMapLoader().load(tmxFilename);
-
+        room.map.getProperties().put("file", tmxFilename);
         return this;
     }
 
