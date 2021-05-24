@@ -159,7 +159,7 @@ public class InputHandler implements InputProcessor {
                     player.getPlayerName(),
                     (int) pos.x,
                     (int) pos.y);
-            //SoundHandler.getInstance().playSound(SoundHandler.Sound.SHOOT);
+            SoundHandler.getInstance().playSound(player.getPlayerName().getShot());
             bullet.setMovement(orientation.moveCoord(new Vector2(0,0), bullet.getSpeed()));
             level.getCurrentRoom().addBullet(bullet);
 

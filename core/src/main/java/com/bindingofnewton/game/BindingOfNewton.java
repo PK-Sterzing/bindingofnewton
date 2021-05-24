@@ -272,8 +272,13 @@ public class BindingOfNewton implements Screen{
 				if (i%2 == 0){
 					enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) 100, (int) 100, 80));
 				}else{
-					Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)100, (int)100, 50);
-					enemies.add(bat);
+					if (levelNumber == 0) {
+						Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)100, (int)100, 50);
+						enemies.add(bat);
+					} else {
+						Enemy bat = new Enemy(world, Enemy.Properties.FIREBAT, (int)100, (int)100, 50);
+						enemies.add(bat);
+					}
 				}
 			}
 			level.getCurrentRoom().addEnemies(enemies);

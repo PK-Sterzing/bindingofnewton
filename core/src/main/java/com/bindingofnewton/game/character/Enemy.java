@@ -25,6 +25,16 @@ public class Enemy extends Entity {
                 2,
                 500
         ),
+        FIREBAT(
+                new float[] {
+                        5.0f, 2.0f,
+                        24.0f, 2.0f,
+                        27.0f, 18.0f,
+                        4.0f, 18.0f,
+                },
+                2,
+                500
+        ),
         //TODO: Vertices berechnen/ändern
         BOSS(
                 new float[]{
