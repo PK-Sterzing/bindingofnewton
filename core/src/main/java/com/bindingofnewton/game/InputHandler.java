@@ -4,6 +4,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.bullets.Bullet;
+import com.bindingofnewton.game.assets.SoundHandler;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.mainmenu.MainMenuScreen;
 import com.bindingofnewton.game.map.Level;
@@ -159,7 +161,7 @@ public class InputHandler implements InputProcessor {
                     player.getPlayerName(),
                     (int) pos.x,
                     (int) pos.y);
-            //SoundHandler.getInstance().playSound(SoundHandler.Sound.SHOOT);
+            SoundHandler.getInstance().playSound(player.getPlayerName().getShot());
             bullet.setMovement(orientation.moveCoord(new Vector2(0,0), bullet.getSpeed()));
             level.getCurrentRoom().addBullet(bullet);
 

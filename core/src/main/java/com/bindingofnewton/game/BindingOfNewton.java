@@ -1,5 +1,7 @@
 package com.bindingofnewton.game;
+import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.bullets.Bullet;
 import com.bindingofnewton.game.character.BossEnemy;
 import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Player;
@@ -246,7 +248,7 @@ public class BindingOfNewton implements Screen{
 		level.getCurrentRoom().setPlayer(playerCached);
 
 		// Create Enemies
-		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
+		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1) && !level.getCurrentRoom().isCleared()){
 			makeBossEnemy();
 		}else if (!level.getCurrentRoom().isCleared()){
 		    /*
@@ -272,8 +274,13 @@ public class BindingOfNewton implements Screen{
 				if (i%2 == 0){
 					enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) 100, (int) 100, 80));
 				}else{
-					Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)100, (int)100, 50);
-					enemies.add(bat);
+					if (levelNumber == 0) {
+						Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)100, (int)100, 50);
+						enemies.add(bat);
+					} else {
+						Enemy bat = new Enemy(world, Enemy.Properties.FIREBAT, (int)100, (int)100, 50);
+						enemies.add(bat);
+					}
 				}
 			}
 			level.getCurrentRoom().addEnemies(enemies);

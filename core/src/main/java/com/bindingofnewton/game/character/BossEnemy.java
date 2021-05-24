@@ -8,7 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bindingofnewton.game.BindingOfNewton;
-import com.bindingofnewton.game.Bullet;
+import com.bindingofnewton.game.bullets.BossBullet;
+import com.bindingofnewton.game.bullets.Bullet;
 import com.bindingofnewton.game.Orientation;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class BossEnemy extends Enemy {
 
     private boolean isShooting  = false;
     private boolean shootsBullet  = false;
-    private Bullet bullet;
+    private BossBullet bullet;
 
     public BossEnemy(World world, int startX, int startY, int speed) {
         super(world, Properties.BOSS, startX, startY, speed);
@@ -32,15 +33,25 @@ public class BossEnemy extends Enemy {
         deltaTime += Gdx.graphics.getDeltaTime();
 
         if (deltaTime > 4){
-            //System.out.println("Sollte schießen");
             shoot(batch);
             isShooting = true;
         }else{
             go(batch);
             isShooting = false;
         }
+
+        if (bullet != null) {
+            Vector2 vector = calculateVectorToPlayer(BindingOfNewton.getInstance().level.getCurrentRoom().getPlayer());
+            vector = vector.scl(bullet.getSpeed() / vector.len());
+            bullet.setMovement(vector);
+            bullet.getSprite().setRotation(bullet.getMovement().angleDeg());
+        }
     }
 
+    /**
+     * The BossEnemy goes
+     * @param batch
+     */
     private void go(SpriteBatch batch) {
         Sprite sprite;
         if (this.getNextDamageSprite() == 0){
@@ -71,6 +82,10 @@ public class BossEnemy extends Enemy {
         }
     }
 
+    /**
+     * The BossEnemy shoots
+     * @param batch
+     */
     private void shoot(SpriteBatch batch) {
         if (animations.get(Orientation.LEFT).isAnimationFinished(deltaTime-3.9f)){
             isShooting = false;
@@ -84,30 +99,26 @@ public class BossEnemy extends Enemy {
                 bullets.remove(bullet);
 
                 if (orientation == Orientation.LEFT && !sprite.isFlipX()) {
-                    bullet = new Bullet(
+                    bullet = new BossBullet(
                             body.getWorld(),
                             null,
                             (int) (body.getPosition().x),
                             (int) (body.getPosition().y + sprite.getHeight() / 2));
                     bullet.setSprite(AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/rat_rocket.png"));
                 } else if (orientation == Orientation.RIGHT && sprite.isFlipX()) {
-                    bullet = new Bullet(body.getWorld(),
+                    bullet = new BossBullet(body.getWorld(),
                             null,
                             (int) (body.getPosition().x + 100),
                             (int) (body.getPosition().y + sprite.getHeight() / 2));
                     bullet.setSprite(AssetsHandler.getInstance().getSingleSpriteFromFile("./character/boss/rat_rocket.png"));
+                    bullet.getSprite().setX(bullet.getSprite().getX()-100);
                 }
+                bullet.getSprite().setFlip(true, false);
                 bullets.add(bullet);
 
                 shootsBullet = true;
             }else if (animation.getKeyFrameIndex(deltaTime-4) == 6){
                 shootsBullet = false;
-            }
-
-            if (bullet != null) {
-                Vector2 vector = calculateVectorToPlayer(BindingOfNewton.getInstance().level.getCurrentRoom().getPlayer());
-                sprite.setRotation(vector.angleDeg());
-                bullet.setMovement(vector);
             }
 
             if (orientation == Orientation.LEFT && !sprite.isFlipX()) {
@@ -126,7 +137,15 @@ public class BossEnemy extends Enemy {
             //System.out.println("Moved nicht");
             move(new Vector2(0.0001f,0.0001f));
         }else{
-            super.calculateMoveToPlayer(player);
+            Vector2 move = calculateVectorToPlayer(player);
+            //move.x *= -1;
+            //move.y *= -1;
+
+            // Change length of vector to the speed of the enemy
+            move = move.scl(this.getSpeed() / move.len());
+
+            this.move(move);
+            setLastPathChange(System.currentTimeMillis());
         }
     }
 }
