@@ -45,48 +45,13 @@ public class WinScreen implements Screen {
 
         stage = new Stage(viewport, batch);
 
-        backgroundSprite = AssetsHandler.getInstance().getSingleSpriteFromFile("Pause-screen.png");
+        backgroundSprite = AssetsHandler.getInstance().getSingleSpriteFromFile("Game-finished.png");
     }
 
 
     @Override
     public void show() {
-        //Stage should control input:
         Gdx.input.setInputProcessor(stage);
-
-
-        //Create buttons
-        TextButton continueButton = new TextButton("Continue", skin);
-        TextButton exitButton = new TextButton("Exit", skin);
-
-        continueButton.setTransform(true);
-        continueButton.setScale(16f, 9.5f);
-        continueButton.setPosition(200, 350);
-
-        exitButton.setTransform(true);
-        exitButton.setScale(15f, 8f);
-        exitButton.setPosition(260, 100);
-
-        //Add listeners to buttons
-        continueButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                SoundHandler.getInstance().stopMusic(SoundHandler.Music.MAIN_MENU);
-                game.setScreen(BindingOfNewton.getInstance());
-                BindingOfNewton.getInstance().setGame(game);
-                SoundHandler.getInstance().playMusic(SoundHandler.Music.MAIN_MENU, true, 0.2f);
-            }
-        });
-        exitButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
-
-        // Add actors (buttons) to stage
-        stage.addActor(continueButton);
-        stage.addActor(exitButton);
     }
 
     @Override
