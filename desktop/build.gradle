@@ -1,5 +1,6 @@
 sourceCompatibility = 1.8
 
+
 sourceSets.main.java.srcDirs = [ "src/main/java" ]
 sourceSets.test.java.srcDirs = [ "src/test/java" ]
 sourceSets.main.resources.srcDirs = ["../core/assets"]
@@ -16,6 +17,7 @@ project.ext.mainClassName = "main.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../core/assets")
 
 task run(dependsOn: classes, type: JavaExec) {
+    project.mainClassName = 'com.bindingofnewton.game.DesktopLauncher'
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
@@ -24,6 +26,7 @@ task run(dependsOn: classes, type: JavaExec) {
 }
 
 task debug(dependsOn: classes, type: JavaExec) {
+    project.mainClassName = 'com.bindingofnewton.game.DesktopLauncher'
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
