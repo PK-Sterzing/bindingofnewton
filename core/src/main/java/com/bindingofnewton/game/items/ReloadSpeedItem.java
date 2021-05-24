@@ -11,7 +11,7 @@ import com.bindingofnewton.game.character.Player;
  */
 public class ReloadSpeedItem extends Item {
     private static int amountUsed = 0;
-    private int reloadSpeedBuff = 300;
+    private int reloadSpeedBuff = 250;
 
     public ReloadSpeedItem(World world, float posX, float posY){
         super(world, posX, posY);

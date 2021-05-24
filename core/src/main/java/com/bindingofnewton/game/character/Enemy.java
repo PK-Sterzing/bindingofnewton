@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class is for enemies.
+ */
 public class Enemy extends Entity {
 
     /**
@@ -73,6 +76,20 @@ public class Enemy extends Entity {
                 250,
                 1,
                 -1
+        ),
+        GOBLIN(
+                new float[]{
+                        7.7f, 0.0f,
+                        14.0f, 0.0f,
+                        15.3f, 18.2f,
+                        16.0f, 28.0f,
+                        5.6f, 28.0f,
+                        6.6f, 18.2f,
+                },
+                4,
+                300,
+                2,
+                -1
         );
 
         private float[] vertices;
@@ -116,6 +133,14 @@ public class Enemy extends Entity {
 
     private Properties enemyName;
 
+    /**
+     * Creates an enemy
+     * @param world the world
+     * @param enemyName the property of the enemy
+     * @param startX the starting x-coordinate of the enemy
+     * @param startY the starting y-coordinate of the enemy
+     * @param speed the speed of the enemy
+     */
     public Enemy(World world, Properties enemyName, int startX, int startY, int speed) {
         this.enemyName = enemyName;
         this.invincibilityCooldown = 0;
@@ -134,9 +159,11 @@ public class Enemy extends Entity {
         body = world.createBody(def);
         body.setUserData(this);
 
-        animations.put(Orientation.DOWN, AssetsHandler.getInstance().getAnimation(enemyName.name().toLowerCase() + "-run-front", SPEED_ANIMATION, 1f));
-
-        System.out.println(animations.get(Orientation.DOWN));
+        if (enemyName == Properties.GOBLIN){
+            animations.put(Orientation.DOWN, AssetsHandler.getInstance().getAnimation(enemyName.name().toLowerCase() + "-run-front", SPEED_ANIMATION, .7f));
+        }else{
+            animations.put(Orientation.DOWN, AssetsHandler.getInstance().getAnimation(enemyName.name().toLowerCase() + "-run-front", SPEED_ANIMATION, 1f));
+        }
 
         PolygonShape polygonShape = new PolygonShape();
 
@@ -217,39 +244,6 @@ public class Enemy extends Entity {
             this.setNextDamageSprite(-1);
             batch.draw(sprite, body.getPosition().x - 2, body.getPosition().y - 10, sprite.getWidth(), sprite.getHeight());
         }
-
-        if (enemyName.firingRate > 0 && deltaTime > enemyName.firingRate){
-            System.out.println("Sollte schießen");
-            Room currentRoom = BindingOfNewton.getInstance().level.getCurrentRoom();
-            List<Bullet> bulletList = currentRoom.getBullets();
-            Vector2 vector = calculateVectorToPlayer(currentRoom.getPlayer());
-
-            switch (enemyName){
-                case FIREBAT:
-                    for (int i=0; i<3; i++){
-                        Bullet bullet = new Bullet(body.getWorld(), null, (int) body.getPosition().x, (int) (body.getPosition().y + sprite.getHeight() / 2) , true);
-                        bullet.setSprite(AssetsHandler.getInstance().getSingleSpriteFromAtlas(enemyName.name().toLowerCase() + "-shot"));
-                        vector = vector.scl(50 / vector.len());
-                        if (i==0){
-                            //bullet.setMovement(vector);
-                            bullet.getSprite().setPosition(body.getPosition().x+40, body.getPosition().y );
-                        } else if (i==1){
-                            //bullet.setMovement(vector.rotateDeg(30f));
-                            bullet.getSprite().setPosition(body.getPosition().x+40, body.getPosition().y + 40);
-                        }else{
-                           // bullet.setMovement(vector.rotateDeg(-30f));
-                            bullet.getSprite().setPosition(body.getPosition().x+40, body.getPosition().y - 40);
-                        }
-
-                        bullets.add(bullet);
-                        bulletList.add(bullet);
-                    }
-                    break;
-            }
-
-            deltaTime = 0;
-        }
-
     }
 
     public Vector2 calculateVectorToPlayer(Player player){

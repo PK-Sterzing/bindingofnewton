@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bindingofnewton.game.BindingOfNewton;
 import com.bindingofnewton.game.assets.SoundHandler;
 import com.bindingofnewton.game.bullets.Bullet;
 import com.bindingofnewton.game.Orientation;
@@ -22,6 +23,7 @@ import com.bindingofnewton.game.items.HealthBoostItem;
 import com.bindingofnewton.game.items.Item;
 import com.bindingofnewton.game.items.ReloadSpeedItem;
 import com.bindingofnewton.game.items.SpeedBoostItem;
+import com.bindingofnewton.game.mainmenu.WinScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -259,6 +261,11 @@ public class Room {
 
         if (enemies.isEmpty()) {
             isCleared = true;
+
+            if (BindingOfNewton.getInstance().getLevelNumber() == 3 && BindingOfNewton.getInstance().level.getCurrentRoom() == BindingOfNewton.getInstance().level.getRooms().get(BindingOfNewton.getInstance().level.getRooms().size() - 1)) {
+                BindingOfNewton.getInstance().getGame().setScreen(new WinScreen(BindingOfNewton.getInstance().getGame()));
+            }
+
             if (!soundPlayed) {
                 soundPlayed = true;
                 SoundHandler.getInstance().playSound(SoundHandler.Sound.DOOR_OPEN);

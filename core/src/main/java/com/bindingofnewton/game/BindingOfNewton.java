@@ -20,10 +20,15 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.bindingofnewton.game.map.*;
 import com.bindingofnewton.game.items.Item;
+import com.sun.glass.ui.Window;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+/**
+ * The main class for the bindingOfNewton
+ */
 public class BindingOfNewton implements Screen{
 	private static BindingOfNewton instance;
 
@@ -188,9 +193,10 @@ public class BindingOfNewton implements Screen{
 		// Make new level
 		level = new LevelBuilder()
 				.setWorld(world)
-				.setLevelWidthHeight(8, 8)
+				.setLevelWidthHeight(10, 10)
+				//.setMinRooms(8 + levelNumber*2)
 				.setMinRooms(3)
-				.setAmountRandomRooms(0, 0)
+				.setAmountRandomRooms(0, 1)
 				.build();
 
         AssetsHandler.PlayerName[] players = AssetsHandler.PlayerName.values();
@@ -245,51 +251,51 @@ public class BindingOfNewton implements Screen{
 		level.getCurrentRoom().setPlayer(playerCached);
 
 		// Create Enemies
-		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1) && !level.getCurrentRoom().isCleared()){
-			makeBossEnemy();
-		}else if (!level.getCurrentRoom().isCleared()){
-		    /*
-			int minX = 40;
-			int maxX = 400;
-			int minY = 40;
-			int maxY = 250;
-			ArrayList<Enemy> enemies = new ArrayList<>();
-			for(int i = 0; i < 5; i++){
-				double startX = Math.floor(Math.random()*(maxX-minX+1)+minX);
-				double startY = Math.floor(Math.random()*(maxY-minY+1)+minY);
+		if (!level.getCurrentRoom().isCleared()){
+			int enemyCount = (int) (6 + levelNumber);
 
-				if (i%2 == 0){
-					enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) startX, (int) startY, 80));
-				}else{
-					Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)startX, (int)startY, 50);
-					enemies.add(bat);
-				}
+			if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
+				//TODO: Boss macht problem
+				//makeBossEnemy();
+				enemyCount += 5;
 			}
-		     */
+
 			ArrayList<Enemy> enemies = new ArrayList<>();
-			for(int i = 0; i < 5; i++){
-				level.getCurrentRoom().getMap().getProperties().get("file");
-				String roomName = level.getCurrentRoom().getMap().getProperties().get("file").toString();
-				roomName = roomName.split("/")[roomName.split("/").length - 1];
-				System.out.println(roomName);
 
+			String roomName = level.getCurrentRoom().getMap().getProperties().get("file").toString();
+			roomName = roomName.split("/")[roomName.split("/").length - 2] + "/" + roomName.split("/")[roomName.split("/").length - 1];
+			System.out.println(roomName);
 
-				if (i%2 == 0){
-					enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) 100, (int) 100, 80));
-				}else{
-					if (levelNumber == 0) {
+			HashMap<String, Vector2[]> spawnPoints = AssetsHandler.getInstance().spawnPoints;
+			Vector2[] vectors =  spawnPoints.get(roomName);
 
-						Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)100, (int)100, 50);
-						Enemy bat1 = new Enemy(world, Enemy.Properties.FIREBAT, (int)100, (int)100, 50);
+			if (vectors == null){
+				vectors = new Vector2[2];
+				vectors[0] = new Vector2(5, 4);
+				vectors[1] = new Vector2(9, 4);
+			}
+
+			if (!roomName.endsWith("mapStart.tmx")){
+				for(int i = 0; i < enemyCount; i++){
+					if (i<3){
+						enemies.add(new Enemy(world, Enemy.Properties.MOUSE, (int) vectors[i%2].x*32, (int) vectors[i%2].y*32, 80));
+					}else{
+
+						Enemy bat = new Enemy(world, Enemy.Properties.BAT, (int)vectors[i%2].x*32, (int)vectors[i%2].y*32, 40);
 						enemies.add(bat);
-						enemies.add(bat1);
-					} else {
-						Enemy bat = new Enemy(world, Enemy.Properties.FIREBAT, (int)100, (int)100, 50);
-						enemies.add(bat);
+
+						if (levelNumber == 1) {
+							Enemy fireBat = new Enemy(world, Enemy.Properties.FIREBAT, (int)vectors[i%2].x*32, (int)vectors[i%2].y*32, 60);
+							enemies.add(fireBat);
+						}
+						if (levelNumber == 2){
+							Enemy goblin = new Enemy(world, Enemy.Properties.GOBLIN, (int)vectors[i%2].x*32, (int)vectors[i%2].y*32, 50);
+							enemies.add(goblin);
+						}
 					}
 				}
+				level.getCurrentRoom().addEnemies(enemies);
 			}
-			level.getCurrentRoom().addEnemies(enemies);
 		}
 
 		room.setDoorBodies();
@@ -322,6 +328,9 @@ public class BindingOfNewton implements Screen{
 		mapBuilder.buildBodies(world);
 	}
 
+	/**
+	 * Makes a boss enemy
+	 */
 	private void makeBossEnemy() {
 		Room room = level.getCurrentRoom();
 

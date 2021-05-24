@@ -52,7 +52,7 @@ public class AssetsHandler {
     private static AssetsHandler instance;
 
     private final TextureAtlas textureAtlas;
-    private final HashMap<String, Vector2[]> spawnPoints;
+    public final HashMap<String, Vector2[]> spawnPoints;
 
     private AssetsHandler() {
         textureAtlas = new TextureAtlas(BIG_ATLAS);

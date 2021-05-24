@@ -122,11 +122,6 @@ public class Bullet {
      * @param batch the batch to be rendered with
      */
     public void render(SpriteBatch batch) {
-        if (isEnemyBullet){
-            System.out.println("Position:  " + sprite.getX() + ",  " + sprite.getY());
-            System.out.println("Movement; " + movement.toString());
-        }
-
         sprite.draw(batch);
     }
 

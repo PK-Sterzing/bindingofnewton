@@ -11,6 +11,9 @@ import com.bindingofnewton.game.Orientation;
  */
 public class Door {
 
+    /**
+     * An enum for the ids of the tileset. It is needed to replace the walls/floor with the open and closed doors
+     */
     public enum Id{
         NORMAL(17, 18),
         BOSS(27, 28),
@@ -18,11 +21,11 @@ public class Door {
 
         NORMAL2(32, 33),
         BOSS2(29, 30),
-        PORTAL2(19, 31),
+        PORTAL2(19, 36),
 
         NORMAL3(10, 11),
         BOSS3(12, 9),
-        PORTAL3(3, 31);
+        PORTAL3(3, 14);
 
         private final int closed;
         private final int open;

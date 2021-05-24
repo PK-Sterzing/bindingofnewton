@@ -12,6 +12,8 @@ import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Entity;
 import com.bindingofnewton.game.character.Player;
 import com.bindingofnewton.game.items.Item;
+import com.bindingofnewton.game.mainmenu.PauseScreen;
+import com.bindingofnewton.game.mainmenu.WinScreen;
 import com.bindingofnewton.game.map.Door;
 import com.bindingofnewton.game.map.Level;
 
@@ -90,7 +92,7 @@ public class ContactHandler implements ContactListener {
 
     private void contactWithPortal(Body body){
         Door door = (Door) body.getUserData();
-        if (door.getId() == Door.Id.PORTAL || door.getId() == Door.Id.PORTAL2 || door.getId() == Door.Id.PORTAL3){
+        if (door.getId() == Door.Id.PORTAL || door.getId() == Door.Id.PORTAL2) {
             BindingOfNewton.getInstance().levelNumber++;
             // Moves to new level
             BindingOfNewton.getInstance().setShouldMoveToNewLevel(true);
