@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.bindingofnewton.game.Bullet;
+import com.bindingofnewton.game.bullets.Bullet;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.bindingofnewton.game.character.Enemy;

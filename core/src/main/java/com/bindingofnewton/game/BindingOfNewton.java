@@ -1,5 +1,7 @@
 package com.bindingofnewton.game;
+import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.bindingofnewton.game.assets.AssetsHandler;
+import com.bindingofnewton.game.bullets.Bullet;
 import com.bindingofnewton.game.character.BossEnemy;
 import com.bindingofnewton.game.character.Enemy;
 import com.bindingofnewton.game.character.Player;
@@ -246,7 +248,7 @@ public class BindingOfNewton implements Screen{
 		level.getCurrentRoom().setPlayer(playerCached);
 
 		// Create Enemies
-		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1)){
+		if (level.getCurrentRoom() == level.getRooms().get(level.getRooms().size()-1) && !level.getCurrentRoom().isCleared()){
 			makeBossEnemy();
 		}else if (!level.getCurrentRoom().isCleared()){
 		    /*
