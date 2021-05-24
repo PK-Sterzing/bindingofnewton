@@ -191,7 +191,6 @@ public class AssetsHandler {
             list.add(MAP_TILED + MAP_CURRENT_LEVEL + file.getName());
             String name = file.getName();
 
-            //TODO: catch exceptions
             int number = Integer.parseInt(name.replaceAll("\\D+", ""));
             number++;
             name = name.replace(String.valueOf(number - 1), String.valueOf(number));

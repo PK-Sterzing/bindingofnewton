@@ -1,5 +1,6 @@
 package com.bindingofnewton.game.character;
 
+import com.bindingofnewton.game.BindingOfNewton;
 import com.bindingofnewton.game.Orientation;
 import com.bindingofnewton.game.assets.AssetsHandler;
 import com.badlogic.gdx.Gdx;
@@ -8,6 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.bindingofnewton.game.bullets.Bullet;
+import com.bindingofnewton.game.map.Room;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Enemy extends Entity {
 
@@ -23,7 +31,9 @@ public class Enemy extends Entity {
                         4.0f, 18.0f,
                 },
                 2,
-                500
+                500,
+                1.5f,
+                -1
         ),
         FIREBAT(
                 new float[] {
@@ -32,10 +42,12 @@ public class Enemy extends Entity {
                         27.0f, 18.0f,
                         4.0f, 18.0f,
                 },
+                3,
+                300,
                 2,
-                500
+                2
         ),
-        //TODO: Vertices berechnen/ändern
+
         BOSS(
                 new float[]{
                         95.0f, 60.0f,
@@ -46,7 +58,9 @@ public class Enemy extends Entity {
                         20.0f, 60.0f,
                 },
                 30,
-                600
+                600,
+                3,
+                4
         ),
         MOUSE(
                 new float[]{
@@ -56,17 +70,23 @@ public class Enemy extends Entity {
                         -3.0f, 0.0f,
                 },
                 1,
-                300
+                250,
+                1,
+                -1
         );
 
         private float[] vertices;
         private final float START_HEALTH;
         private final int pathChangingRate;
+        private final float damage;
+        private final float firingRate;
 
-        Properties(float vertices[], float health, int pathChangingRate){
+        Properties(float vertices[], float health, int pathChangingRate, float damage, float firingRate){
             this.vertices = vertices;
             this.START_HEALTH = health;
             this.pathChangingRate = pathChangingRate;
+            this.damage = damage;
+            this.firingRate = firingRate;
         }
 
         /**
@@ -87,9 +107,12 @@ public class Enemy extends Entity {
     private long lastPathChange = 0;
 
     protected float deltaTime = 0f;
-    //TODO: SpeedAnimation should be property of enemy (enum in assetshandler)
     protected final float SPEED_ANIMATION = 0.08f;
     protected float animation_offset;
+
+    private boolean isShooting;
+
+    private List<Bullet> bullets;
 
     private Properties enemyName;
 
@@ -111,7 +134,9 @@ public class Enemy extends Entity {
         body = world.createBody(def);
         body.setUserData(this);
 
-        animations.put(Orientation.DOWN, AssetsHandler.getInstance().getAnimation(enemyName.toString().toLowerCase() + "-run-front", SPEED_ANIMATION, 1f));
+        animations.put(Orientation.DOWN, AssetsHandler.getInstance().getAnimation(enemyName.name().toLowerCase() + "-run-front", SPEED_ANIMATION, 1f));
+
+        System.out.println(animations.get(Orientation.DOWN));
 
         PolygonShape polygonShape = new PolygonShape();
 
@@ -126,6 +151,8 @@ public class Enemy extends Entity {
         MassData massData = new MassData();
         massData.mass = 50;
         body.setMassData(massData);
+
+        bullets = new ArrayList<>();
 
         polygonShape.dispose();
     }
@@ -173,6 +200,7 @@ public class Enemy extends Entity {
     public void render(SpriteBatch batch, boolean isMoving) {
         move(new Vector2(0, 0));
         deltaTime += Gdx.graphics.getDeltaTime();
+
         Sprite sprite;
         if(this.getNextDamageSprite() == 0){
             sprite = AssetsHandler.getInstance().getAnimationFrame(animations.get(Orientation.DOWN), deltaTime + animation_offset);
@@ -183,11 +211,45 @@ public class Enemy extends Entity {
             }
             batch.draw(sprite, body.getPosition().x-10, body.getPosition().y-10, sprite.getWidth(), sprite.getHeight());
         }else{
-            sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas("bat-damage");
+            //Enemy gets damage
+            sprite = AssetsHandler.getInstance().getSingleSpriteFromAtlas(enemyName.name().toLowerCase() + "-damage");
             sprite.setScale(0.5f);
             this.setNextDamageSprite(-1);
             batch.draw(sprite, body.getPosition().x - 2, body.getPosition().y - 10, sprite.getWidth(), sprite.getHeight());
         }
+
+        if (enemyName.firingRate > 0 && deltaTime > enemyName.firingRate){
+            System.out.println("Sollte schießen");
+            Room currentRoom = BindingOfNewton.getInstance().level.getCurrentRoom();
+            List<Bullet> bulletList = currentRoom.getBullets();
+            Vector2 vector = calculateVectorToPlayer(currentRoom.getPlayer());
+
+            switch (enemyName){
+                case FIREBAT:
+                    for (int i=0; i<3; i++){
+                        Bullet bullet = new Bullet(body.getWorld(), null, (int) body.getPosition().x, (int) (body.getPosition().y + sprite.getHeight() / 2) , true);
+                        bullet.setSprite(AssetsHandler.getInstance().getSingleSpriteFromAtlas(enemyName.name().toLowerCase() + "-shot"));
+                        vector = vector.scl(50 / vector.len());
+                        if (i==0){
+                            //bullet.setMovement(vector);
+                            bullet.getSprite().setPosition(body.getPosition().x+40, body.getPosition().y );
+                        } else if (i==1){
+                            //bullet.setMovement(vector.rotateDeg(30f));
+                            bullet.getSprite().setPosition(body.getPosition().x+40, body.getPosition().y + 40);
+                        }else{
+                           // bullet.setMovement(vector.rotateDeg(-30f));
+                            bullet.getSprite().setPosition(body.getPosition().x+40, body.getPosition().y - 40);
+                        }
+
+                        bullets.add(bullet);
+                        bulletList.add(bullet);
+                    }
+                    break;
+            }
+
+            deltaTime = 0;
+        }
+
     }
 
     public Vector2 calculateVectorToPlayer(Player player){
@@ -206,6 +268,14 @@ public class Enemy extends Entity {
     }
 
     /**
+     * Gets the bullets the enemy has shot
+     * @return a list of bullets
+     */
+    public List<Bullet> getBullets() {
+        return bullets;
+    }
+
+    /**
      * Calculates vector with fixed length to player and moves enemy to that vector
      * @param player to which the enemy has to move
      */
@@ -217,5 +287,9 @@ public class Enemy extends Entity {
 
         this.move(move);
         setLastPathChange(System.currentTimeMillis());
+    }
+
+    public float getDamage() {
+        return enemyName.damage;
     }
 }

@@ -46,87 +46,45 @@
   </animation>
  </tile>
  <tile id="12">
-  <properties>
-   <property name="id" type="int" value="4"/>
-  </properties>
   <image width="32" height="48" source="../../img/fire2.png"/>
  </tile>
  <tile id="13">
-  <properties>
-   <property name="id" type="int" value="5"/>
-  </properties>
   <image width="32" height="48" source="../../img/fire3.png"/>
  </tile>
  <tile id="18">
-  <properties>
-   <property name="id" type="int" value="6"/>
-  </properties>
   <image width="32" height="32" source="../../img/floor-stone.png"/>
  </tile>
  <tile id="19">
-  <properties>
-   <property name="id" type="int" value="7"/>
-  </properties>
   <image width="32" height="32" source="../../img/floor-stone-hole.png"/>
  </tile>
  <tile id="20">
-  <properties>
-   <property name="id" type="int" value="8"/>
-  </properties>
   <image width="32" height="32" source="../../img/floor-stone-spikes.png"/>
  </tile>
  <tile id="21">
-  <properties>
-   <property name="id" type="int" value="13"/>
-  </properties>
   <image width="32" height="32" source="../../img/wall-stone.png"/>
  </tile>
  <tile id="22">
-  <properties>
-   <property name="id" type="int" value="14"/>
-  </properties>
   <image width="32" height="32" source="../../img/wall-stone-corner.png"/>
  </tile>
  <tile id="23">
-  <properties>
-   <property name="id" type="int" value="16"/>
-  </properties>
   <image width="32" height="32" source="../../img/floor-stone-hole-full.png"/>
  </tile>
  <tile id="24">
-  <properties>
-   <property name="id" type="int" value="17"/>
-  </properties>
   <image width="32" height="32" source="../../img/floor-stone-hole-corner.png"/>
  </tile>
  <tile id="25">
-  <properties>
-   <property name="id" type="int" value="13"/>
-  </properties>
   <image width="32" height="32" source="../../img/floor-stone-hole-edge.png"/>
  </tile>
  <tile id="28">
-  <properties>
-   <property name="id" type="int" value="9"/>
-  </properties>
   <image width="32" height="32" source="../../img/2floor-boosdoor-closed.png"/>
  </tile>
  <tile id="29">
-  <properties>
-   <property name="id" type="int" value="10"/>
-  </properties>
   <image width="32" height="32" source="../../img/2floor-boosdoor-open.png"/>
  </tile>
  <tile id="31">
-  <properties>
-   <property name="id" type="int" value="11"/>
-  </properties>
   <image width="32" height="32" source="../../img/2nd-door.png"/>
  </tile>
  <tile id="32">
-  <properties>
-   <property name="id" type="int" value="12"/>
-  </properties>
   <image width="32" height="32" source="../../img/2nd-door-open.png"/>
  </tile>
  <tile id="33">

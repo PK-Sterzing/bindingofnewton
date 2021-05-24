@@ -1,6 +1,5 @@
 package com.bindingofnewton.game.bullets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.bindingofnewton.game.assets.AssetsHandler;
@@ -20,7 +19,7 @@ public class BossBullet extends Bullet {
     @Override
     public void setMovement(Vector2 vector) {
         long deltaTime = System.currentTimeMillis();
-        if (deltaTime - startBullet < 500){
+        if (deltaTime - startBullet < 200){
             vector.y = 0;
         }
         super.setMovement(vector);

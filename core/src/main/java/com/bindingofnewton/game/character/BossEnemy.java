@@ -134,7 +134,6 @@ public class BossEnemy extends Enemy {
     @Override
     public void calculateMoveToPlayer(Player player) {
         if (isShooting){
-            //System.out.println("Moved nicht");
             move(new Vector2(0.0001f,0.0001f));
         }else{
             Vector2 move = calculateVectorToPlayer(player);

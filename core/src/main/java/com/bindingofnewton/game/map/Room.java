@@ -264,7 +264,7 @@ public class Room {
     }
 
     /**
-     * Removes all bullets that have to be removed
+     * Removes all bullets that have to get removed
      */
     private void updateBullets() {
         for (int i = 0; i < bullets.size(); i++) {
@@ -272,6 +272,7 @@ public class Room {
                 // Destroy body, remove bullet
                 world.destroyBody(bullets.get(i).getBody());
                 bullets.remove(i);
+                i--;
             } else {
                 bullets.get(i).update();
             }

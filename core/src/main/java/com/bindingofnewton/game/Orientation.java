@@ -22,7 +22,6 @@ public enum Orientation {
         }
     }
 
-    //TODO: gleiche Methode mit x-, y-Übergabeparametern
     public Vector2 moveCoord(Vector2 vector, float value){
         Vector2 vector2 = new Vector2(vector);
         switch (this){
@@ -42,7 +41,6 @@ public enum Orientation {
         return vector2;
     }
 
-    //TODO: Methode verbessern! Funktioniert nicht zu 100%
     public static Vector2 addVectors(Orientation orientation1, Vector2 v1, Orientation orientation2, Vector2 v2){
         if (orientation1 == orientation2){
             if (orientation1.isHorizontal()){
